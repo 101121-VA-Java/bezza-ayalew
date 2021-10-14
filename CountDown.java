@@ -1,6 +1,6 @@
 public class CountDown{
     public static void main(String[] args){
-        countdown(8);
+        countdown(-1);
     }
     public static void countdown(int startValue) { 
         if(startValue < 0){
