@@ -6,6 +6,7 @@ public class Calculator{
         Calculator subtr = new Calculator();
         Calculator mult = new Calculator();
         Calculator remain = new Calculator();
+
         System.out.println(myday.weekday("blah"));
         System.out.println(add1.add(45,54));
         System.out.println(subtr.subtract(30,20));
