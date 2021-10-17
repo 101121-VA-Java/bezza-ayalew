@@ -1,8 +1,8 @@
+public class Test{
+  public static void main(String[] args){
+      System.out.println("This is test");
+  }
 
-public class test{
-	public static void main{
-		
-	}
 	public static int[] order(int[] intArr){
 		for (int i = intArr.length; i > 0; i--) {
 			for (int j = 0; j < i - 1; j++) {
@@ -16,3 +16,4 @@ public class test{
         return intArr;
 	}
 }
+
