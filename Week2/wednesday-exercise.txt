@@ -1,0 +1,20 @@
+Go line by line, and explain what's happening in each line.
+
+int score = 80; // A variable of type int and of name score is declared and is assigned a value of 80;
+
+String result; // A variable of type String is declared.
+
+if (score == 80) { 				// A control flow if-else statement is started with set a first condition to be evaluated whether 
+									the value of the variable "score" is equal to 80.
+	result = "You passed!"; 	// A statement is provided to be executed in case the condition turns out to be true:  
+									for the string value of "You passed!" to be assigned to the variable name "result" 
+} else if (score > 80) {    	// Another condition is set to be evaluated whether the value in the variable "score"  
+									is greater than 80 in case the previous condition was not met:
+	result = "You did great!"; 	// Another string value of "You did great!" is provided to be assigned to the variable "result" 
+									if the second condition is met.
+} else {						// A default condition of 'in all other cases' is set by else
+	result = "You did not pass. Try again!";	// A string value of "You did not pass." is set to be assigned if all the
+													above conditions turn out to be false.
+}
+
+System.out.println(result);		//The standard output command is called to display the value of the variable "result" on the console.
