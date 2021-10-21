@@ -1,0 +1,60 @@
+public static void main(String[] args) {					// A parameterized method of name "main" is declared with access modifier of "public", 
+										the class scope specifier "static", and a return data type of "void" (no return). 
+										A single parameter of name "args" is declared with data type of String array.
+ 
+	String[] foodTypes = getFoodTypes();					// A non-parameterized method "getFoodTypes" is invoked and its return value is assigned 
+										to the variable of data type String array and name "foodTypes".
+										
+	String myType = foodTypes[2];						// The third element of the array "foodTypes" is assigned to the the String data type variable of "myType".
+
+	String[] foodsOfMyType = getFoodsByType(myType);			// The parameterized method "getFoodsByType" is invoked with the "myType" as the 
+										parameter/argument, the returned value is assigned to the variable of String array 
+										data type "foodsOfMyType".
+	for (String food : foodsOfMyType) {					// A for-each loop is set with a String variable of "food" iterating over the elements 
+										of the String array "foodOfMyType".					
+		System.out.println(food);					// The system standar output is invoked to display the elements of the array in each iteration. 
+	}
+}
+
+public static String[] getFoodTypes() {						// A non-parameterized method of name "getFoodTypes" is declared with access modifier of "public", 
+										the class scope specifier "static", and a return data type of String array.
+	String[] foodTypes = {"breakfast","lunch","dinner","dessert","snack"};	// A string array is set and assigned to the variable "foodTypes" (of String array data type).
+	return foodTypes;							// The return value of the method is set to be the variable "foodTypes".
+}
+
+public static String[] getFoodsByType(String type) {
+	String[] foods = new String[3];
+
+	switch(type) {
+	case "breakfast":
+		foods[0] = "pancakes";
+		foods[1] = "cereal";
+		foods[2] = "omelette";
+		break;
+	case "lunch":
+		foods[0] = "sandwich";
+		foods[1] = "salad";
+		foods[2] = "soup";
+		break;
+	case "dinner":
+		foods[0] = "curry";
+		foods[1] = "stir fry";
+		foods[2] = "burger";
+		break;
+	case "dessert":
+		foods[0] = "cake";
+		foods[1] = "ice cream";
+		foods[2] = "candy";
+		break;
+	case "snack":
+		foods[0] = "chips";
+		foods[1] = "apple";
+		foods[2] = "samosa";
+		break;
+	default:
+		// add your own
+		break;
+	}
+
+	return foods;
+}
