@@ -22,17 +22,19 @@ public static String[] getFoodTypes() {						// A non-parameterized method of na
 	return foodTypes;							// The return value of the method is set to be the variable "foodTypes".
 }
 
-public static String[] getFoodsByType(String type) {
-	String[] foods = new String[3];
+public static String[] getFoodsByType(String type) {				// A parameterized method of name "getFoodsByType" is declared with access modifier of "public", 
+										the class scope specifier "static", and a return data type of String array. A single parameter of 
+										name "type" and data type Sting is declared.
+	String[] foods = new String[3];						// A string array of 3 elements is constructed and assigned to the variable "foods" of String array data type. 
 
-	switch(type) {
-	case "breakfast":
-		foods[0] = "pancakes";
-		foods[1] = "cereal";
-		foods[2] = "omelette";
-		break;
-	case "lunch":
-		foods[0] = "sandwich";
+	switch(type) {								// A control-flow statement of "switch" is set to test the value of the variable "type".
+	case "breakfast":							// The value is checked if it is "breakfast", if true:
+		foods[0] = "pancakes";						// The first index of the array foods will be assigned the value "pancakes".
+		foods[1] = "cereal";						// The second index of the array foods will be assigned the value "cereal".
+		foods[2] = "omelette";						// The first index of the array foods will be assigned the value "omlette".
+		break;								// and the control-flow stops further testing.
+	case "lunch":								// if the previous condition is not met, the value checking  
+		foods[0] = "sandwich";						// and the assignment proceeds until a condition is met. 
 		foods[1] = "salad";
 		foods[2] = "soup";
 		break;
@@ -51,10 +53,10 @@ public static String[] getFoodsByType(String type) {
 		foods[1] = "apple";
 		foods[2] = "samosa";
 		break;
-	default:
-		// add your own
-		break;
+	default:								// If all cases above are not the case, the default is met and  
+		// add your own							// Whatever statement is here will be executed and
+		break;								// the control-flow stops
 	}
 
-	return foods;
+	return foods;								// The return value of the method is set to the variable "foods".
 }
