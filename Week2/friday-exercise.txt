@@ -23,9 +23,12 @@ public class Food {							// A class named "Food" is declared with access modifi
 public class Main {							// A class named "Main" id defined with access modifier of "public".
 	public static void main(String[] args) {			// A one-argument/parameter method named "main" is declared with parameter of String array data type, 
 									   with access modifier "public", a class-scope identifier "static" and a return type of void.
-		Food myFood = new Food("potato", "vegetable");		// An object of the class "Food" is instantiated and assigned to the variable "myFood" declared as type/class "Food". 
-		myFood.cook();						// The method "cook" is envoked on the object "myFood.
+		Food myFood = new Food("potato", "vegetable");		// An object of the class "Food" is instantiated and assigned to the variable "myFood" declared as type/class "Food".
+									// myFood will have properties "name" = "potato" and "type" = "vegetable". 
+		myFood.cook();						// The method "cook" is envoked on the object "myFood". And as a result the name property of "myFood" will be:
+									   "cooked potato"
 
-		System.out.println(myFood.name);			// The system standard output is envoked to display on the console the "name" property of the object myFood.
+		System.out.println(myFood.name);			// The system standard output is envoked to display on the console the value of the "name" property of 
+									   the object myFood. And "cooked potato" will be displayed on the console.
 	}
 }
