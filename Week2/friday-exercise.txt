@@ -7,8 +7,8 @@ public class Food {							// A class named "Food" is declared with access modifi
 	public String type;						// A variable of String data type is declared with the name "type" and with access modifier "public".
 
 	public Food(String name, String type) {				// A two-argument construtor of the class "Food" is declared with two String data-type parameters "name" and "type".
-		this.name = name;					// The argument "name" is assigned to the object.
-		this.type = type;					// The argument "type" is associated with the property "type" of the object.
+		this.name = name;					// The value of the argument "name" is assigned to the field "name" referrenced as "this.name".
+		this.type = type;					// Similarly the vale of argument "type" is assigned to the field "type". (The fields "name" and "type" are now initialized
 	}
 
 	public void cook() {						// A method named "cook" is declared with access modifier "public" and return type of "void".
