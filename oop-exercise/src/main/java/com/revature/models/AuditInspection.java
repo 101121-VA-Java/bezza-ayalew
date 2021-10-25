@@ -2,7 +2,7 @@ package com.revature.models;
 
 import com.revature.interfaces.Available;
 
-public class HouseKeeping extends Service implements Available{
+public class AuditInspection extends Service implements Available{
 
 	@Override
 	public String assignAssociate() {
