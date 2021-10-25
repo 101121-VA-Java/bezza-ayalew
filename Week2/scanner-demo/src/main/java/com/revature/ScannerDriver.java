@@ -25,7 +25,7 @@ public class ScannerDriver {
 //		System.out.println("You picked " + num);
 //		
 //		ScannerDriver.loginScreen();
-		
+		System.out.println((int)(Math.random() *10));
 		ScannerDriver.menu();
 		// Please close your resources people
 		sc.close();
@@ -82,3 +82,4 @@ public class ScannerDriver {
 		}
 	}
 }
+
