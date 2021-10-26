@@ -1,0 +1,7 @@
+- User has {Role, userId, username, password}, register, login, logout
+- Customer (is a User), has {customerId, name, phone, email, address}, viewItem, makeOfferForItem, makePayment, viewPaymentBalance
+- Employee has {empId, name, empRole}, addItem, removeItem, acceptRejectOffer, viewPayments,
+- Manager (is an Employee) createEmployee, removeEmployee, viewSalesHistory
+- Item {itemId, description, quantity, state?}
+- System updateItemState, calculateWeeklyPayments
+
