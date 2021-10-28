@@ -2,6 +2,8 @@
 - Customer (is a User), has {customerId, name, phone, email, address}, viewItem, makeOfferForItem, makePayment, viewPaymentBalance
 - Employee has {empId, name, empRole}, addItem, removeItem, acceptRejectOffer, viewPayments,
 - Manager (is an Employee) createEmployee, removeEmployee, viewSalesHistory
-- Item {itemId, description, quantity, state?}
+- Item {itemId, description, price} quantity, state
+- Payment {id, amount, date, itemId, balance}
+- Offer {id, customerId, itemId, amount, date} 
 - System updateItemState, calculateWeeklyPayments
 

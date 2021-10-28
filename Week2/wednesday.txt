@@ -4,7 +4,7 @@ Inheritance
 		- DRY - Do not repeat yourself - principle
 	- keyword "extends"
 		- by default/implicitely every class extends the Object class
-	- by default the first line of every constructor is a call the the parent's constructor (super())
+	- by default the first line of every constructor is a call for the parent's constructor (super())
 		- super is a keyword that refers to the parent class
 			- can access states and behaviors from the parent class dependending on the access modifer
 		- this vs super

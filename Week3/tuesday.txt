@@ -4,7 +4,7 @@ Java Memory Management
 		- Datastructure that follows a LastInFirstOut pattern (LIFO) 
 		- stores primitives and reference variables
 		- each thread gets its own stack
-		- variables "pop off" the stack once the scope the method is over 
+		- variables "pop off" the stack once the scope of the method is over 
 	- Heap
 		- Object storage
 			- almost anything that's not a primitive is an object

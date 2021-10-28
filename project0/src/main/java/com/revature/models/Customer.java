@@ -3,9 +3,7 @@ package com.revature.models;
 import java.util.Objects;
 
 public class Customer {
-	private int customerId;
-	private String username;
-	private String password;
+	private int id;
 	private String name;
 	private String email;
 	private String address;
@@ -15,38 +13,20 @@ public class Customer {
 		// TODO Auto-generated constructor stub
 	}
 
-	protected Customer(int customerId, String username, String password, String name, String email, String address) {
+	protected Customer(int id, String username, String password, String name, String email, String address) {
 		super();
-		this.customerId = customerId;
-		this.username = username;
-		this.password = password;
+		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.address = address;
 	}
 
-	public int getCustomerId() {
-		return customerId;
+	public int getId() {
+		return id;
 	}
 
-	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -75,13 +55,13 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [customerId=" + customerId + ", username=" + username + ", password=" + password + ", name="
-				+ name + ", email=" + email + ", address=" + address + "]";
+		return "Customer [id=" + id + ", name=" + name + ", email=" + email + ", address=" + address
+				+ "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(address, customerId, email, name, password, username);
+		return Objects.hash(address, id, email, name);
 	}
 
 	@Override
@@ -91,11 +71,9 @@ public class Customer {
 		if (!(obj instanceof Customer))
 			return false;
 		Customer other = (Customer) obj;
-		return Objects.equals(address, other.address) && customerId == other.customerId
-				&& Objects.equals(email, other.email) && Objects.equals(name, other.name)
-				&& Objects.equals(password, other.password) && Objects.equals(username, other.username);
+		return Objects.equals(address, other.address) && id == other.id
+				&& Objects.equals(email, other.email) && Objects.equals(name, other.name);
 	}
-	
+
 	
 }
-
