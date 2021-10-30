@@ -3,19 +3,20 @@ package com.revature.controllers;
 import java.util.Scanner;
 
 import com.revature.exceptions.LoginException;
-import com.revature.models.Employee;
+import com.revature.models.Customer;
 import com.revature.models.Role;
-import com.revature.services.EmployeeService;
+import com.revature.services.CustomerService;
 
 public class CustomerLoginController {
 
-	private static EmployeeService es = new EmployeeService();
-	private static Employee principal;
+	private static CustomerService cs = new CustomerService();
+	private static Customer customerUser;
 	private static Scanner sc;
 	
 	public static void run(Scanner scan) {
-		sc = scan;
-		
+		sc = scan;		
+		System.out.println();
+		System.out.println("CUSTOMER LOGIN PAGE");
 		System.out.println();
 		System.out.println("Please enter your username:");
 		String username = sc.nextLine();
@@ -23,23 +24,14 @@ public class CustomerLoginController {
 		String password = sc.nextLine();
 		
 		try {
-			principal = es.login(username, password);
-
+			customerUser = cs.login(username, password);
 			
 		} catch (LoginException e) {
 			System.out.println("Invalid credentials.");
 		}
 	}
 	
-	public static void EmployeeMenu() {
-		
-	}
-	
-	public static void ManagerMenu() {
-		
-	}
-	
-	public static void AdminMenu() {
+	public static void CustomerMenu() {
 		
 	}
 }

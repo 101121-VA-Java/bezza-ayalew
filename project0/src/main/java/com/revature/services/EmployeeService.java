@@ -3,6 +3,11 @@ package com.revature.services;
 import java.util.List;
 
 import com.revature.Daos.EmployeeDao;
+import com.revature.Daos.EmployeeList;
+import com.revature.exceptions.LoginException;
+import com.revature.exceptions.UsernameAlreadyExistsException;
+import com.revature.models.Employee;
+import com.revature.models.Role;
 
 import java.util.List;
 

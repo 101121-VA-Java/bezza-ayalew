@@ -3,12 +3,14 @@ package com.revature.controllers;
 import java.util.Scanner;
 
 import com.revature.exceptions.UsernameAlreadyExistsException;
+import com.revature.models.Customer;
 import com.revature.models.Employee;
+import com.revature.services.CustomerService;
 import com.revature.services.EmployeeService;
 
 public class RegisterController {
 
-	private static CustomerService us = new CustomerService();
+	private static CustomerService cs = new CustomerService();
 	
 	public static void run(Scanner sc) {
 		System.out.println();
@@ -35,7 +37,7 @@ public class RegisterController {
 		Customer newCustomer = new Customer(name, username, password);
 		
 		try {
-			newCustomer = us.addCustomer(newCustomer);
+			newCustomer = cs.addCustomer(newCustomer);
 			System.out.println("Welcome " + newCustomer.getName() + "!");
 		} catch (UsernameAlreadyExistsException e) {
 			System.out.println("Username is already in use.\nPlease try again.");

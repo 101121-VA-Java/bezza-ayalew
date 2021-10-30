@@ -11,16 +11,16 @@ public class EmployeeLoginController {
 
 	private static EmployeeService es = new EmployeeService();
 	private static Employee principal;
-	private static Scanner sc;
+	private static Scanner empScan;
 	
 	public static void run(Scanner scan) {
-		sc = scan;
-		
+		empScan = scan;
+		System.out.println("EMPLOYEE LOGIN PAGE");
 		System.out.println();
 		System.out.println("Please enter your username:");
-		String username = sc.nextLine();
+		String username = empScan.nextLine();
 		System.out.println("Please enter your password:");
-		String password = sc.nextLine();
+		String password = empScan.nextLine();
 		
 		try {
 			principal = es.login(username, password);
@@ -28,6 +28,12 @@ public class EmployeeLoginController {
 			
 		} catch (LoginException e) {
 			System.out.println("Invalid credentials.");
+		}
+		if(principal.getRole() == Role.BASIC_EMP) {
+			//Add EmployeeMenu() with BASIC_EMP privileges
+		}
+		if(principal.getRole() == Role.MANAGER) {
+			//Add ManagerMenu() with MANAGER privileges
 		}
 	}
 	

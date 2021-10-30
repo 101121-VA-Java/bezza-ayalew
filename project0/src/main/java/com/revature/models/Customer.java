@@ -5,20 +5,27 @@ import java.util.Objects;
 public class Customer {
 	private int id;
 	private String name;
-	private String email;
-	private String address;
+	private String username;
+	private String password;
 	
 	protected Customer() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+		
+	public Customer(String name, String username, String password) {
+		super();
+		this.name = name;
+		this.username = username;
+		this.password = password;
+	}
 
-	protected Customer(int id, String username, String password, String name, String email, String address) {
+	public Customer(int id, String name, String username, String password) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.email = email;
-		this.address = address;
+		this.username = username;
+		this.password = password;
 	}
 
 	public int getId() {
@@ -37,31 +44,30 @@ public class Customer {
 		this.name = name;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", name=" + name + ", email=" + email + ", address=" + address
-				+ "]";
+		return "Customer [id=" + id + ", name=" + name + ", username=" + username + ", password=" + password + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(address, id, email, name);
+		return Objects.hash(id, name, password, username);
 	}
 
 	@Override
@@ -71,9 +77,11 @@ public class Customer {
 		if (!(obj instanceof Customer))
 			return false;
 		Customer other = (Customer) obj;
-		return Objects.equals(address, other.address) && id == other.id
-				&& Objects.equals(email, other.email) && Objects.equals(name, other.name);
+		return id == other.id && Objects.equals(name, other.name) && Objects.equals(password, other.password)
+				&& Objects.equals(username, other.username);
 	}
+
+	
 
 	
 }
