@@ -81,7 +81,4 @@ public class Customer {
 				&& Objects.equals(username, other.username);
 	}
 
-	
-
-	
 }

@@ -17,32 +17,38 @@ public class EmployeeService {
 	
 	public Employee addEmployee(Employee e) throws UsernameAlreadyExistsException {
 
-		Employee newEmp = this.getEmployeeByUsername(e.getUsername());
+		Employee newEmp = this.getEmployeeById(e.getId());
 		if(newEmp != null) {
 			throw new UsernameAlreadyExistsException();
 		}
-		e.setRole(Role.BASIC_EMPLOYEE);
+		e.setRole(Role.BASIC_EMP);
 		e.setManager(ed.getById(0));
  
 		return ed.add(e);
 	}
 	
-	public Employee getEmployeeByUsername(String username){
+	public Employee getEmployeeById(int id){
 		List<Employee> employees = ed.getAll();
 		for(Employee e : employees) {
-			if (e.getUsername().equals(username)) {
+			if (e.getId() == id) {
 				return e;
 			}
 		}
 		return null;
 	}
 	
-	public Employee login(String username, String password) throws LoginException {
-		Employee emp = this.getEmployeeByUsername(username);
-		if(emp == null || !emp.getPassword().equals(password)) {
-			throw new LoginException();
-		}
-		return emp;
+
+	public Employee removeEmployee(Employee e) {
+		Employee firedEmp = this.getEmployeeById(e.getId());
+		return ed.delete(firedEmp);
 	}
+	
+//	public Employee login(String username, String password) throws LoginException {
+//		Employee emp = this.getEmployeeById(username);
+//		if(emp == null || !emp.getPassword().equals(password)) {
+//			throw new LoginException();
+//		}
+//		return emp;
+//	}
 }
 

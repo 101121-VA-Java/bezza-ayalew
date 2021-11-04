@@ -11,17 +11,19 @@ public class ItemList implements ItemDao{
 
 	@Override
 	//returns a newly registered Item's record with the id set to the order of registration
-	public Item add(Item t) {
-		t.setId(items.size());
-		items.add(t);
-		return t;
+	public Item add(Item i) {
+		i.setId(items.size());
+		i.setName(null); //What is the source?
+		items.add(i);
+		return i;
 	}
+	// 
 
 	@Override
 	public Item getById(int id) {
-		for (Item c : items) {
-			if (c.getId() == id) {
-				return c;
+		for (Item t : items) {
+			if (t.getId() == id) {
+				return t;
 			}
 		}
 		return null;
@@ -40,6 +42,14 @@ public class ItemList implements ItemDao{
 		}
 		items.set(t.getId(), t);
 		return true;
+	}
+
+	@Override
+	public Item delete(Item t) {
+		Item toDelete = getById(t.getId());
+		toDelete.setId(0);
+		toDelete.setName(null);
+		return toDelete;
 	}
 
 

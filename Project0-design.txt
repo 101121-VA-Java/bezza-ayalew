@@ -1,9 +1,10 @@
-- User has {Role, userId, username, password}, register, login, logout
-- Customer (is a User), has {customerId, name, phone, email, address}, viewItem, makeOfferForItem, makePayment, viewPaymentBalance
-- Employee has {empId, name, empRole}, addItem, removeItem, acceptRejectOffer, viewPayments,
+- Customer has {id, username, password, name}, register, login, viewItem, makeOfferForItem, makePayment, viewPaymentBalance
+- Employee has {id, name, username, password, role, manager}, addItem, removeItem, acceptRejectOffer, viewPayments,
 - Manager (is an Employee) createEmployee, removeEmployee, viewSalesHistory
-- Item {itemId, description, price} quantity, state
-- Payment {id, amount, date, itemId, balance}
-- Offer {id, customerId, itemId, amount, date} 
-- System updateItemState, calculateWeeklyPayments
-
+- Item {id, name}
+- ItemStatus {Item.id, status, price, date}
+- Payment {id, amount, date, Item.id, balance = (ItemStatus.price where ItemStatus = "sold") - sum(Payment.amount by Item.id)}
+- WeeklyPayment = Select sum(amount) as "Weekly Payment" From Payment Group By date.week
+- Offer {id, customer.id, item.id, amount, date}
+- SalesHistory {Item.id, Item.name, ItemStatus.status, ItemStatus.price, ItemStatus.date, Payment.id, Payment.amount, Payment.date, Payment.balance}
+- System updateItemStatus, calculateWeeklyPayments

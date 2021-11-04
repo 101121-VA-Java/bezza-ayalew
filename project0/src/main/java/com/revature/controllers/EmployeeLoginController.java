@@ -24,8 +24,6 @@ public class EmployeeLoginController {
 		
 		try {
 			principal = es.login(username, password);
-
-			
 		} catch (LoginException e) {
 			System.out.println("Invalid credentials.");
 		}
