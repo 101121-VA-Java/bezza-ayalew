@@ -4,30 +4,30 @@ import java.util.Objects;
 
 public class Employee {
 
-	private int emp_id;
-	private String emp_name;
-	private String emp_username;
-	private String emp_password;
+	private int empId;
+	private String empName;
+	private String empUsername;
+	private String empPassword;
 	private Employee manager;
 	
 	public Employee() {
 		super();
 	}
 
-	public Employee(int emp_id, String emp_name, String emp_username, String emp_password, Employee manager) {
+	public Employee(int empId, String empName, String empUsername, String empPassword, Employee manager) {
 		super();
-		this.emp_id = emp_id;
-		this.emp_name = emp_name;
-		this.emp_username = emp_username;
-		this.emp_password = emp_password;
+		this.empId = empId;
+		this.empName = empName;
+		this.empUsername = empUsername;
+		this.empPassword = empPassword;
 		this.manager = manager;
 	}
 
-	protected Employee(String emp_name, String emp_username, String emp_password, Employee manager) {
+	protected Employee(String empName, String empUsername, String empPassword, Employee manager) {
 		super();
-		this.emp_name = emp_name;
-		this.emp_username = emp_username;
-		this.emp_password = emp_password;
+		this.empName = empName;
+		this.empUsername = empUsername;
+		this.empPassword = empPassword;
 		this.manager = manager;
 	}
 
@@ -35,36 +35,36 @@ public class Employee {
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getEmp_id() {
-		return emp_id;
+	public int getempId() {
+		return empId;
 	}
 
-	public void setEmp_id(int emp_id) {
-		this.emp_id = emp_id;
+	public void setempId(int empId) {
+		this.empId = empId;
 	}
 
-	public String getEmp_name() {
-		return emp_name;
+	public String getempName() {
+		return empName;
 	}
 
-	public void setEmp_name(String emp_name) {
-		this.emp_name = emp_name;
+	public void setempName(String empName) {
+		this.empName = empName;
 	}
 
-	public String getEmp_username() {
-		return emp_username;
+	public String getempUsername() {
+		return empUsername;
 	}
 
-	public void setEmp_username(String emp_username) {
-		this.emp_username = emp_username;
+	public void setempUsername(String empUsername) {
+		this.empUsername = empUsername;
 	}
 
-	public String getEmp_password() {
-		return emp_password;
+	public String getempPassword() {
+		return empPassword;
 	}
 
-	public void setEmp_password(String emp_password) {
-		this.emp_password = emp_password;
+	public void setempPassword(String empPassword) {
+		this.empPassword = empPassword;
 	}
 
 	public Employee getManager() {
@@ -77,7 +77,7 @@ public class Employee {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(emp_id, emp_name, emp_password, emp_username, manager);
+		return Objects.hash(empId, empName, empPassword, empUsername, manager);
 	}
 
 	@Override
@@ -87,8 +87,8 @@ public class Employee {
 		if (!(obj instanceof Employee))
 			return false;
 		Employee other = (Employee) obj;
-		return emp_id == other.emp_id && Objects.equals(emp_name, other.emp_name)
-				&& Objects.equals(emp_password, other.emp_password) && Objects.equals(emp_username, other.emp_username)
+		return empId == other.empId && Objects.equals(empName, other.empName)
+				&& Objects.equals(empPassword, other.empPassword) && Objects.equals(empUsername, other.empUsername)
 				&& Objects.equals(manager, other.manager);
 	}
 

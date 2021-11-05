@@ -1,8 +1,9 @@
 package com.revature.Daos;
 
-import java.beans.Statement;
+import java.sql.Statement;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,44 +15,53 @@ import com.revature.util.ConnectionUtil;
 
 public class EmployeePostgres implements GenericDao<Employee> {
 
-	public Employee add(Employee employee) throws IOException {
+	public int add(Employee employee) throws IOException {
 		int genId = -1;
-		String sql = "insert into employees (emp_name, emp_username, emp_password, manager) "
+		String sql = "insert into employee (emp_name, emp_username, emp_password, manager) "
 				+ "values (?, ?, ?, ?) returning emp_id;";
 		
 		try(Connection con = ConnectionUtil.getConnectionFromFile()){
 			PreparedStatement ps = con.prepareStatement(sql);
 			
-			ps.setString(1, employee.getEmp_name());
-			ps.setString(2, employee.getEmp_username());
-			ps.setString(3, employee.getEmp_password());
-			ps.setInt(5, employee.getManager().getEmp_id());
+			ps.setString(1, employee.getempName());
+			ps.setString(2, employee.getempUsername());
+			ps.setString(3, employee.getempPassword());
+			ps.setInt(4, employee.getManager().getempId());
 			
 			ResultSet rs = ps.executeQuery();
 
 			if(rs.next()) {
-				int genId = rs.getInt("emp_id");
+				genId = rs.getInt("emp_id");
 			}
-		
-			return genId;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}			
+		return genId;
 	}
 
-
-
-	public Employee delete(Employee employee) {
-		String sql = "delete from employee where condition;";
-		return 0;
+	public int delete(Employee employee) {
+		String sql = "delete from employee where emp_id = ? ";
+		int result = 0;
+		try (Connection con = ConnectionUtil.getConnectionFromFile()){
+			PreparedStatement ps = con.prepareStatement(sql);	
+			ps.setInt(1, employee.getempId());
+			result = ps.executeUpdate(sql);
+	        con.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 
 	public Employee getById(int id) {
-		String sql = "select * from employees where emp_id = ? ";
+		String sql = "select * from employee where emp_id = ? ";
 		Employee emp = null;
 		
 		try (Connection con = ConnectionUtil.getHardCodedConnection()){
 			PreparedStatement ps = con.prepareStatement(sql);
 			
-			ps.setInt(1, id); // 1 refers to the first '?'	
+			ps.setInt(1, id);	
 			
 			ResultSet rs = ps.executeQuery();
 			
@@ -71,11 +81,11 @@ public class EmployeePostgres implements GenericDao<Employee> {
 	}
 
 	public List<Employee> getAll() {
-		String sql = "select * from employees;";
+		String sql = "select * from employee;";
 		List<Employee> employees = new ArrayList<>();
 		
 		try (Connection con = ConnectionUtil.getConnectionFromEnv()){
-			java.sql.Statement s = con.createStatement();
+			Statement s = con.createStatement();
 			ResultSet rs = s.executeQuery(sql);
 			
 			while(rs.next()) {
@@ -94,9 +104,29 @@ public class EmployeePostgres implements GenericDao<Employee> {
 		return employees;
 	}
 
-	public boolean update(Employee employee) {
-		String sql = "update employee set column = value where condition;";
-		return false;
+	public int update(Employee employee) {
+
+		int result = 0;
+		// replace the values of the following variables to modify the respective fields
+		String emp_name = employee.getempName();
+		String emp_username = employee.getempUsername();
+		String emp_password = employee.getempPassword();
+		int manager = 0;//employee.getManager();
+		
+		String sql = "update item set emp_name = ?, emp_username = ?, emp_password = ?, emp_manager = ?;";
+		try (Connection con = ConnectionUtil.getConnectionFromFile()){
+			PreparedStatement ps = con.prepareStatement(sql);	
+			ps.setString(1, emp_name);
+			ps.setString(2, emp_username);
+			ps.setString(3, emp_password);
+			ps.setInt(4, manager);
+			
+			result = ps.executeUpdate(sql);
+	        con.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 
