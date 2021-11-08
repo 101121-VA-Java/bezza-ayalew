@@ -114,6 +114,32 @@
 --SELECT 
 --  extract(dow from date_added) AS "Day of week",
 --  to_char(date_added, 'Day') AS "Day Name" from item;
+--create table item_status(
+--status_id serial primary key,
+--item_id integer references item(item_id),
+--status varchar(20),
+--price decimal(10,2),
+--date_udated date
+--);
+--insert into item_status (item_id, status, price, date_updated) values(20,'sold', 34.45, CURRENT_TIMESTAMP);
+--insert into customer (customer_name, customer_username, customer_password) values ('Flossy McCumesky', 'fmccumesky0', 'TScpHwkec1');
+--insert into customer (customer_name, customer_username, customer_password) values ('Ray Sebastian', 'rsebastian1', 'nNPYXrEdI');
+--insert into customer (customer_name, customer_username, customer_password) values ('Emalia Demonge', 'edemonge2', 'CyTfuU');
+--insert into customer (customer_name, customer_username, customer_password) values ('Dulci Batalini', 'dbatalini3', '1cqc2Bat');
+--insert into customer (customer_name, customer_username, customer_password) values ('Emile Padell', 'epadell4', 'CQJ0yELWPCg');
+--insert into customer (customer_name, customer_username, customer_password) values ('Marsh Braybrookes', 'mbraybrookes5', 'IrYYOAuA');
+--insert into customer (customer_name, customer_username, customer_password) values ('Josh Fanthome', 'jfanthome6', 'BmI2Ou');
+--insert into customer (customer_name, customer_username, customer_password) values ('Whitney Dahmel', 'wdahmel7', 'RACwRCXHC');
+--insert into customer (customer_name, customer_username, customer_password) values ('Myrta Farrance', 'mfarrance8', 'E5hdBMlLhbA');
+--insert into customer (customer_name, customer_username, customer_password) values ('Aileen Davy', 'adavy9', 'M6W7M3');
+--update employee set emp_role = 'Manager' where emp_id in (5,10) returning emp_id;
 
 
- 
+
+
+
+
+
+
+
+

@@ -1,5 +1,6 @@
 package com.revature.models;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Objects;
 
@@ -7,23 +8,29 @@ public class Offer {
 	int offerId;
 	int customerId;
 	int itemId;
-	Date offerDate;
 	double offerAmount;
-	double offerPrice;
+	Timestamp offerDate;
+	
+
 	
 	public Offer() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Offer(int offerId, int customerId, int itemId, Date offerDate, double offerAmount, double offerPrice) {
-		super();
+	public Offer(int offerId, int customerId, int itemId, double offerAmount, 
+			Timestamp offerDate) {
 		this.offerId = offerId;
 		this.customerId = customerId;
 		this.itemId = itemId;
-		this.offerDate = offerDate;
 		this.offerAmount = offerAmount;
-		this.offerPrice = offerPrice;
+		this.offerDate = offerDate;
+	}
+	public Offer(int customerId, int itemId, double offerAmount, Timestamp offerDate) {
+		this.customerId = customerId;
+		this.itemId = itemId;
+		this.offerAmount = offerAmount;
+		this.offerDate = offerDate;
 	}
 
 	public int getOfferId() {
@@ -54,9 +61,9 @@ public class Offer {
 		return offerDate;
 	}
 
-	public void setOfferDate(Date offerDate) {
-		this.offerDate = offerDate;
-	}
+//	public void setOfferDate(Date offerDate) {
+//		this.offerDate = offerDate;
+//	}
 
 	public double getOfferAmount() {
 		return offerAmount;
@@ -66,17 +73,10 @@ public class Offer {
 		this.offerAmount = offerAmount;
 	}
 
-	public double getOfferPrice() {
-		return offerPrice;
-	}
-
-	public void setOfferPrice(double offerPrice) {
-		this.offerPrice = offerPrice;
-	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(customerId, itemId, offerAmount, offerDate, offerId, offerPrice);
+		return Objects.hash(customerId, itemId, offerAmount, offerDate, offerId);
 	}
 
 	@Override
@@ -88,8 +88,7 @@ public class Offer {
 		Offer other = (Offer) obj;
 		return customerId == other.customerId && itemId == other.itemId
 				&& Double.doubleToLongBits(offerAmount) == Double.doubleToLongBits(other.offerAmount)
-				&& Objects.equals(offerDate, other.offerDate) && offerId == other.offerId
-				&& Double.doubleToLongBits(offerPrice) == Double.doubleToLongBits(other.offerPrice);
+				&& Objects.equals(offerDate, other.offerDate) && offerId == other.offerId;
 	}
 	
 	

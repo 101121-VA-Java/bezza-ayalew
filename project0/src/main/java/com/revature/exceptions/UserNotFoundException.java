@@ -1,6 +1,6 @@
 package com.revature.exceptions;
 
-public class EmployeeNotFoundException extends Exception{
+public class UserNotFoundException extends Exception{
 
 	/**
 	 * 

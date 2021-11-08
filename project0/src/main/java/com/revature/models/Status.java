@@ -1,25 +1,46 @@
 package com.revature.models;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 public class Status {
+	int statusId;
 	int itemId;
 	String status;
 	Double price;
-	Date date;
+	Timestamp date;
 	
 	public Status() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Status(int itemId, String status, Double price, Date date) {
+	public Status(int statusId, int itemId, String status, Double price, Timestamp date) {
 		super();
+		this.statusId = statusId;
 		this.itemId = itemId;
 		this.status = status;
 		this.price = price;
 		this.date = date;
+	}
+	public Status(int itemId, String status, Double price) {
+		this.itemId = itemId;
+		this.status = status;
+		this.price = price;
+	}
+	public Status(int statusId, int itemId, String status, Double price) {
+		this.statusId = statusId;
+		this.itemId = itemId;
+		this.status = status;
+		this.price = price;
+	}
+
+	public int getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(int statusId) {
+		this.statusId = statusId;
 	}
 
 	public int getItemId() {
@@ -27,7 +48,7 @@ public class Status {
 	}
 
 	public void setItemId(int itemId) {
-		itemId = itemId;
+		this.itemId = itemId;
 	}
 
 	public String getStatus() {
@@ -46,13 +67,13 @@ public class Status {
 		this.price = price;
 	}
 
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
+//	public Date getDate() {
+//		return date;
+//	}
+//
+//	public void setDate(Date date) {
+//		this.date = date;
+//	}
 
 	@Override
 	public int hashCode() {

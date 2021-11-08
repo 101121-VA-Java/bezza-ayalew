@@ -4,13 +4,12 @@ import java.util.Scanner;
 
 import com.revature.exceptions.LoginException;
 import com.revature.models.Employee;
-import com.revature.models.Role;
 import com.revature.services.EmployeeService;
 
 public class EmployeeLoginController {
 
 	private static EmployeeService es = new EmployeeService();
-	private static Employee principal;
+	private static Employee emp;
 	private static Scanner empScan;
 	
 	public static void run(Scanner scan) {
@@ -23,27 +22,27 @@ public class EmployeeLoginController {
 		String password = empScan.nextLine();
 		
 		try {
-			principal = es.login(username, password);
+			emp = es.empLogin(username, password);
 		} catch (LoginException e) {
 			System.out.println("Invalid credentials.");
 		}
-		if(principal.getRole() == Role.BASIC_EMP) {
-			//Add EmployeeMenu() with BASIC_EMP privileges
+		if(emp.getEmpRole() == "Manager") {
+			System.out.println("Please select from the following options and enter the option number: "
+								+ "====================================================================="
+								+ "\n1. Add/remove item"
+								+ "\n2. Approve offer"
+								+ "\n3. View payment"
+								+ "\n4. Add/remove new employee"
+								+ "\n5. View sales history");
+			String managerWantsTo = empScan.nextLine();
 		}
-		if(principal.getRole() == Role.MANAGER) {
-			//Add ManagerMenu() with MANAGER privileges
+		if(emp.getEmpRole() == "Basic_Employee") {
+			System.out.println("Please select from the following options and enter the option number: "
+					+ "====================================================================="
+					+ "\n1. Add/remove item"
+					+ "\n2. Approve offer"
+					+ "\n3. View payment");
+			String employeeWantsTo = empScan.nextLine();
 		}
-	}
-	
-	public static void EmployeeMenu() {
-		
-	}
-	
-	public static void ManagerMenu() {
-		
-	}
-	
-	public static void AdminMenu() {
-		
 	}
 }

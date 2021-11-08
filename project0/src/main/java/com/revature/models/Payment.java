@@ -1,38 +1,46 @@
 package com.revature.models;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 public class Payment {
-	int payementId;
+	int paymentId;
 	int itemId;
 	int customerId;
-	Date payementDate;
+	Timestamp paymentDate;
 	double paymentAmount;
 	double salePrice;
 	double balance;
 	
-	protected Payment() {
+	public Payment() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	protected Payment(int payementId, int itemId, int customerId, Date payementDate, double paymentAmount,
-			double salePrice, double balance) {
-		super();
-		this.payementId = payementId;
+	public Payment(int paymentId, int itemId, int customerId, Timestamp paymentDate, 
+			double paymentAmount, double salePrice, double balance) {
+		this.paymentId = paymentId;
 		this.itemId = itemId;
 		this.customerId = customerId;
-		this.payementDate = payementDate;
+		this.paymentDate = paymentDate;
+		this.paymentAmount = paymentAmount;
+		this.salePrice = salePrice;
+		this.balance = balance;
+	}
+	public Payment(int itemId, int customerId, double paymentAmount, double salePrice, 
+			double balance) {
+			
+		this.itemId = itemId;
+		this.customerId = customerId;
 		this.paymentAmount = paymentAmount;
 		this.salePrice = salePrice;
 		this.balance = balance;
 	}
 
-	public int getPayementId() {
-		return payementId;
+	public int getPaymentId() {
+		return paymentId;
 	}
 
-	public void setPayementId(int payementId) {
-		this.payementId = payementId;
+	public void setPayementId(int paymentId) {
+		this.paymentId = paymentId;
 	}
 
 	public int getItemId() {
@@ -51,13 +59,13 @@ public class Payment {
 		this.customerId = customerId;
 	}
 
-	public Date getPayementDate() {
-		return payementDate;
-	}
-
-	public void setPayementDate(Date payementDate) {
-		this.payementDate = payementDate;
-	}
+//	public Date getPayementDate() {
+//		return paymentDate;
+//	}
+//
+//	public void setPayementDate(Date paymentDate) {
+//		this.paymentDate = paymentDate;
+//	}
 
 	public double getPaymentAmount() {
 		return paymentAmount;
@@ -85,7 +93,7 @@ public class Payment {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(balance, customerId, itemId, payementDate, payementId, paymentAmount, salePrice);
+		return Objects.hash(balance, customerId, itemId, paymentDate, paymentId, paymentAmount, salePrice);
 	}
 
 	@Override
@@ -97,7 +105,7 @@ public class Payment {
 		Payment other = (Payment) obj;
 		return Double.doubleToLongBits(balance) == Double.doubleToLongBits(other.balance)
 				&& customerId == other.customerId && itemId == other.itemId
-				&& Objects.equals(payementDate, other.payementDate) && payementId == other.payementId
+				&& Objects.equals(paymentDate, other.paymentDate) && paymentId == other.paymentId
 				&& Double.doubleToLongBits(paymentAmount) == Double.doubleToLongBits(other.paymentAmount)
 				&& Double.doubleToLongBits(salePrice) == Double.doubleToLongBits(other.salePrice);
 	}

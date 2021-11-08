@@ -1,30 +1,30 @@
 package com.revature.models;
 
-import java.sql.Date;
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 public class Item {
 	public int itemId;
 	public String itemName;
-	public Date date;
+	public Timestamp date;
 	public Double initialPrice;
 	
 	public Item() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-	public Item(int itemId, String itemName, Date date, Double initialPrice) {
-		super();
+	public Item(int itemId, String itemName, Timestamp date, Double initialPrice) {
 		this.itemId = itemId;
 		this.itemName = itemName;
 		this.date = date;
 		this.initialPrice = initialPrice;
 	}
-	public Item(String itemName, Date date, Double initialPrice) {
-		super();
+	public Item(String itemName, Timestamp date, Double initialPrice) {
 		this.itemName = itemName;
 		this.date = date;
+		this.initialPrice = initialPrice;
+	}
+	public Item(String itemName, Double initialPrice) {
+		this.itemName = itemName;
 		this.initialPrice = initialPrice;
 	}
 
@@ -44,13 +44,13 @@ public class Item {
 		this.itemName = itemName;
 	}
 
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
+//	public Date getDate() {
+//		return date;
+//	}
+//
+//	public void setDate(Date date) {
+//		this.date = date;
+//	}
 
 	public Double getInitialPrice() {
 		return initialPrice;

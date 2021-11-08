@@ -5,8 +5,8 @@ import java.util.List;
 
 public interface GenericDao<T> {
 
-	int add(T t) throws IOException;
-	int delete(T t) throws IOException; 
+	T add(T t) throws IOException;
+	int delete(int id) throws IOException; 
 	T getById(int id) throws IOException;
 	List<T> getAll() throws IOException;
 	int update(T t);

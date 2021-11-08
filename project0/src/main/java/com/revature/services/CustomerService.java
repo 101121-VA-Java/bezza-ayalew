@@ -1,24 +1,30 @@
 package com.revature.services;
 
-import java.util.List;
-
-import com.revature.Daos.ItemDao;
-import com.revature.Daos.ItemList;
-import com.revature.models.Employee;
-import com.revature.models.Item;
+import java.io.IOException;
+import com.revature.Daos.CustomerPostgres;
+import com.revature.exceptions.LoginException;
+import com.revature.exceptions.UsernameAlreadyExistsException;
+import com.revature.models.Customer;
 
 public class CustomerService {
-
-	private static ItemDao allItems = new ItemList();
+	private static CustomerPostgres cp = new CustomerPostgres();
 	
-	public Item getItemByName(String name){
-		List<Item> items = allItems.getAll();
-		for(Item i : items) {
-			if (i.getName() == name) {
-				return i;
+	public Customer customerLogin(String username, String password) throws LoginException {
+		Customer cust = new Customer();
+		if(cust.getUsername().equals(username) && cust.getPassword().equals(password)) {
+			return cust;
+		}
+		throw new LoginException();
+	}
+	
+	public Customer register(Customer c) throws UsernameAlreadyExistsException, IOException{
+		for(Customer cust: cp.getAll()) {
+			if(!cust.getUsername().equals(c.getUsername())) {
+				return cp.add(c);
 			}
 		}
-		return null;
+		throw new UsernameAlreadyExistsException();
 	}
+	
 
 }

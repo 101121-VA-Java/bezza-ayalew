@@ -8,30 +8,33 @@ public class Employee {
 	private String empName;
 	private String empUsername;
 	private String empPassword;
-	private Employee manager;
+	private int manager;
+	private String empRole;
 	
 	public Employee() {
 		super();
 	}
 
-	public Employee(int empId, String empName, String empUsername, String empPassword, Employee manager) {
+	public Employee(int empId, String empName, String empUsername, String empPassword, int manager, String empRole) {
 		super();
 		this.empId = empId;
 		this.empName = empName;
 		this.empUsername = empUsername;
 		this.empPassword = empPassword;
 		this.manager = manager;
+		this.empRole = empRole;
 	}
 
-	protected Employee(String empName, String empUsername, String empPassword, Employee manager) {
+	public Employee(String empName, String empUsername, String empPassword, int manager, String empRole) {
 		super();
 		this.empName = empName;
 		this.empUsername = empUsername;
 		this.empPassword = empPassword;
 		this.manager = manager;
+		this.empRole = empRole;
 	}
 
-	public Employee(int manager2) {
+	public Employee(int manager) {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -67,17 +70,25 @@ public class Employee {
 		this.empPassword = empPassword;
 	}
 
-	public Employee getManager() {
+	public int getManager() {
 		return manager;
 	}
 
-	public void setManager(Employee manager) {
+	public void setManager(int manager) {
 		this.manager = manager;
+	}
+
+	public String getEmpRole() {
+		return empRole;
+	}
+
+	public void setEmpRole(String empRole) {
+		this.empRole = empRole;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(empId, empName, empPassword, empUsername, manager);
+		return Objects.hash(empName, empPassword, empRole, empUsername);
 	}
 
 	@Override
@@ -87,11 +98,8 @@ public class Employee {
 		if (!(obj instanceof Employee))
 			return false;
 		Employee other = (Employee) obj;
-		return empId == other.empId && Objects.equals(empName, other.empName)
-				&& Objects.equals(empPassword, other.empPassword) && Objects.equals(empUsername, other.empUsername)
-				&& Objects.equals(manager, other.manager);
+		return Objects.equals(empName, other.empName) && Objects.equals(empPassword, other.empPassword)
+				&& Objects.equals(empRole, other.empRole) && Objects.equals(empUsername, other.empUsername);
 	}
-
-
 	
 }

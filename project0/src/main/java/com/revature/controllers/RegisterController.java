@@ -1,25 +1,19 @@
 package com.revature.controllers;
 
+import java.io.IOException;
 import java.util.Scanner;
-
 import com.revature.exceptions.UsernameAlreadyExistsException;
 import com.revature.models.Customer;
-import com.revature.models.Employee;
 import com.revature.services.CustomerService;
-import com.revature.services.EmployeeService;
 
 public class RegisterController {
 
 	private static CustomerService cs = new CustomerService();
 	
-	public static void run(Scanner sc) {
+	public static void run(Scanner sc) throws IOException {
 		System.out.println();
-		System.out.println("Please enter your name: (at least 4 char)");
+		System.out.println("Please enter your full name)");
 		String name = sc.nextLine();
-		if(name.trim().length() < 3) {
-			System.out.println("Your name should be at least 4 characters.");
-			return;
-		}
 		System.out.println("Please enter your username: at least 4 char");
 		String username = sc.nextLine();
 		if(username.trim().length() < 3) {
@@ -37,7 +31,7 @@ public class RegisterController {
 		Customer newCustomer = new Customer(name, username, password);
 		
 		try {
-			newCustomer = cs.addCustomer(newCustomer);
+			newCustomer = cs.register(newCustomer);
 			System.out.println("Welcome " + newCustomer.getName() + "!");
 		} catch (UsernameAlreadyExistsException e) {
 			System.out.println("Username is already in use.\nPlease try again.");

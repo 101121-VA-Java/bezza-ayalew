@@ -8,20 +8,17 @@ public class Customer {
 	private String username;
 	private String password;
 	
-	protected Customer() {
+	public Customer() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 		
 	public Customer(String name, String username, String password) {
-		super();
 		this.name = name;
 		this.username = username;
 		this.password = password;
 	}
 
 	public Customer(int id, String name, String username, String password) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.username = username;
