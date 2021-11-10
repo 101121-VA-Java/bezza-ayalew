@@ -2,9 +2,8 @@ package com.revature.util;
 
 import java.io.IOException;
 
-import com.revature.Daos.EmployeePostgres;
-import com.revature.Daos.GenericDao;
-
+import com.revature.daos.EmployeePostgres;
+import com.revature.daos.GenericDao;
 import com.revature.models.Employee;
 
 

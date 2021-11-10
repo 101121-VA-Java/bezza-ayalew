@@ -1,4 +1,4 @@
-package com.revature.Daos;
+package com.revature.daos;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -16,7 +16,7 @@ import com.revature.models.Offer;
 import com.revature.util.ConnectionUtil;
 
 public class OfferPostgres implements GenericDao<Offer>{
-	private static final Timestamp CURRENT_TIMESTAMP = null;
+
 	public static Customer customer = new Customer();
 	public static Item item = new Item();
 	
@@ -26,24 +26,28 @@ public class OfferPostgres implements GenericDao<Offer>{
 	
 	@Override
 	public Offer add(Offer offer) throws IOException {
-		String sql = "insert into offer (customer_id, item_id, offer_amount) "
-				+ "values (?, ?, ? CURRENT_TIMESTAMP) returning offer_id;";
-		Double newOfferAmount = null;
+		
+		String sql = "insert into offer (customer_id, item_id, offer_amount, offer_date) "
+				+ "values (?, ?, ?, ?) returning offer_id, customer_id, item_id, offer_amount, offer_date;";
 		Offer newOffer = null;
-//		int genId = 0;
 		try(Connection con = ConnectionUtil.getConnectionFromFile()){
 			PreparedStatement ps = con.prepareStatement(sql);
 			
-			ps.setInt(1, customer.getId());
-			ps.setInt(2, item.getItemId());
-			ps.setDouble(3,  newOfferAmount);
+			ps.setInt(1, offer.getCustomerId());
+			ps.setInt(2, offer.getItemId());
+			ps.setDouble(3, offer.getOfferAmount());
+			ps.setTimestamp(4, offer.getOfferDate());
 			
 			ResultSet rs = ps.executeQuery();
 			
 			if(rs.next()) {
-//				genId = rs.getInt("item_id");
-//				newOffer = Offer(genId, customer.getId(), item.getItemId(), newOfferAmount, CURRENT_TIMESTAMP);
-				newOffer = (Offer)rs;
+				int offerId = rs.getInt("offer_id");
+				int custId = rs.getInt("customer_id");
+				int itemId = rs.getInt("item_id");
+				Double offerAmount = rs.getDouble("offer_amount");
+				Timestamp offerDate = rs.getTimestamp("offer_date");
+								
+				newOffer = new Offer(offerId, custId, itemId, offerAmount, offerDate);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -59,8 +63,9 @@ public class OfferPostgres implements GenericDao<Offer>{
 		try (Connection con = ConnectionUtil.getConnectionFromFile()){
 			PreparedStatement ps = con.prepareStatement(sql);	
 			ps.setInt(1, id);
-			result = ps.executeUpdate(sql);
-	        con.commit();
+			
+			if(ps.execute()) result = 1;
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -69,6 +74,7 @@ public class OfferPostgres implements GenericDao<Offer>{
 
 	@Override
 	public Offer getById(int id) throws IOException {
+		
 		String sql = "select * from item where item_id = ? ";
 		Offer singleOffer = null;
 		
@@ -93,6 +99,34 @@ public class OfferPostgres implements GenericDao<Offer>{
 			e1.printStackTrace();
 		} 
 		return singleOffer;
+	}
+	
+	public Offer getByCustomerId(int id) throws IOException {
+		
+		String sql = "select * from item where customer_id = ? ";
+		Offer offerByCustomer = null;
+		
+		try (Connection con = ConnectionUtil.getConnectionFromFile()){
+			PreparedStatement ps = con.prepareStatement(sql);
+			
+			ps.setInt(1, id);	
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				int offerId = rs.getInt("offer_id");
+				int customerId = rs.getInt("customer_id");
+				int itemId = rs.getInt("item_id");
+				Double offerAmount = rs.getDouble("offer_amount");
+				Timestamp offerDate = rs.getTimestamp("offer_date");		
+				offerByCustomer = new Offer(offerId, customerId, itemId, offerAmount, offerDate);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		} 
+		return offerByCustomer;
 	}
 
 	@Override
@@ -131,7 +165,7 @@ public class OfferPostgres implements GenericDao<Offer>{
 			ps.setDouble(3, o.getOfferAmount());
 			ps.setInt(4, o.getOfferId());
 			
-			result = ps.executeUpdate();
+			if(ps.execute()) result = 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

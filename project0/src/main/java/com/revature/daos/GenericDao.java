@@ -1,4 +1,4 @@
-package com.revature.Daos;
+package com.revature.daos;
 
 import java.io.IOException;
 import java.util.List;

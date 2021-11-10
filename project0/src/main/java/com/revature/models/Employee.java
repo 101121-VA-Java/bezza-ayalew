@@ -58,16 +58,16 @@ public class Employee {
 		return empUsername;
 	}
 
-	public void setempUsername(String empUsername) {
-		this.empUsername = empUsername;
+	public String setempUsername(String empUsername) {
+		return this.empUsername = empUsername;
 	}
 
 	public String getempPassword() {
 		return empPassword;
 	}
 
-	public void setempPassword(String empPassword) {
-		this.empPassword = empPassword;
+	public String setempPassword(String empPassword) {
+		return this.empPassword = empPassword;
 	}
 
 	public int getManager() {

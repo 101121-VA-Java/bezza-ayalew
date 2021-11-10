@@ -33,6 +33,7 @@ public class RegisterController {
 		try {
 			newCustomer = cs.register(newCustomer);
 			System.out.println("Welcome " + newCustomer.getName() + "!");
+//			Redirect the new customer to customerLogin page
 		} catch (UsernameAlreadyExistsException e) {
 			System.out.println("Username is already in use.\nPlease try again.");
 		}

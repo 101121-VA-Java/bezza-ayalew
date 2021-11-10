@@ -45,8 +45,8 @@ public class Offer {
 		return customerId;
 	}
 
-	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
+	public int setCustomerId(int customerId) {
+		return this.customerId = customerId;
 	}
 
 	public int getItemId() {
@@ -57,13 +57,13 @@ public class Offer {
 		this.itemId = itemId;
 	}
 
-	public Date getOfferDate() {
+	public Timestamp getOfferDate() {
 		return offerDate;
 	}
 
-//	public void setOfferDate(Date offerDate) {
-//		this.offerDate = offerDate;
-//	}
+	public void setOfferDate(Timestamp offerDate) {
+		this.offerDate = offerDate;
+	}
 
 	public double getOfferAmount() {
 		return offerAmount;

@@ -12,3 +12,23 @@
 - Offer {id, customer.id, item.id, amount, date}
 - SalesHistory {Item.id, Item.name, ItemStatus.status, ItemStatus.price, ItemStatus.date, Payment.id, Payment.amount, Payment.date, Payment.balance}
 - System updateItemStatus, calculateWeeklyPayments
+
+
+- Controllers:
+	contain methods that expose instructions and options to the user on the console
+	- CustomerController
+		exposeLogin(), exposeRegistration(), exposeItemList(), exposeOfferOption(), exposePaymentOption()
+	- EmployeeController
+		exposeEmployeeLogin(), exposeOfferManagement(), exposePaymentManagement()
+	- ManagerController
+		exposeEmployeeManagement(), exposeSalesManagement()
+
+- Services:
+	contain methods that process user interaction data
+	- CustomerService
+		rigister(), customerLogin(), viewItems(), makeOffer(), makePayment()
+	- EmployeeService
+		employeeLogin(), addItem(), removeItem(), approveOffer(), viewPayments()
+	- ManagerService
+		addEmployee(), removeEmployee(), viewSalesHistory()
+	

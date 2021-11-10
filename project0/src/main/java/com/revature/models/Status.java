@@ -9,30 +9,41 @@ public class Status {
 	String status;
 	Double price;
 	Timestamp date;
+	int updatedBy;
 	
 	public Status() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Status(int statusId, int itemId, String status, Double price, Timestamp date) {
+	public Status(int statusId, int itemId, String status, Double price, Timestamp date, int updatedBy) {
 		super();
 		this.statusId = statusId;
 		this.itemId = itemId;
 		this.status = status;
 		this.price = price;
 		this.date = date;
+		this.updatedBy = updatedBy;
 	}
-	public Status(int itemId, String status, Double price) {
+	public Status(int itemId, String status, Double price, Timestamp date, int updatedBy) {
 		this.itemId = itemId;
 		this.status = status;
 		this.price = price;
+		this.date = date;
+		this.updatedBy = updatedBy;
 	}
-	public Status(int statusId, int itemId, String status, Double price) {
+	public Status(int itemId, String status, Double price, int updatedBy) {
+		this.itemId = itemId;
+		this.status = status;
+		this.price = price;
+		this.updatedBy = updatedBy;
+	}
+	public Status(int statusId, int itemId, String status, Double price, int updatedBy) {
 		this.statusId = statusId;
 		this.itemId = itemId;
 		this.status = status;
 		this.price = price;
+		this .updatedBy = updatedBy;
 	}
 
 	public int getStatusId() {
@@ -67,13 +78,21 @@ public class Status {
 		this.price = price;
 	}
 
-//	public Date getDate() {
-//		return date;
-//	}
-//
-//	public void setDate(Date date) {
-//		this.date = date;
-//	}
+	public Timestamp getDate() {
+		return date;
+	}
+
+	public void setDate(Timestamp date) {
+		this.date = date;
+	}
+
+	public int getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(int updatedBy) {
+		this.updatedBy = updatedBy;
+	}
 
 	@Override
 	public int hashCode() {

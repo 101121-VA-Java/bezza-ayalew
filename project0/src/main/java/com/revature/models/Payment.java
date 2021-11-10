@@ -25,6 +25,15 @@ public class Payment {
 		this.salePrice = salePrice;
 		this.balance = balance;
 	}
+	public Payment(int paymentId, int itemId, int customerId, 
+			double paymentAmount, double salePrice, double balance) {
+		this.paymentId = paymentId;
+		this.itemId = itemId;
+		this.customerId = customerId;
+		this.paymentAmount = paymentAmount;
+		this.salePrice = salePrice;
+		this.balance = balance;
+	}
 	public Payment(int itemId, int customerId, double paymentAmount, double salePrice, 
 			double balance) {
 			
@@ -59,13 +68,13 @@ public class Payment {
 		this.customerId = customerId;
 	}
 
-//	public Date getPayementDate() {
-//		return paymentDate;
-//	}
-//
-//	public void setPayementDate(Date paymentDate) {
-//		this.paymentDate = paymentDate;
-//	}
+	public Timestamp getPayementDate() {
+		return paymentDate;
+	}
+
+	public void setPayementDate(Timestamp paymentDate) {
+		this.paymentDate = paymentDate;
+	}
 
 	public double getPaymentAmount() {
 		return paymentAmount;

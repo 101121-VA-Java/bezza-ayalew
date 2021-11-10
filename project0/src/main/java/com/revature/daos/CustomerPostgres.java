@@ -1,4 +1,4 @@
-package com.revature.Daos;
+package com.revature.daos;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -17,7 +17,7 @@ public class CustomerPostgres implements GenericDao<Customer>{
 	public Customer add(Customer customer) throws IOException {
 		Customer newCustomer = null;
 		String sql = "insert into customer (customer_name, customer_username, customer_password) "
-				+ "values (?, ?, ?) returning customer_id;";
+				+ "values (?, ?, ?) returning *;";
 		
 		try(Connection con = ConnectionUtil.getConnectionFromFile()){
 			PreparedStatement ps = con.prepareStatement(sql);
@@ -30,7 +30,10 @@ public class CustomerPostgres implements GenericDao<Customer>{
 
 			if(rs.next()) {
 				int genId = rs.getInt("customer_id");
-				newCustomer = new Customer(genId, customer.getName(), customer.getUsername(), customer.getPassword());
+				String custName = rs.getString("customer_name");
+				String custUsername = rs.getString("customer_username");
+				String custPassword = rs.getString("customer_password");
+				newCustomer = new Customer(genId, custName, custUsername, custPassword);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -104,7 +107,7 @@ public class CustomerPostgres implements GenericDao<Customer>{
 		return cust;
 	}
 	public List<Customer> getAll() {
-		String sql = "select * from employee;";
+		String sql = "select * from customer ;";
 		List<Customer> customers = new ArrayList<>();
 		
 		try (Connection con = ConnectionUtil.getConnectionFromEnv()){
@@ -112,10 +115,10 @@ public class CustomerPostgres implements GenericDao<Customer>{
 			ResultSet rs = s.executeQuery(sql);
 			
 			while(rs.next()) {
-				int customer_id = rs.getInt("id");
-				String customer_name = rs.getString("name");
-				String customer_username = rs.getString("username");
-				String customer_password = rs.getString("password");
+				int customer_id = rs.getInt("customer_id");
+				String customer_name = rs.getString("customer_name");
+				String customer_username = rs.getString("customer_username");
+				String customer_password = rs.getString("customer_password");
 				
 				Customer newCust = new Customer(customer_id, customer_name, customer_username, customer_password);
 				customers.add(newCust);
@@ -131,7 +134,7 @@ public class CustomerPostgres implements GenericDao<Customer>{
 		int result = 0;
 		// replace the values of the following variables to modify the respective fields
 				
-		String sql = "update item set name = ?, username = ?, password = ?;";
+		String sql = "update item set customer_name = ?, customer_username = ?, customer_password = ?;";
 		try (Connection con = ConnectionUtil.getConnectionFromFile()){
 			PreparedStatement ps = con.prepareStatement(sql);	
 			ps.setString(1, customer.getName());

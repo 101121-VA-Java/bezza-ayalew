@@ -1,4 +1,4 @@
-package com.revature.Daos;
+package com.revature.daos;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -20,10 +20,10 @@ public class ItemPostgres implements GenericDao<Item> {
 	}
 
 	@Override
-	public int add(Item item) throws IOException {
+	public Item add(Item item) throws IOException {
 		String sql = "insert into item (item_name, date_added, initial_price) "
-				+ "values (?, CURRENT_TIMESTAMP, ?) returning item_id;";
-		int genId = 0;
+				+ "values (?, CURRENT_TIMESTAMP, ?) returning item_id,item_name, date_added, initial_price;";
+		Item newItem = null;
 		try(Connection con = ConnectionUtil.getConnectionFromFile()){
 			PreparedStatement ps = con.prepareStatement(sql);
 			
@@ -33,13 +33,17 @@ public class ItemPostgres implements GenericDao<Item> {
 			ResultSet rs = ps.executeQuery();
 
 			if(rs.next()) {
-				genId = rs.getInt("item_id");
+			int	genId = rs.getInt("item_id");
+			String itemName = rs.getString("item_name");
+			Timestamp dateAdded = rs.getTimestamp("date_added");
+			Double initialPrice = rs.getDouble("initial_price");
+			newItem = new Item(genId, itemName, dateAdded, initialPrice);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} 
 
-		return genId;
+		return newItem;
 	}
 
 	@Override
@@ -49,8 +53,8 @@ public class ItemPostgres implements GenericDao<Item> {
 		try (Connection con = ConnectionUtil.getConnectionFromFile()){
 			PreparedStatement ps = con.prepareStatement(sql);	
 			ps.setInt(1, id);
-			result = ps.executeUpdate(sql);
-	        con.commit();
+			if(ps.execute());
+			result = 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

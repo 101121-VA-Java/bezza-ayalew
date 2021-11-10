@@ -1,4 +1,4 @@
-package com.revature.Daos;
+package com.revature.daos;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -16,11 +16,12 @@ import com.revature.util.ConnectionUtil;
 public class StatusPostgres  implements GenericDao<Status> {
 
 	@Override
-	public int add(Status s) throws IOException {
+	public Status add(Status s) throws IOException {
 		
-		String sql = "insert into item_status (item_id, status, price, date_updated) "
-				+ "values (?, ?, ?, CURRENT_TIMESTAMP) returning status_id;";
-		int genId = 0;
+		Status newStatus = null;
+		String sql = "insert into item_status (item_id, status, price, date_updated, udated_by) "
+				+ "values (?, ?, ?, CURRENT_TIMESTAMP,?) returning status_id;";
+
 		try(Connection con = ConnectionUtil.getConnectionFromFile()){
 			PreparedStatement ps = con.prepareStatement(sql);
 			
@@ -31,13 +32,19 @@ public class StatusPostgres  implements GenericDao<Status> {
 			ResultSet rs = ps.executeQuery();
 
 			if(rs.next()) {
-				genId = rs.getInt("status_id");
+				int genId = rs.getInt("status_id");
+				String status = rs.getString("status");
+				Double price = rs.getDouble("price");
+				Timestamp dateUpdated = rs.getTimestamp("date_updated");
+				int updatedBy = rs.getInt("updated_by");
+				
+				newStatus = new Status(genId, status, price, dateUpdated, updatedBy);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} 
 
-		return genId;
+		return newStatus;
 	}
 
 	@Override
@@ -48,7 +55,7 @@ public class StatusPostgres  implements GenericDao<Status> {
 			PreparedStatement ps = con.prepareStatement(sql);	
 			ps.setInt(1, id);
 			result = ps.executeUpdate();
-//	        con.commit();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -72,9 +79,11 @@ public class StatusPostgres  implements GenericDao<Status> {
 				int itemId = rs.getInt("item_id");
 				String status = rs.getString("status");
 				Double price = rs.getDouble("price");
+				Timestamp date = rs.getTimestamp("date_updated");
+				int updatedBy = rs.getInt("updated_by");
 
 		
-				singleItemStatus = new Status(statusId, itemId, status, price);
+				singleItemStatus = new Status(statusId, itemId, status, price, date, updatedBy);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -86,8 +95,10 @@ public class StatusPostgres  implements GenericDao<Status> {
 
 	@Override
 	public List<Status> getAll() throws IOException {
+		
+		List<Status> newStatus = new ArrayList<>();
 		String sql = "select * from item_status;";
-		List<Status> statuses = new ArrayList<>();
+		Status state = null;
 		
 		try (Connection con = ConnectionUtil.getConnectionFromFile()){
 			Statement s = con.createStatement();
@@ -99,28 +110,30 @@ public class StatusPostgres  implements GenericDao<Status> {
 				String status = rs.getString("status");
 				Double price = rs.getDouble("price");
 				Timestamp date = rs.getTimestamp("date_updated");
+				int updatedBy = rs.getInt("updated_by");
 				
 				
-				Status newStatus = new Status(statusId, itemId, status, price, date);
-				statuses.add(newStatus);
+				state = new Status(statusId, itemId, status, price, date, updatedBy);
+				newStatus.add(state);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} 
-		return statuses;
+		return newStatus;
 	}
 
 	@Override
 	public int update(Status s) {
 		int result = 0;		
-		String sql = "update item_status set status = ?, price = ?, date_updated = CURRENT_TIMESTAMP;";
+		String sql = "update item_status set status = ?, price = ?, date_updated = CURRENT_TIMESTAMP, updated_by = ?;";
 		try (Connection con = ConnectionUtil.getConnectionFromFile()){
 			PreparedStatement ps = con.prepareStatement(sql);	
 			ps.setString(1, s.getStatus());
 			ps.setDouble(2, s.getPrice());
+			ps.setInt(3, s.getUpdatedBy());
 			
 			result = ps.executeUpdate(sql);
-	        con.commit();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

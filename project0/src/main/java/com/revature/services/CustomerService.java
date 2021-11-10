@@ -1,7 +1,8 @@
 package com.revature.services;
 
 import java.io.IOException;
-import com.revature.Daos.CustomerPostgres;
+
+import com.revature.daos.CustomerPostgres;
 import com.revature.exceptions.LoginException;
 import com.revature.exceptions.UsernameAlreadyExistsException;
 import com.revature.models.Customer;
@@ -9,9 +10,9 @@ import com.revature.models.Customer;
 public class CustomerService {
 	private static CustomerPostgres cp = new CustomerPostgres();
 	
-	public Customer customerLogin(String username, String password) throws LoginException {
-		Customer cust = new Customer();
-		if(cust.getUsername().equals(username) && cust.getPassword().equals(password)) {
+	public Customer customerLogin(String uname, String pword) throws LoginException {
+		Customer cust = cp.getByUsernameAndPassword(uname, pword);
+		if(cust.setUsername(uname).equals(uname) && cust.getPassword().equals(pword)) {
 			return cust;
 		}
 		throw new LoginException();

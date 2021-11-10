@@ -1,4 +1,4 @@
-package com.revature.Daos;
+package com.revature.daos;
 
 
 import java.io.IOException;
@@ -16,10 +16,11 @@ import com.revature.util.ConnectionUtil;
 public class PaymentPostgres implements GenericDao<Payment> {
 
 	@Override
-	public int add(Payment payment) throws IOException {
+	public Payment add(Payment payment) throws IOException {
+		
+		Payment newPayment = null;
 		String sql = "insert into payment (item_id, customer_id, CURRENT_TIMESTAMP, paid_amount, sale_price, balance) "
 				+ "values (?, ?, ?, ?, ?) returning payment_id;";
-		int genId = 0;
 		try(Connection con = ConnectionUtil.getConnectionFromFile()){
 			PreparedStatement ps = con.prepareStatement(sql);
 			
@@ -32,13 +33,20 @@ public class PaymentPostgres implements GenericDao<Payment> {
 			ResultSet rs = ps.executeQuery();
 
 			if(rs.next()) {
-				genId = rs.getInt("payment_id");
+				int paymentId = rs.getInt("payment_id");
+				int itemId = rs.getInt("item_id");
+				int custId = rs.getInt("customer_id");
+				Timestamp payDate = rs.getTimestamp("payment_date");
+				Double payAmount = rs.getDouble("paid_amount");
+				Double salePrice = rs.getDouble("sale_price");
+				Double balance = rs.getDouble("balance");
+				newPayment = new Payment(paymentId, itemId, custId, payDate, payAmount, salePrice,balance);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} 
 
-		return genId;
+		return newPayment;
 	}
 
 	@Override
@@ -76,7 +84,8 @@ public class PaymentPostgres implements GenericDao<Payment> {
 				Double paymentAmount = rs.getDouble("payment_amount");
 				Double salePrice = rs.getDouble("sale_price");
 				Double balance = rs.getDouble("balance");
-				singlePayment = new Payment(paymentId, itemId, customerId, paymentDate, paymentAmount, salePrice, balance);
+				singlePayment = new Payment(paymentId, itemId, customerId, paymentDate, 
+						paymentAmount, salePrice, balance);
 
 			}
 		} catch (IOException e) {
@@ -101,7 +110,7 @@ public class PaymentPostgres implements GenericDao<Payment> {
 				int itemId = rs.getInt("item_id");
 				int customerId = rs.getInt("customer_id");
 				Timestamp paymentDate = rs.getTimestamp("payment_date");
-				Double paymentAmount = rs.getDouble("payment_amount");
+				Double paymentAmount = rs.getDouble("paid_amount");
 				Double salePrice = rs.getDouble("sale_price");
 				Double balance = rs.getDouble("balance");
 				
@@ -124,15 +133,16 @@ public class PaymentPostgres implements GenericDao<Payment> {
 		
 		try (Connection con = ConnectionUtil.getConnectionFromFile()){
 			PreparedStatement ps = con.prepareStatement(sql);	
-			ps.setInt(1, p.getItemId());
-			ps.setInt(2, p.getCustomerId());
-			ps.setDouble(3, p.getPaymentAmount());
-			ps.setDouble(4, p.getSalePrice());
-			ps.setDouble(5, p.getBalance());
-			ps.setDouble(6, p.getPaymentId());
+			
+			ps.setDouble(1, p.getPaymentId());
+			ps.setInt(2, p.getItemId());
+			ps.setInt(3, p.getCustomerId());
+			ps.setDouble(4, p.getPaymentAmount());
+			ps.setDouble(5, p.getSalePrice());
+			ps.setDouble(6, p.getBalance());
+			
 			
 			result = ps.executeUpdate();
-	        con.commit();
 	        
 		} catch (Exception e) {
 			e.printStackTrace();

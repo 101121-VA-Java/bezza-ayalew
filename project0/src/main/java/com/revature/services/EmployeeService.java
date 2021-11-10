@@ -1,65 +1,54 @@
 package com.revature.services;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import com.revature.Daos.EmployeePostgres;
-import com.revature.Daos.ItemPostgres;
+import java.util.Scanner;
+import com.revature.daos.EmployeePostgres;
+import com.revature.daos.ItemPostgres;
 import com.revature.exceptions.LoginException;
 import com.revature.models.Customer;
 import com.revature.models.Employee;
-import com.revature.models.Item;
 
 public class EmployeeService {
 
-	private static Timestamp CURRENT_TIMESTAMP;
-	private static final Timestamp Timestamp = CURRENT_TIMESTAMP;
-	public ItemPostgres ip;
-	public EmployeePostgres ep;
-	
-	public EmployeeService() {
-		ip = new ItemPostgres();
-		ep = new EmployeePostgres();
-	}
-	
+	public static Scanner sc = new Scanner(System.in);
+	public static EmployeePostgres ep = new EmployeePostgres();
+		
 	public Employee empLogin(String username, String password) throws LoginException {
-		Employee emp = new Employee();
-		if(emp.getempUsername().equals(username) && emp.getempPassword().equals(password)) {
+		Employee emp = ep.getByUsernameAndPassword(username,password);
+		if(emp.setempUsername(username).equals(username) && emp.setempPassword(password).equals(password)) {
 			return emp;
 		}
 		throw new LoginException();
 	}
 
-	public int addEmployee(Employee e) throws IOException{
-		String empName = "";
-		String empUsername = "";
-		String empPassword = ""; 
-		int manager = 0;
-		String empRole = "Basic_Employee";
+	public static void addEmployee(Scanner sc) throws IOException{
+		System.out.println("To add new employee enter the name of the employee: ");
+		String empName = sc.nextLine();
+		System.out.println("Assign username to the employee: ");
+		String empUsername = sc.nextLine();
+		System.out.println("Assign password to the employee: ");
+		String empPassword = sc.nextLine();
+		System.out.println("Assign manager the employee. Enter manager's Employee Id: ");
+		int manager = Integer.parseInt(sc.nextLine());
+		System.out.println("Assign role to the employee: ");
+		String empRole = sc.nextLine();
 		Employee newEmp = new Employee(empName,empUsername,empPassword,manager,empRole);
-		return ep.add(newEmp);
+		ep.add(newEmp);
 	}
 	
-	public int removeEmployee(int id) throws IOException{
+	public static int removeEmployee(Scanner sc) throws IOException{
+		System.out.println("To remove an employee enter the id of the employee: ");
+		int id = Integer.parseInt(sc.nextLine());
 		return ep.delete(id);
 	}
-	public int addItem() throws IOException {
-		String itemName = "";
-		Timestamp dateAdded = Timestamp;
-		Double initialPrice = null;
-		Item newItem = new Item(itemName, dateAdded, initialPrice);
-		return(ip.add(newItem));
-	}
-	public String acceptRejectOffer() {
-		
-	}
 	
-
-	public Item removeItem(Item i) {
-		
-	}
-	public Sales viewSalesHistory() {
-		
-	}
+//	public String acceptRejectOffer() {
+//		
+//	}
+//	
+//	public Sales viewSalesHistory() {
+//		
+//	}
 	
 }
 

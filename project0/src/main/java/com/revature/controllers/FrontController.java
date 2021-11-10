@@ -3,19 +3,21 @@ package com.revature.controllers;
 import java.io.IOException;
 import java.util.Scanner;
 
+import com.revature.exceptions.LoginException;
+
 public class FrontController {
 	
 	private static Scanner sc = new Scanner(System.in);
-	public static void runMenu() throws IOException {
+	public static void runMenu() throws IOException, LoginException {
 		boolean run = true;
 		while(run) {
 			System.out.println("Welcome to Horizon Antiques! Please select from the following options:"
-					+ "\nCUSTOMERS							EMPLOYEES"
-					+ "================================================"
+					+ "\nCUSTOMERS				EMPLOYEES"
+					+ "\n===================================================="
 					+ "\n1: Returning customer? Login		4: Login"
-					+ "\n2: New customer? Register			5: Exit"
+					+ "\n2: New customer? Register		5: Exit"
 					+ "\n3: Exit");
-			System.out.println("=======================================================================");
+			System.out.println("==============================================");
 			String choice = sc.nextLine();
 			switch(choice) {
 			case "1":

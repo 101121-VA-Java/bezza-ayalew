@@ -1,5 +1,6 @@
 package com.revature.controllers;
 
+import java.io.IOException;
 import java.util.Scanner;
 import com.revature.exceptions.LoginException;
 import com.revature.models.Customer;
@@ -9,8 +10,8 @@ public class CustomerLoginController {
 
 	private static CustomerService cs = new CustomerService();
 	private static Scanner sc;
-	
-	public static void run(Scanner scan) {
+	public static Customer cust = new Customer();
+	public static void run(Scanner scan) throws IOException, LoginException {
 		sc = scan;		
 		System.out.println();
 		System.out.println("CUSTOMER LOGIN PAGE");
@@ -20,17 +21,23 @@ public class CustomerLoginController {
 		String username = sc.nextLine();
 		System.out.println("Please enter your password:");
 		String password = sc.nextLine();
-		
-		try {
-			login(username, password);
-			
-		} catch (LoginException e) {
-			System.out.println("Invalid credentials.");
+		cust = cs.customerLogin(username, password);
+		System.out.println();
+		System.out.println("Please choose from the following options.");
+		System.out.println("========================================="
+				+ "\n1. View items and shop"
+				+ "\n2. Make payment");
+		String choice = sc.nextLine();
+		switch(choice) {
+			case "1":
+				ItemController.printListOfItems(sc);
+				System.out.println();
+				break;
+			case "2":
+				PaymentController.makePayment(sc);
+				System.out.println();
+				break;
 		}
-	}
-	public static Customer login(String username, String password) throws LoginException {
-		Customer cust = cs.customerLogin(username, password);
-		System.out.println("Login successful!");
-		return cust;
+
 	}
 }

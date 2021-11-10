@@ -134,10 +134,12 @@
 --insert into customer (customer_name, customer_username, customer_password) values ('Aileen Davy', 'adavy9', 'M6W7M3');
 --update employee set emp_role = 'Manager' where emp_id in (5,10) returning emp_id;
 
+--alter table item_status add updated_by int references employee(emp_id);
 
 
-
-
+Select item.item_name, item_status.status, payment.paid_amount
+From item Inner Join item_status ON item.item_id = item_status.item_id
+Inner Join payment ON item.item_id = payment.item_id;
 
 
 
