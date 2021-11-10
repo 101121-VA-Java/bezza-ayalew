@@ -31,4 +31,16 @@
 		employeeLogin(), addItem(), removeItem(), approveOffer(), viewPayments()
 	- ManagerService
 		addEmployee(), removeEmployee(), viewSalesHistory()
-	
+
+FrontContrloller
+	Entry with welcome message and general menu
+	Redirects customers to Customer Login or registration page
+	Redirects employees to Employee login page
+CustomerLoginController
+	Login page
+	On success redirect to Customer Service
+	On failure invites registration
+RegistrationController
+	On success bypasses login and redirects to Customer Service
+EmployeeLoginController
+	On success redirects Employees to General Employee or Manager Services	
