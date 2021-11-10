@@ -20,7 +20,8 @@ public class StatusPostgres  implements GenericDao<Status> {
 		
 		Status newStatus = null;
 		String sql = "insert into item_status (item_id, status, price, date_updated, udated_by) "
-				+ "values (?, ?, ?, CURRENT_TIMESTAMP,?) returning status_id;";
+				+ "values (?, ?, ?, CURRENT_TIMESTAMP,?) returning status_id, item_id, status,"
+				+ "price, date_updated, udated_by;";
 
 		try(Connection con = ConnectionUtil.getConnectionFromFile()){
 			PreparedStatement ps = con.prepareStatement(sql);
@@ -33,12 +34,13 @@ public class StatusPostgres  implements GenericDao<Status> {
 
 			if(rs.next()) {
 				int genId = rs.getInt("status_id");
+				int itemId = rs.getInt("item_id");
 				String status = rs.getString("status");
 				Double price = rs.getDouble("price");
 				Timestamp dateUpdated = rs.getTimestamp("date_updated");
 				int updatedBy = rs.getInt("updated_by");
 				
-				newStatus = new Status(genId, status, price, dateUpdated, updatedBy);
+				newStatus = new Status(genId, itemId, status, price, dateUpdated, updatedBy);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

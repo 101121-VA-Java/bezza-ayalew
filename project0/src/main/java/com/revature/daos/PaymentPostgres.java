@@ -9,26 +9,33 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import com.revature.models.Payment;
 import com.revature.util.ConnectionUtil;
 
 public class PaymentPostgres implements GenericDao<Payment> {
 
+	Calendar calendar = Calendar.getInstance();
+	Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
+
 	@Override
 	public Payment add(Payment payment) throws IOException {
 		
 		Payment newPayment = null;
-		String sql = "insert into payment (item_id, customer_id, CURRENT_TIMESTAMP, paid_amount, sale_price, balance) "
-				+ "values (?, ?, ?, ?, ?) returning payment_id;";
+		String sql = "insert into payment (item_id, customer_id, payment_date, "
+				+ "paid_amount, sale_price, balance) values (?,?, ?, ?, ?, ?) "
+				+ "returning payment_id, item_id, customer_id, payment_date, "
+				+ "paid_amount, sale_price, balance;";
 		try(Connection con = ConnectionUtil.getConnectionFromFile()){
 			PreparedStatement ps = con.prepareStatement(sql);
 			
 			ps.setInt(1, payment.getItemId());
 			ps.setInt(2, payment.getCustomerId());
-			ps.setDouble(3, payment.getPaymentAmount());
-			ps.setDouble(4, payment.getSalePrice());
-			ps.setDouble(5, (payment.getSalePrice() - payment.getPaymentAmount()));
+			ps.setTimestamp(3, currentTimestamp);
+			ps.setDouble(4, payment.getPaymentAmount());
+			ps.setDouble(5, payment.getSalePrice());
+			ps.setDouble(6, (payment.getSalePrice() - payment.getPaymentAmount()));
 			
 			ResultSet rs = ps.executeQuery();
 

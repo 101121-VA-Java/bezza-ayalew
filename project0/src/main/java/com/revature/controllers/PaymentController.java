@@ -31,10 +31,13 @@ public class PaymentController {
 				newPayment.setSalePrice(o.getOfferAmount());
 				newPayment.getBalance();
 				pp.add(newPayment);
-			}else {
-				System.out.println("You have not made offer to make payment for");
 			}
-			
+				
+		}
+		if(pp != null) {
+			System.out.println("Payment receive. Thank you!");
+		}else {
+			System.out.println("You have not made offer to make payment for");
 		}
 	}
 }

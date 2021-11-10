@@ -12,7 +12,7 @@ public class RegisterController {
 	
 	public static void run(Scanner sc) throws IOException {
 		System.out.println();
-		System.out.println("Please enter your full name)");
+		System.out.println("To register enter your full name: ");
 		String name = sc.nextLine();
 		System.out.println("Please enter your username: at least 4 char");
 		String username = sc.nextLine();

@@ -12,9 +12,11 @@ public class PaymentService {
 	private static PaymentPostgres pp = new PaymentPostgres();
 	static List<String> paymentList = new ArrayList<>();
 	public static List<String> viewPayment() throws IOException {
+		String paymentDate = "-";
 		for(Payment p: pp.getAll()) {
-			
-			String paymentDate = new SimpleDateFormat("MM/dd/yyyy").format(p.getPayementDate());
+			if(p.getPayementDate() != null) {
+				paymentDate = new SimpleDateFormat("MM/dd/yyyy").format(p.getPayementDate());
+			}
 			String singlePayment = String.format("%-10d %-10d %-14d %-14s %-10.2f %-10.2f %-10.2f", 
 					p.getPaymentId(), p.getItemId(), p.getCustomerId(), paymentDate,
 					p.getPaymentAmount(), p.getSalePrice(), p.getBalance());

@@ -1,7 +1,6 @@
 package com.revature.models;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Objects;
 
 public class Offer {
@@ -15,7 +14,6 @@ public class Offer {
 	
 	public Offer() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Offer(int offerId, int customerId, int itemId, double offerAmount, 

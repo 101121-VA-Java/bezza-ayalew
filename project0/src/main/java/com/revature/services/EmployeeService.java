@@ -3,9 +3,7 @@ package com.revature.services;
 import java.io.IOException;
 import java.util.Scanner;
 import com.revature.daos.EmployeePostgres;
-import com.revature.daos.ItemPostgres;
 import com.revature.exceptions.LoginException;
-import com.revature.models.Customer;
 import com.revature.models.Employee;
 
 public class EmployeeService {

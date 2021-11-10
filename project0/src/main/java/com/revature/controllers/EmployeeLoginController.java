@@ -33,6 +33,7 @@ public class EmployeeLoginController {
 								+ "\n5. Add new employee"
 								+ "\n6. Remove employee"
 								+ "\n7. View sales history");
+			
 			String managerWantsTo = empScan.nextLine();
 			switch(managerWantsTo) {
 			case "1":
@@ -49,11 +50,11 @@ public class EmployeeLoginController {
 				break;
 			case "4":
 				try {
-					System.out.printf("%1$45s","Sales History\n");
 					System.out.println();
-					System.out.printf("%-10s %-10s %-14s %-14s %-10s %-10s %-10s",
-							"PaymentID","Item_id","CustomerID", "Date", "Amount", "Price", "Balance");
+					System.out.println(String.format("%1$45s","Sales History\n"));
 					System.out.println();
+					System.out.println(String.format("%-10s %-10s %-14s %-14s %-10s %-10s %-10s",
+							"PaymentID","Item_id","CustomerID", "Date", "Amount", "Price", "Balance"));
 					System.out.println("-".repeat(82));
 					for(String payment: PaymentService.viewPayment()) {
 						System.out.println(payment);
@@ -100,6 +101,12 @@ public class EmployeeLoginController {
 				break;
 			case "4":
 				try {
+					System.out.println();
+					System.out.println(String.format("%1$45s","Sales History\n"));
+					System.out.println();
+					System.out.println(String.format("%-10s %-10s %-14s %-14s %-10s %-10s %-10s",
+							"PaymentID","Item_id","CustomerID", "Date", "Amount", "Price", "Balance"));
+					System.out.println("-".repeat(82));
 					for(String payment: PaymentService.viewPayment()) {
 						System.out.println(payment);
 					}
