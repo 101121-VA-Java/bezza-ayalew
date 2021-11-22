@@ -113,5 +113,8 @@ buildNumber.properties
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
+### Personal Files ###
+outstanding-questions.txt
+
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,java,maven
 *.properties

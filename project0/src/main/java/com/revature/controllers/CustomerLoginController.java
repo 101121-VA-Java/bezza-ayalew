@@ -7,11 +7,10 @@ import com.revature.models.Customer;
 import com.revature.services.CustomerService;
 
 public class CustomerLoginController {
-
+	
 	private static CustomerService cs = new CustomerService();
-	private static Scanner sc;
 	public static Customer cust = new Customer();
-	public static void login(Scanner scan) throws IOException, LoginException {	
+	public static void login(Scanner sc) throws IOException, LoginException {	
 		System.out.println();
 		System.out.println("CUSTOMER LOGIN PAGE");
 		System.out.println("====================");
@@ -24,6 +23,5 @@ public class CustomerLoginController {
 		if(cust != null) {
 			CustomerService.services();
 		}
-		sc.close();
 	}
 }

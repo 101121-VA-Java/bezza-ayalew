@@ -141,9 +141,9 @@
 --From item Inner Join item_status ON item.item_id = item_status.item_id
 --Inner Join payment ON item.item_id = payment.item_id;
 
-Select item.item_name, item_status.status, payment.paid_amountFrom item Inner Join item_statusON item.item_id = item_status.item_idInner Join payment ON payment.item_id = item.item_id
+--Select item.item_name, item_status.status, payment.paid_amount--From item Inner Join item_status--ON item.item_id = item_status.item_id--Inner Join payment ON payment.item_id = item.item_id
 
-
+drop database project1;
 
 
 

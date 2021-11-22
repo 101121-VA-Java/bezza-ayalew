@@ -26,3 +26,6 @@ Log4J2
 			- identify error occuring during app, potentially recoverable
 		- Fatal
 			- identify a server error that prevents an app from continuing its execution
+
+
+

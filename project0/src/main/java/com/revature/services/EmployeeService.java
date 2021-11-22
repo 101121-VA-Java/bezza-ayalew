@@ -40,13 +40,5 @@ public class EmployeeService {
 		return ep.delete(id);
 	}
 	
-//	public String acceptRejectOffer() {
-//		
-//	}
-//	
-//	public Sales viewSalesHistory() {
-//		
-//	}
-	
 }
 

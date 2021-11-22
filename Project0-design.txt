@@ -1,3 +1,12 @@
+
+An application for an antique store that handles Employee and customer service such as:
+	customer registration, login, view items, make offer and payment
+	employee login, add/remove items, approve/disapprove offer, view payment
+	managers have additional privileges of adding/removing employees and viewing sales history 
+Technology: Java, Eclipse, PostgreSql, DBeaver
+
+
+
 - Customer has {id, username, password, name}, register, login, viewItem, makeOfferForItem, makePayment, viewPaymentBalance
 - Employee has {id, name, username, password, role, manager}, addItem, removeItem, acceptRejectOffer, viewPayments,
 - Manager (is an Employee) createEmployee, removeEmployee, viewSalesHistory
@@ -44,3 +53,11 @@ RegistrationController
 	On success bypasses login and redirects to Customer Service
 EmployeeLoginController
 	On success redirects Employees to General Employee or Manager Services	
+
+
+
+
+
+
+
+

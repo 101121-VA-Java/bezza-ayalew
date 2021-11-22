@@ -1,0 +1,227 @@
+
+Tuesday
+
+POJO/ Java Beans
+	- POJO: Plain Old Java Object
+		- Any java object, not bound to any specific restriction
+		- used to define an entity
+	- Java Beans
+		- Special type of POJOs
+			- All java beans are POJOs but not POJOs are Java beans
+		- should implement the Serializable interface
+			- marker interface that provides information to the compiler that a class can be serialized
+				- serialization: process of converting an object into a stream of byte to store that object(file, db)...
+		- no-args constructor defined
+		- all fields to be encapsulated
+			- private
+			- setters/getters
+		- override Object class methods
+			- toString()
+			- hashcode()
+			- equals()
+
+CRUD operations
+	- Create | Read | Update | Delete
+	- POST | GET | PUT | DELETE
+
+
+Javalin
+	- lightweight framework for Java (and Kotlin) to handle HTTP requests and response
+	- runs on an embedded webserver(Jetty)
+		- Jetty: an open source web server and servlet container which allows a servlet application to run 
+	- Built on top of Servlets
+	- Set up
+		- dependencies
+			- Javalin
+			- slf4j
+			- (Object mapper, optional)
+		- main method
+		- Javalin app = Javalin.create()
+			      = Javalin.create( config -> {})
+		- app.start(portNum)
+			- by default 8080
+		- HTTP handlers
+			- a functional interface that takes in a Context Object as a parameter, used to specify a behavior to handle a request at a particular endpoint
+				- Context object is an abstraction of HttpServletRequest and HttpServletResponse
+					- used to retrieve information from the request
+						- url
+						- headers
+						- body
+					- used to add information to the response
+						- headers
+						- body
+						- status code
+				- https://javalin.io/documentation#context
+			- app.get("path/endpoint", Executable<Handler>)
+			- app.get("path/endpoint", lambda)
+			- app.get("path/endpoint", (ctx) -> { // handle request})
+			- app.post("path/endpoint"...)
+
+			.../employees 
+				- Get
+					- retrieve all employees
+				- Post
+					- add a new employee
+					- include employee information in the request body
+
+JSON
+	- JavaScript Object notation
+		- JavaScript Like
+		- string format used to represent objects to be exchanged over the web
+			- syntax: {"key1":"value1", "key2":"value2"}
+				- {} represent an object
+				- key represent a field
+				- value represent the field's value
+
+JSON Marshalling/Object mapping
+	- Converting Java Objects to JSON
+		- mapping for data exchange
+	- Jackson-databind
+		- provides us with an object mapper to convert Java to JSON and vice versa
+		- Jackson integrates very well with javalin
+	
+
+Wednesday
+
+Handler groups
+	- Grouping HTTP handlers/setting up path to handle different resources (ie: Pokemons)
+		- app.routes()
+			- can then set up paths (nested paths as well) for the different resources
+				- path("resourceName", () -> {
+						get(//Handling behavior);
+						post(...);
+						path("...")...
+					});
+	- handler methods in Controllers should take Context object as param to interact the Http request and response
+
+URL - Uniform Resource Locator
+	- Location for where a resource (on a server) is located
+	- URL => protocol + domain name (host + port) + URI + parameters
+ 
+	
+	- URL: https://www.google.com/search?q=java+documentation&rlz=1C1GCEU_enUS924US924&oq=java+documen&aqs=chrome.0.0i433i512j69i57j0i512l5j69i60.4432j0j7&sourceid=chrome&ie=UTF-8
+	
+	- protocol - https://
+	- domain name - www.google.com
+	- URI - search
+		- Uniform Resource Identifier
+			- specifically determines a resource/service requested
+	- parameters (query params)
+		- ?param1=value1&param2=value2...
+		- q=java+documentation
+		- &rlz=1C1GCEU_enUS924US924
+		- &oq=java+documen
+		- &aqs=chrome.0.0i433i512j69i57j0i512l5j69i60.4432j0j7
+		- &sourceid=chrome
+		- &ie=UTF-8
+
+Path param
+	- parameter embedded in the url
+		- resources/{path-param}/{something}
+		- employees/{id}/reimbursements?param1=value1
+	
+
+
+base-app-endpoints
+
+- /employees
+	GET - return all employees
+	POST - create a new employee
+	 - /employees?manager-id=[value]
+		GET - return all employees with a specific manager (based on id)
+	 - /employees?username=[value]
+		GET - return all employees with a specific username (in this case, just one)
+	
+- /employees/{id}
+	GET - returning employee with id specified
+	PUT - update employee with that id
+			- FTAL(for this application's logic): this is just for basic information
+				- username, password, name
+		
+- /employees/{id}/admin
+	PUT - update employee with that id
+			- FTAL(for this application's logic): this is just for admin information
+				- Role, manager
+				- needs to have a role of Admin to use this endpoint
+
+- /auth
+	POST - login 
+		- send username/password
+		- retrieve Authorization Header if login was successful
+
+For ERS, endpoint/HTTP verb to create reimbursement?
+	- /reimbursements - POST
+		- JSON representation of reimbursement
+			- field with employee-id
+	- /createANewreimbursementforthisid/{id}
+		- if this was the endpoint, not very intuitive
+
+Authentication
+	- user being who they say they are
+		- ie: login in
+
+Authorization
+	- user has the permission to do something/use some functionality
+
+Query params:
+	- localhost:8080/employees?username=kev&password=kevpass
+		- bad for sensitive information as it's displayed in the url
+
+x-www-form-urlencoded params
+	- localhost:8080/employees
+		- params are hidden in the body of the request
+		- better practice with sensitive information
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

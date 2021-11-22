@@ -196,6 +196,7 @@ Joins
 		- full (outer) join: return all records when there is a match in either left or right table
 
 Thursday
+
 Scalar and aggregate functions
 	- scalar functions
 		- used on a single input to retrieve a single output

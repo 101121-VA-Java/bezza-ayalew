@@ -5,14 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.revature.daos.EmployeePostgres;
 import com.revature.models.Employee;
 import com.revature.models.Role;
 import com.revature.repositories.EmployeeArray;
 import com.revature.repositories.EmployeeDao;
 
-public class EmployeeDaoTest {
+public class EmployeePostgresTest {
 
-	private static EmployeeDao ed;
+	private static EmployeePostgres ep;
 	
 	@BeforeEach
 	public void setup() {

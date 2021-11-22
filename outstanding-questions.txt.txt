@@ -1,0 +1,18 @@
+1. When do we need to run a main method with arguments?
+2. What is configuration? When do we need a configuration file for our app?
+3. Get clarification about the layers of code.
+4. How do I set queryParams in routs as path?
+5. Are APIs interfaces in the sense of Java interface? Do they contain promises to be implemented by other classes?
+6. How does a factory do in Factory Design Pattern?
+7. I am still not comfortable with:
+	Junit testing 
+	Log4j logging
+	Exception handling
+	Debuging
+8. What is ClassName.class?
+9. What are we doing when we reference a class's method/function like Class::method?
+
+
+
+
+

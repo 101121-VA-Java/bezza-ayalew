@@ -1,0 +1,47 @@
+<html>
+<head>
+	<title>Reimbursement Table</title>
+  <link rel="stylesheet" href="css/tables.css" type="text/css" />
+  <script src="css/bootstrap.min.js"></script>
+</head>
+<body>
+	<h1>Table 1</h1>
+	<table class="data-table">
+		<caption class="title">Reimbursement Status</caption>
+		<thead>
+			<tr>
+				<th>REIMB_ID</th>
+				<th>REIMB_AMOUNT</th>
+				<th>REIMB_SUBMITED</th>
+				<th>REIMB_RESOLVED</th>
+				<th>REIMB_STATUS</th>
+				<th>REIMB_TYPE</th>
+			</tr>
+		</thead>
+		<tbody>
+		<!-- <?php
+		$no 	= 1;
+		$total 	= 0;
+		while ($row = mysqli_fetch_array($query))
+		{
+			$amount  = $row['amount'] == 0 ? '' : number_format($row['amount']);
+			echo '<tr>
+					<td>'.$no.'</td>
+					<td>'.$row['name'].'</td>
+					<td>'.$row['item'].'</td>
+					<td>'. date('F d, Y', strtotime($row['date'])) . '</td>
+					<td>'.$amount.'</td>
+				</tr>';
+			$total += $row['amount'];
+			$no++;
+		}?> -->
+		</tbody>
+		<tfoot>
+			<tr>
+				<th colspan=5></th>
+				<th><?=number_format($total)?></th>
+			</tr>
+		</tfoot>
+	</table>
+</body>
+</html>

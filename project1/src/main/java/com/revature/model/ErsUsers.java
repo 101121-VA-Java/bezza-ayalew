@@ -11,6 +11,7 @@ public class ErsUsers {
 	private String userLastName;
 	private String userEmail;
 	private int userRoleId;
+	
 	public ErsUsers() {
 		super();
 		// TODO Auto-generated constructor stub
