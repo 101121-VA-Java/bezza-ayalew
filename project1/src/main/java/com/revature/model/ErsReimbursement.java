@@ -114,6 +114,13 @@ public class ErsReimbursement {
 				&& reimbStatusId == other.reimbStatusId && Objects.equals(reimbSubmitted, other.reimbSubmitted)
 				&& reimbTypeId == other.reimbTypeId;
 	}
+	@Override
+	public String toString() {
+		return "ErsReimbursement [reimbId=" + reimbId + ", reimbAmount=" + reimbAmount + ", reimbSubmitted="
+				+ reimbSubmitted + ", reimbResolved=" + reimbResolved + ", reimbDescription=" + reimbDescription
+				+ ", reimbReceipt=" + reimbReceipt + ", reimbAuthor=" + reimbAuthor + ", reimbResolver=" + reimbResolver
+				+ ", reimbStatusId=" + reimbStatusId + ", reimbTypeId=" + reimbTypeId + "]";
+	}
 	
 	
 	

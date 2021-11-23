@@ -24,6 +24,7 @@ public class Driver {
 
 		Javalin app = Javalin.create((config) -> {
      		config.enableCorsForAllOrigins();
+//     		config.addStaticFiles(null, null)
      			/*
      			 * Enables CORS: Cross Origin Resource Sharing - protective mechanism built into
      			 * most browsers - restricts resources to be allowed only by webpages on the
@@ -50,20 +51,17 @@ public class Driver {
             	path("{reimbId}", () -> {
             		get(ErsController::getReimbursementClaimById);
             	});
-            	path("status", () -> {
-            		get(ErsController::getReimbursementClaimsByStatus);
-            	});
             });
-
+     		path("auth", () ->{
+     			post(AuthController::login);
+     		});
      		path("ersUsers", () -> {
      			get(ErsUsersController::getErsUsers);
      			put(ErsUsersController::updateErsUserInfo);
      			path("{id}", () -> {
      				get(ErsUsersController::getErsUsersById);
      		});
-     		path("{auth}", () ->{
-     			post(AuthController::login);
-     		});
+
      	});
      	
      	});

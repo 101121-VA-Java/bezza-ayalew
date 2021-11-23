@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>PHP Login Script</title>
+	<title>Login</title>
+	<script src="../js/login.js"></script>
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" >
 </head>
 <body>
 
 	<div class="form-row justify-content-center">
-		<input class="btn btn-outline-secondary" value="Login" id="submitButton">
+		<input class="username" placeholder="Username" id="username">
+		<input class="password" placeholder="Password" id="password">
+		<button onclick="login()" class="btn btn-outline-secondary" placeholder="Login" >Login</button>
 	</div>
-	<script src="../js/front.js"></script>			
+	<div id="error-div">
+	</div>
+		
 </body>
 </html>

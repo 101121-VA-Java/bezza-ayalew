@@ -5,10 +5,10 @@ let apiUrl = 'http://localhost:7000/reimbursements';
 
 async function getData() {
 
-//   let userInput = document.getElementById('dataInput').value;
+  let userInput = document.getElementById('dataInput').value;
 
-  let response = await fetch(`${apiUrl}`);
-//   /${userInput}
+  let response = await fetch(`${apiUrl}/${userInput}`);
+//   
 
   if(response.status >= 200 && response.status < 300){
       let data = await response.json();

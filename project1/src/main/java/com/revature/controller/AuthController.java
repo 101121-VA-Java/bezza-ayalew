@@ -15,7 +15,8 @@ public class AuthController {
 		// leverages x-www-form-urlencoded which prevents the parameters from being displayed in the url
 		String username = ctx.formParam("username");
 		String password = ctx.formParam("password");
-		
+		System.out.println(username);
+		System.out.println(password);
 		String token = null;
 		
 		if(username != null && password != null) {
