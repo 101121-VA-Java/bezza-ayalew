@@ -33,15 +33,12 @@ function getErsReimbursements(){
 function registerReimbursementClaim(){
 
     let newClaim = {
-        reimb_amount:345.56,
-        reimb_submitted:`{$timestamp}`,
-        reimb_resolved:null,
-        reimb_description:'conference attendance',
-        reimb_receipt: null,
-        reimb_author:1,
-        reimb_resolver:null,
-        reimb_status_id:1,
-        reimb_type_id:2
+        reimbAmount:345.56,
+        reimbSubmitted: + new Date,
+        reimbDescription:'conference attendance',
+        reimbReceipt: 'place holder',
+        reimbAuthor:1,
+        reimbTypeId:2
     };
 
     let xhr = new XMLHttpRequest();

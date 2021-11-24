@@ -111,7 +111,7 @@ public class ErsReimbursementPostgres implements ErsReimbursementDao {
 		ErsReimbursement newReimb = null;
 			
 		try (Connection con = ConnectionUtil.getConnectionFromFile()){
-			String sql = "insert into ers_reimbursement (reimb_amount,"
+			String sql = "insert into ers.ers_reimbursement (reimb_amount,"
 					+ "reimb_submitted,reimb_description,reimb_receipt,reimb_author,"
 					+ "reimb_type_id) values (?,?,?,?,?,?) returning reimb_id;";
 
@@ -139,7 +139,7 @@ public class ErsReimbursementPostgres implements ErsReimbursementDao {
 
 	@Override
 	public boolean updateErsReimbursement(ErsReimbursement er) throws IOException {
-		String sql = "update ers_reimbursement set reimb_amount = ?, "
+		String sql = "update ers.ers_reimbursement set reimb_amount = ?, "
 				+ "reimb_resolved = ?, reimb_description = ?, reimb_receipt = ?, "
 				+ "reimb_resolver = ?, reimb_status_id = ? where reimb_id = ?;";
 
