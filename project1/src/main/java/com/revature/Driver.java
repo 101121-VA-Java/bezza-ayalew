@@ -5,31 +5,16 @@ import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.path;
 import static io.javalin.apibuilder.ApiBuilder.post;
 import static io.javalin.apibuilder.ApiBuilder.put;
-
 import java.io.IOException;
-import java.util.stream.Collectors;
-
 import com.revature.controller.AuthController;
 import com.revature.controller.ErsController;
 import com.revature.controller.ErsUsersController;
-import com.revature.service.ErsService;
 
 public class Driver {
 	public static void main(String[] args) throws IOException {
-		
-//		ErsService reimbByStatus = new ErsService();
-//		System.out.println(reimbByStatus.getReimbByStatus("rejected").stream()
-//		.map(reimb -> reimb.getReimbId())
-//		.collect(Collectors.toList()));
 
 		Javalin app = Javalin.create((config) -> {
      		config.enableCorsForAllOrigins();
-//     		config.addStaticFiles(null, null)
-     			/*
-     			 * Enables CORS: Cross Origin Resource Sharing - protective mechanism built into
-     			 * most browsers - restricts resources to be allowed only by webpages on the
-     			 * same domain
-     			 */
      		config.defaultContentType = "application/json";
      	});
      	app.start(7000);
@@ -48,10 +33,14 @@ public class Driver {
             	get(ErsController::getReimbursements);
             	put(ErsController::updateReimbursementClaim);
             	post(ErsController::registerReimbursementClaim);
-            	path("{reimbId}", () -> {
-            		get(ErsController::getReimbursementClaimById);
+            	path("reimbAuthId", () -> {
+            		get(ErsController::getReimbursements);
+            		});
+	        	path("{reimbId}", () -> {
+	        		get(ErsController::getReimbursementClaimById);
+	        		});
             	});
-            });
+
      		path("auth", () ->{
      			post(AuthController::login);
      		});
@@ -60,10 +49,11 @@ public class Driver {
      			put(ErsUsersController::updateErsUserInfo);
      			path("{id}", () -> {
      				get(ErsUsersController::getErsUsersById);
-     		});
+     				put(ErsUsersController::updateErsUserInfo);
+     			});
 
-     	});
-     	
-     	});
+     		});
+		});
 	}
 }
+

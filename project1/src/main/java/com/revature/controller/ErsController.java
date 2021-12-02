@@ -11,19 +11,41 @@ import io.javalin.http.HttpCode;
 public class ErsController {
 
 	private static ErsService ers = new ErsService();
-	private static AuthService as = new AuthService();
+//	private static AuthService as = new AuthService();
 
 	public static void getReimbursements(Context ctx) throws IOException {
+		
 		String status = ctx.queryParam("status");
+		String reimbAuthId = ctx.queryParam("reimbAuthId");
+		
 		if(status != null){
 			List<ErsReimbursement> reimbByStatus = ers.getReimbByStatus(status);
 			ctx.json(reimbByStatus);
 			ctx.status(HttpCode.OK);
-		}else {
+			
+		}else if(reimbAuthId != null){
+			int authId = Integer.parseInt(reimbAuthId);
+			List<ErsReimbursement> claimByAuth = ers.getReimbByAuthId(authId);
+			if (claimByAuth != null) {
+				ctx.json(claimByAuth);
+				ctx.status(HttpCode.OK);
+			} else {
+				ctx.status(HttpCode.NOT_FOUND);
+			}
+		}else{
 			ctx.json(ers.getAllReimbursements());
-		ctx.status(HttpCode.OK);
 		}
-		
+	}
+	
+	public static void getReimbursementClaimById(Context ctx) throws IOException {
+		int intId = Integer.parseInt(ctx.pathParam("reimbId"));
+		ErsReimbursement reimbClaim = ers.getReimbById(intId);
+		if (reimbClaim != null) {
+			ctx.json(reimbClaim);
+			ctx.status(HttpCode.OK);
+		} else {
+			ctx.status(HttpCode.NOT_FOUND);
+		}
 	}
 
 	public static void registerReimbursementClaim(Context ctx) throws IOException {
@@ -37,43 +59,15 @@ public class ErsController {
 		}
 
 	}
+	
 	public static void updateReimbursementClaim(Context ctx) throws IOException {
 
 		boolean newClaim = ers.updateReimbursement(ctx.bodyAsClass(ErsReimbursement.class)); 
 
-		if (!newClaim) {
+		if (newClaim == false) {
 			ctx.status(HttpCode.BAD_REQUEST);
 		} else {
 			ctx.status(HttpCode.CREATED);
-		}
-
-	}
-
-	public static void getReimbursementClaimById(Context ctx) throws IOException {
-		int id = Integer.parseInt(ctx.pathParam("reimbId"));
-
-		ErsReimbursement reimbClaim = ers.getReimbById(id);
-
-		if (reimbClaim != null) {
-			ctx.json(reimbClaim);
-			ctx.status(HttpCode.OK);
-		} else {
-			ctx.status(HttpCode.NOT_FOUND);
-		}
-	}
-	public static void getReimbursementClaimsByStatus(Context ctx) throws IOException {
-		
-		String token = ctx.header("Authorization");
-		if(!as.checkPermission(token)) {
-			ctx.status(HttpCode.UNAUTHORIZED);
-			return;
-		}
-		String status = ctx.queryParam("status");
-		if(status != null){
-			List<ErsReimbursement> reimbByStatus = ers.getReimbByStatus(status);
-			System.out.println(reimbByStatus);
-			ctx.json(reimbByStatus);
-			ctx.status(HttpCode.OK);
 		}
 	}
 }

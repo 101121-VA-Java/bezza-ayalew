@@ -69,6 +69,7 @@ public class ErsReimbursementPostgres implements ErsReimbursementDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} 
+		System.out.println("in dao" + reimb);
 		return reimb;
 	}
 
@@ -107,22 +108,59 @@ public class ErsReimbursementPostgres implements ErsReimbursementDao {
 	}
 
 	@Override
+	public List<ErsReimbursement> getErsReimbursementByAuthorId(int authId) throws IOException {
+		
+		List<ErsReimbursement> reimbs = new ArrayList<>();
+		
+		String sql = "select * from ers.ers_reimbursement where reimb_author = ? ";
+		
+		try (Connection con = ConnectionUtil.getConnectionFromFile()){
+			PreparedStatement ps = con.prepareStatement(sql);
+			
+			ps.setInt(1, authId);	
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				ErsReimbursement reimb = 
+					new ErsReimbursement(rs.getInt("reimb_id"),
+										rs.getDouble("reimb_amount"),
+										rs.getTimestamp("reimb_submitted"),
+										rs.getTimestamp("reimb_resolved"),
+										rs.getString("reimb_description"),
+										rs.getString("reimb_receipt"),
+										rs.getInt("reimb_author"),
+										rs.getInt("reimb_resolver"),
+										rs.getInt("reimb_status_id"),
+										rs.getInt("reimb_type_id"));
+				reimbs.add(reimb);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		return reimbs;
+	}
+
+	@Override
 	public ErsReimbursement addErsReimbursement(ErsReimbursement er) throws IOException {
 		ErsReimbursement newReimb = null;
 			
 		try (Connection con = ConnectionUtil.getConnectionFromFile()){
 			String sql = "insert into ers.ers_reimbursement (reimb_amount,"
-					+ "reimb_submitted,reimb_description,reimb_receipt,reimb_author,"
-					+ "reimb_type_id) values (?,?,?,?,?,?) returning reimb_id;";
-
+					+ "reimb_submitted,reimb_resolved,reimb_description,reimb_receipt,reimb_author,"
+					+ "reimb_resolver,reimb_status_id,reimb_type_id) values (?,?,?,?,?,?,?,?,?) returning reimb_id;";
+			
 			PreparedStatement ps = con.prepareStatement(sql);
 			
 			ps.setDouble(1, er.getReimbAmount());
 			ps.setTimestamp(2, er.getReimbSubmitted());
-			ps.setString(3, er.getReimbDescription());
-			ps.setString(4, er.getReimbReceipt());
-			ps.setInt(5, er.getReimbAuthor());
-			ps.setInt(6, er.getReimbTypeId());
+			ps.setTimestamp(3, er.getReimbResolved());
+			ps.setString(4, er.getReimbDescription());
+			ps.setString(5, er.getReimbReceipt());
+			ps.setInt(6, er.getReimbAuthor());
+			ps.setInt(7, er.getReimbResolver());
+			ps.setInt(8, er.getReimbStatusId());
+			ps.setInt(9, er.getReimbTypeId());
 
 			ResultSet rs = ps.executeQuery();
 
@@ -130,8 +168,8 @@ public class ErsReimbursementPostgres implements ErsReimbursementDao {
 				newReimb = er;
 				newReimb.setReimbId(rs.getInt("reimb_id"));
 			}
-		} catch (SQLException e1) {
-			e1.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		
 		return newReimb;
@@ -154,6 +192,7 @@ public class ErsReimbursementPostgres implements ErsReimbursementDao {
 			ps.setString(4, er.getReimbReceipt());
 			ps.setInt(5, er.getReimbResolver());
 			ps.setInt(6, er.getReimbStatusId());
+			ps.setInt(7, er.getReimbAuthor());
 
 			rowsChanged = ps.executeUpdate();
 

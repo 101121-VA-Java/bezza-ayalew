@@ -26,16 +26,6 @@ public class ErsService {
 	}
 
 	/**
-	 * Service method to retrieve all reimbursements
-	 * 
-	 * @return all reimbursements or null if none is found
-	 * @throws IOException
-	 */
-	public ErsReimbursement getReimbById(int reimbId) throws IOException {
-		return erd.getErsReimbursementById(reimbId);
-	}
-
-	/**
 	 * Service method to retrieve reimbursement by its reimbursement id
 	 * 
 	 * @param the reimbursement id
@@ -55,6 +45,28 @@ public class ErsService {
 			}
 		}
 		return result;
+	}
+	/**
+	 * Service method to retrieve all reimbursements identified by reimbId
+	 * 
+	 * @return all reimbursements or null if none is found
+	 * @throws IOException
+	 */
+	public ErsReimbursement getReimbById(int reimbId) throws IOException {
+		return erd.getErsReimbursementById(reimbId);
+	}
+
+	/**
+	 * Service method to retrieve reimbursement by reimbursement author id
+	 * 
+	 * @param the reimbursement author id
+	 * @return a list of reimbursement objects or null if none is found
+	 * @throws IOException
+	 */
+	public List<ErsReimbursement> getReimbByAuthId(int authId) throws IOException {
+
+		return erd.getErsReimbursementByAuthorId(authId);
+
 	}
 	
 	/**
@@ -92,10 +104,6 @@ public class ErsService {
 
 		if (!reimbToUpdate.getReimbReceipt().equals(reimb.getReimbReceipt())) {
 			reimbToUpdate.setReimbReceipt(reimb.getReimbReceipt());
-		}
-		
-		if (!reimbToUpdate.getReimbDescription().equals(reimb.getReimbDescription())) {
-			reimbToUpdate.setReimbDescription(reimb.getReimbDescription());
 		}
 		
 		if (reimbToUpdate.getReimbResolver() != reimb.getReimbResolver()) {

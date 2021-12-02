@@ -30,5 +30,9 @@ public class AuthController {
 			ctx.status(HttpCode.NOT_FOUND);
 		}
 	}
+	public static void logout(Context ctx) {
+		ctx.header("Authorization", null);
+		ctx.status(HttpCode.OK);
+	}
 
 }

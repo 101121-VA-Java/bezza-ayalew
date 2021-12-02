@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editable table</title>
+</head>
+<body>
+    <table id="my_table_id"
+    data-url="data/url.json"
+    data-id-field="id"
+    data-editable-emptytext="Default empty text."
+    data-editable-url="http://localhost/ersUsers">
+    <thead>
+      <tr>
+        <th class="col-md-1" data-field="id" data-sortable="true" data-align="center">ID</th>
+        <th class="col-md-4" data-field="userName" data-editable="true">Username</th>
+        <th class="col-md-4" data-field="password" data-editable="true">Password</th>
+        <th class="col-md-4" data-field="firstName" data-editable="true">First Name</th>
+        <th class="col-md-4" data-field="lastName" data-editable="true">Last Name</th>
+        <th class="col-md-4" data-field="email" data-editable="true">Email</th>
+        <th class="col-md-4" data-field="role" data-editable="false">Role</th>
+        <th class="col-md-7" data-field="description" data-editable="true" data-editable-emptytext="Custom empty text.">Description</th>
+      </tr>
+    </thead>
+  </table>
+  
+</body>
+</html>

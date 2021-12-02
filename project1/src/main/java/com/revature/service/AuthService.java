@@ -2,12 +2,17 @@ package com.revature.service;
 
 import java.io.IOException;
 
-import com.revature.dao.ErsUsersPostgres;
+import com.revature.dao.DaoFactory;
+import com.revature.dao.ErsUsersDao;
 import com.revature.model.ErsUsers;
 
 public class AuthService {
 
-	ErsUsersPostgres eup = new ErsUsersPostgres();
+	private ErsUsersDao eud;
+	
+	public AuthService() {
+		eud = DaoFactory.getDaoFactory().getErsUsersDao();
+	}
 	/**
 	 * Service method to login an employee based on username/password
 	 * @param String username, String password
@@ -17,7 +22,7 @@ public class AuthService {
 	public String login(String username, String password) throws IOException {
 		
 		String token = null;
-		ErsUsers principal = eup.getErsUserByUsername(username);
+		ErsUsers principal = eud.getErsUserByUsername(username);
 
 		if (principal != null && principal.getErsPassword().equals(password)) {
 			token = principal.getErsUserId() + ":" + principal.getUserRoleId();
@@ -40,12 +45,13 @@ public class AuthService {
 		
 		String[] info = token.split(":"); 
 		int token_id = Integer.parseInt(info[0]);
-		int token_role = Integer.parseInt(info[1]);
+//		int token_role = Integer.parseInt(info[1]);
 		
-		ErsUsers principal = eup.getErsUserById(token_id);
+		ErsUsers principal = eud.getErsUserById(token_id);
 		
-		if(principal != null && token_role == principal.getUserRoleId()
-				&& token_role == 2) {
+//		if(principal != null && token_role == principal.getUserRoleId()
+//				&& token_role == 2) {
+		if(principal != null) {
 			return true;
 		}
 		

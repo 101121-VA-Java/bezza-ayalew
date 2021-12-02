@@ -41,7 +41,8 @@ Javalin
 		- app.start(portNum)
 			- by default 8080
 		- HTTP handlers
-			- a functional interface that takes in a Context Object as a parameter, used to specify a behavior to handle a request at a particular endpoint
+			- a functional interface that takes in a Context Object as a parameter, 
+			  used to specify a behavior to handle a request at a particular endpoint
 				- Context object is an abstraction of HttpServletRequest and HttpServletResponse
 					- used to retrieve information from the request
 						- url
@@ -281,7 +282,7 @@ DAO/CRUD methods (These are common interview questions, for more info checkout t
 	- .update() vs merge()
 		- update:
 			- void return
-			- if trying to updat an object with no id in db, throws an exception
+			- if trying to update an object with no id in db, throws an exception
 			- if a persistent object in the same session has the same id, throws an exception
 		- merge:
 			- returns the merged object
