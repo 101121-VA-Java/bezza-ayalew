@@ -90,8 +90,10 @@ if (!token) {
     
     async function setReimbursementForUpdate() {
       let reimbId = document.getElementById('reimbursementToReview').value;
-      let response = await fetch(`${reimbUrl}/${reimbId}`);
+      let response = await fetch(`${reimbUrl}/${reimbId}`); 
+      console.log("Fine");
       if(response.status >= 200 && response.status < 300){
+       
           data = await response.json();
           delete data.reimbId;
           delete data.reimbSubmitted;
