@@ -1,1 +1,1 @@
-document.getElementById('demo').innerHTML = new Date(1637727553337).toLocaleDateString();
+console.log(document.getElementById('demo').id);

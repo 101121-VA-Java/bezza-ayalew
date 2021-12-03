@@ -1,7 +1,7 @@
 if (!token) {
-  window.location.href = '../pages/index.html';
-}else if(token.split(":")[1] == 1){
-  window.location.href = '../pages/employees.html';
+  window.location.relode(); //href = '../pages/index.html';
+// }else if(token.split(":")[1] == 1){
+//   window.location.href = '../pages/index.html';
 }else{
   
   let col_map = {
@@ -39,8 +39,8 @@ if (!token) {
   document.getElementById('updateMyAccount')
   .addEventListener("click", setAccountForUpdate);
 
-  // document.getElementById('fileReimbursement')
-  // .addEventListener("click", fileReimbursement);
+  document.getElementById('fileReimbursement')
+  .addEventListener("click", fileReimbursement);
 
 
   
@@ -81,6 +81,23 @@ if (!token) {
         return result;
       }, {})
     return result;
+  }
+
+  async function setAccountForUpdate() {
+    let response = await fetch(`${empUrl}/${empId}`);
+    if(response.status >= 200 && response.status < 300){
+        data = await response.json();
+        delete data.ersUserId;
+        delete data.userRoleId;
+        populateData(data);
+        editBtn = document.createElement("button");
+        editBtn.setAttribute("class","btn btn-outline-primary");
+        editBtn.setAttribute("id", "editBtn");
+        editBtn.innerHTML = 'Save Changes';
+        document.body.appendChild(editBtn);
+        document.getElementById('editBtn')
+        .addEventListener("click", commitUpdates);
+    }
   }
 
   function populateData(response) {
@@ -124,36 +141,51 @@ if (!token) {
           generateTable(table, response);
       }
   }
-  async function setAccountForUpdate() {
-    let response = await fetch(`${empUrl}/${empId}`);
-    if(response.status >= 200 && response.status < 300){
-        data = await response.json();
-        delete data.ersUserId;
-        delete data.userRoleId;
-        populateData(data);
-        editBtn = document.createElement("button");
-        editBtn.setAttribute("class","btn btn-outline-primary");
-        editBtn.setAttribute("id", "editBtn");
-        editBtn.innerHTML = 'Save Changes';
-        document.body.appendChild(editBtn);
-        document.getElementById('editBtn')
-        .addEventListener("click", commitUpdates);
-    }
+
+  function fileReimbursement(){
+    let newReimbursement = {
+      reimbAmount:0,
+      reimbSubmitted: + new Date(),
+      reimbResolved:null,
+      reimbDescription:null,
+      reimbReceipt: null,
+      reimbAuthor:empId,
+      reimbResolver:null,
+      reimbStatusId:0,
+      reimbTypeId:0
+  };
+  populateData(newReimbursement);
+  editBtn = document.createElement("button");
+  editBtn.setAttribute("class","btn btn-outline-primary");
+  editBtn.setAttribute("id", "editBtn");
+  editBtn.innerHTML = 'Save Changes';
+  document.body.appendChild(editBtn);
+  document.getElementById('editBtn')
+  .addEventListener("click", commitUpdates);
   }
 
-  function tableMyReimbursements(authId){
-    populateData(getMyReimbursements(authId));
+  function tableMyReimbursements(){
+    let authId = empId;
+    let data = getReimbursementsByAuthorId(authId);
+    populateData(data);
+    console.log("my reimbursements on table");
   }
 
-  function tableMyPendingReimbursements(authId){
-    populateData(getMyPendingReimbursements(authId));
+  function tableMyResolvedReimbursements(){
+    let authId = empId;
+    let status = "resolved";
+    getMyReimbursementsByStatus(authId,status);
+    console.log("my resolved reimbursements on table");
   }
 
-  function tableMyResolvedReimbursements(authId){
-    populateData(getMyResolvedReimbursements(authId));
+  function tableMyPendingReimbursements(){
+    let status = "pending";
+    let authId = empId;
+    getMyReimbursementsByStatus(authId,status);
+    console.log("my pending reimbursements on table");
   }
 
-  async function getMyAccount(id) {
+  async function getMyAccount() {
     id = empId;
     let response = await fetch(`${empUrl}/${id}`);
     if(response.status >= 200 && response.status < 300){
@@ -162,26 +194,56 @@ if (!token) {
     }
   }
 
-  async function getMyPendingReimbursements(authId) {
-    return getReimbursementByStatus("under review");
-  }
-
-  async function getMyResolvedReimbursements(authId){
-    authId = empId;
-    let resolved = [];
-    let myReimbs = getMyReimbursements(authId);
-    for (const reimb of myReimbs) {
-      if(reimb != null && reimb.reimbStatusId != 1){
-          reimb.reimbSubmitted = new Date(reimb.reimbSubmitted)
+  function getMyReimbursementsByStatus(authId, status) {
+    let data = getReimbursementsByAuthorId(authId);
+    let reimbs = [];
+    if(data != null){
+      for (const reimb in data) {
+        console.log(reimb);
+        if(status == "pending" && reimb[reimbStatusId] == 1){
+          reimb[reimbSubmitted] = new Date(reimb[reimbSubmitted])
           .toLocaleDateString();
-          reimb.reimbResolved = new Date(reimb.reimbSubmitted)
+          if(reimb[resolved] != null){
+            reimb[reimbResolved] = new Date(reimb[reimbSubmitted])
+            .toLocaleDateString();
+          }
+          reimbs.push(reimb);
+        }else if(status == "resolved" && reimb[reimbStatusId] != 1){
+          reimb[reimbSubmitted] = new Date(reimb[reimbSubmitted])
           .toLocaleDateString();
-          resolved.push(reimb);
+          if(reimb[resolved] != null){
+            reimb[reimbResolved] = new Date(reimb[reimbSubmitted])
+            .toLocaleDateString();
+          }
+          reimbs.push(reimb);
+        }
+        
       }
+      console.log(reimbs);
+      populateData(data);
     }
-    return resolved;
   }
 
+  async function getReimbursementsByAuthorId(authorId) {
+    let reimbs = [];
+    authorId = empId;
+    let userInput = "?reimbAuthId=" + authorId;
+    let response = await fetch(`${reimbUrl}${userInput}`);
+    if(response.status >= 200 && response.status < 300){
+        let data = await response.json();
+        if(data != null){
+        for (const reimb of data) {
+            reimb.reimbSubmitted = new Date(reimb.reimbSubmitted)
+            .toLocaleDateString();
+            if(reimb.reimbResolved != null){
+              reimb.reimbResolved = new Date(reimb.reimbResolved)
+              .toLocaleDateString();
+            }
+            reimbs.push(reimb);
+        return reimbs;
+    }
+  }
+    
   async function getAllReimbursements() {
     let reimbs = [];
     let response = await fetch(reimbUrl);
@@ -202,34 +264,26 @@ if (!token) {
     }
   }
 
-  async function getMyReimbursementByStatus(authId, status) {
-    let data = getMyReimbursements(authId);
-    let reimbs = [];
-    if(data != null){
-      for (const reimb of data) {
-        if(status == "pending" && reimb.reimbStatusId == 1){
-          reimb.reimbSubmitted = new Date(reimb.reimbSubmitted)
-          .toLocaleDateString();
-          if(reimb.resolved != null){
-            reimb.reimbResolved = new Date(reimb.reimbSubmitted)
-            .toLocaleDateString();
-          }
-          reimbs.push(reimb);
-        }else if(status == "resolved" && reimb.reimbStatusId != 1){
-          reimb.reimbSubmitted = new Date(reimb.reimbSubmitted)
-          .toLocaleDateString();
-          if(reimb.resolved != null){
-            reimb.reimbResolved = new Date(reimb.reimbSubmitted)
-            .toLocaleDateString();
-          }
-          reimbs.push(reimb);
-        }
-      }
-      return reimbs;
-    }
-  }
   
+  // async function getMyPendingReimbursements(authId) {
+  //   return getReimbursementByStatus("under review");
+  // }
 
+  // async function getMyResolvedReimbursements(authId){
+  //   authId = empId;
+  //   let resolved = [];
+  //   let myReimbs = getMyReimbursements(authId);
+  //   for (const reimb of myReimbs) {
+  //     if(reimb != null && reimb.reimbStatusId != 1){
+  //         reimb.reimbSubmitted = new Date(reimb.reimbSubmitted)
+  //         .toLocaleDateString();
+  //         reimb.reimbResolved = new Date(reimb.reimbSubmitted)
+  //         .toLocaleDateString();
+  //         resolved.push(reimb);
+  //     }
+  //   }
+  //   return resolved;
+  // }
   // async function getReimbursementByStatus(status) {
   //   let reimbs = [];
   //   let userInput = "?status=" + status;
@@ -251,29 +305,7 @@ if (!token) {
   //   }
   // }
 
-  async function getMyReimbursements(authId) {
-    return getReimbursementByAuthorId(authId);
-  }
 
-  async function getReimbursementByAuthorId(authorId) {
-    let reimbs = [];
-    authorId = empId;
-    let userInput = "?reimbAuthId=" + authorId;
-    let response = await fetch(`${reimbUrl}${userInput}`);
-    if(response.status >= 200 && response.status < 300){
-        let data = await response.json();
-        if(data != null){
-        for (const reimb of data) {
-            reimb.reimbSubmitted = new Date(reimb.reimbSubmitted)
-            .toLocaleDateString();
-            if(reimb.resolved != null){
-              reimb.reimbResolved = new Date(reimb.reimbSubmitted)
-              .toLocaleDateString();
-            }
-            reimbs.push(reimb);
-        return reimbs;
-    }
-  }
 
 
 
@@ -353,33 +385,7 @@ if (!token) {
         //   str = str + "#";
 
     }
-    // async function fileReimbursement(){
-    //   let newReimbursement = {
-    //     reimbAmount:0,
-    //     reimbSubmitted: + new Date,
-    //     reimbResolved:null,
-    //     reimbDescription:null,
-    //     reimbReceipt: null,
-    //     reimbAuthor:empId,
-    //     reimbResolver:null,
-    //     reimbStatusId:0,
-    //     reimbTypeId:0
-    // };
-    // populateDataEditable(newReimbursement);
-    // let userInput = "?reimbAuthId=" + empId;
-    // let response = await fetch(`${reimbUrl}${userInput}`, {
-    //     method:'PUT',
-    //     headers:{
-
-    //     },
-    //     body: JSON.stringify(newReimbursement)
-    //   });
-    // if(response.status == 200){
-    //   window.location.reload();
-    //   } else {
-    //     document.getElementById('error-div').innerHTML='Unable to submit reimbursement.'
-    // }
-    // }
+    
   
     
     // function populateDataEditable(response){
