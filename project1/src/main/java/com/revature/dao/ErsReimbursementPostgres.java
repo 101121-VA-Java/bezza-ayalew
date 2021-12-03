@@ -192,7 +192,7 @@ public class ErsReimbursementPostgres implements ErsReimbursementDao {
 			ps.setString(4, er.getReimbReceipt());
 			ps.setInt(5, er.getReimbResolver());
 			ps.setInt(6, er.getReimbStatusId());
-			ps.setInt(7, er.getReimbAuthor());
+			ps.setInt(7, er.getReimbId());
 
 			rowsChanged = ps.executeUpdate();
 

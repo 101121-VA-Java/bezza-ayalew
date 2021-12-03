@@ -51,5 +51,5 @@ insert into ers.ers_users_roles (user_role) values('Basic Employee');
 insert into ers.ers_users_roles (user_role) values('Financial Manager');
 
 insert into ers.ers_users (ers_username, ers_password, user_first_name, user_last_name, user_email, user_role_id) values('uname','pword','fname','lname','usr@tmail.com',1);
-
+alter  table ers.ers_reimbursement alter column reimb_receipt set data type varchar(200);
 

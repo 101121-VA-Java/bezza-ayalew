@@ -94,29 +94,32 @@ public class ErsService {
 
 		ErsReimbursement reimbToUpdate = erd.getErsReimbursementById(reimb.getReimbId());
 
-		if (reimbToUpdate.getReimbAmount() != reimb.getReimbAmount()) {
-			reimbToUpdate.setReimbAmount(reimb.getReimbAmount());
-		}
+//		if (reimbToUpdate.getReimbAmount() != reimb.getReimbAmount()) {
+//			reimbToUpdate.setReimbAmount(reimb.getReimbAmount());
+//		}
+//
+//		if (!reimbToUpdate.getReimbDescription().equals(reimb.getReimbDescription())) {
+//			reimbToUpdate.setReimbDescription(reimb.getReimbDescription());
+//		}
+//
+//		if (!reimbToUpdate.getReimbReceipt().equals(reimb.getReimbReceipt())) {
+//			reimbToUpdate.setReimbReceipt(reimb.getReimbReceipt());
+//		}
+//
+//		if (reimbToUpdate.getReimbResolver() != reimb.getReimbResolver()) {
+//			reimbToUpdate.setReimbResolver(reimb.getReimbResolver());
+//		}
+//
+//		if (reimbToUpdate.getReimbStatusId() != reimb.getReimbStatusId()) {
+//			reimbToUpdate.setReimbStatusId(reimb.getReimbStatusId());
+//		}
+//
+//		
+//		if (reimbToUpdate.getReimbTypeId() != reimb.getReimbTypeId()) {
+//			reimbToUpdate.setReimbTypeId(reimb.getReimbTypeId());
+//		}
+//
 
-		if (!reimbToUpdate.getReimbDescription().equals(reimb.getReimbDescription())) {
-			reimbToUpdate.setReimbDescription(reimb.getReimbDescription());
-		}
-
-		if (!reimbToUpdate.getReimbReceipt().equals(reimb.getReimbReceipt())) {
-			reimbToUpdate.setReimbReceipt(reimb.getReimbReceipt());
-		}
-		
-		if (reimbToUpdate.getReimbResolver() != reimb.getReimbResolver()) {
-			reimbToUpdate.setReimbResolver(reimb.getReimbResolver());
-		}
-		if (reimbToUpdate.getReimbStatusId() != reimb.getReimbStatusId()) {
-			reimbToUpdate.setReimbStatusId(reimb.getReimbStatusId());
-		}
-		
-		if (reimbToUpdate.getReimbTypeId() != reimb.getReimbTypeId()) {
-			reimbToUpdate.setReimbTypeId(reimb.getReimbTypeId());
-		}
-
-		return erd.updateErsReimbursement(reimb);
+		return erd.updateErsReimbursement(reimbToUpdate);
 	}
 }

@@ -44,7 +44,7 @@ if (!token) {
     .addEventListener("input", getReimbursementByAuthorId);
 
     document.getElementById('reimbursementToReview')
-    .addEventListener("input", reviewReimbursement);
+    .addEventListener("input", setReimbursementForUpdate);
 
     document.getElementById('viewAllEmployees')
     .addEventListener("click", getAllEmployees);
@@ -52,6 +52,22 @@ if (!token) {
     document.getElementById('viewEmployeeById')
     .addEventListener("input", getEmployeeById);
 
+    async function commitUpdates(){
+      let data = collectUpdates();
+      let reimbId = document.getElementById('reimbursementAuthorId').value;
+      let response = await fetch(`${reimbUrl}/${reimbId}`, {
+          method:'PUT',
+          headers:{
+            "Authorization":token
+          },
+          body: JSON.stringify(data)
+        });
+      if(response.status == 200){
+        window.location.reload();
+        } else {
+          document.getElementById('error-div').innerHTML='Unable to submit reimbursement.'
+      }
+    }
 
     function collectUpdates() {
       let cells = document.getElementById("updatable").rows[1].cells;
@@ -63,7 +79,7 @@ if (!token) {
         sessionStorage.setItem("update", str);
       }
       let savedUpdate = sessionStorage.getItem("update");
-      let th = ["ersUsername", "ersPassword", "userFirstName", "userLastName", "userEmail"];
+      let th = ["reimbAmount","reimbResolved","reimbDescription","reimbReceipt","reimbResolver","reimbStatusId"]    
       let tr = savedUpdate.slice(0,-1).split(":");
       let result =  tr.reduce(function(result, field, index) {
           result[th[index]] = field;
@@ -71,13 +87,16 @@ if (!token) {
         }, {})
       return result;
     }
-
+    
     async function setReimbursementForUpdate() {
-      let response = await fetch(`${empUrl}/${empId}`);
+      let reimbId = document.getElementById('reimbursementToReview').value;
+      let response = await fetch(`${reimbUrl}/${reimbId}`);
       if(response.status >= 200 && response.status < 300){
           data = await response.json();
-          delete data.ersUserId;
-          delete data.userRoleId;
+          delete data.reimbId;
+          delete data.reimbSubmitted;
+          delete data.reimbDescription;
+          delete data.reimbAuthor;
           populateData(data);
           editBtn = document.createElement("button");
           editBtn.setAttribute("class","btn btn-outline-primary");
@@ -90,6 +109,9 @@ if (!token) {
     }
 
     function populateData(response) {
+      if(document.getElementById('editBtn')){
+        document.getElementById('editBtn').remove();
+      }
       function generateTableHead(table, data) {
           let thead = table.createTHead();
           let row = thead.insertRow();
@@ -161,7 +183,6 @@ if (!token) {
                 reimb.reimbResolved = new Date(reimb.reimbSubmitted)
                 .toLocaleDateString();
               }
-              console.log(reimb);
               reimbs.push(reimb);
             }
             populateData(reimbs);
