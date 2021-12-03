@@ -1,7 +1,5 @@
 if (!token) {
-  window.location.relode(); //href = '../pages/index.html';
-// }else if(token.split(":")[1] == 1){
-//   window.location.href = '../pages/index.html';
+  window.location.href = "../pages/login.html";
 }else{
   
   let col_map = {
@@ -101,6 +99,7 @@ if (!token) {
   }
 
   function populateData(response) {
+    document.getElementById("newButton").innerHTML="";
     function generateTableHead(table, data) {
         let thead = table.createTHead();
         let row = thead.insertRow();
@@ -155,7 +154,10 @@ if (!token) {
       reimbTypeId:0
   };
   populateData(newReimbursement);
-  editBtn = document.createElement("button");
+  let buttonLocation = document.getElementById("newButton");
+  buttonLocation.innerHTML="";
+  editBtn = buttonLocation.createElement("button")
+  // editBtn = document.createElement;
   editBtn.setAttribute("class","btn btn-outline-primary");
   editBtn.setAttribute("id", "editBtn");
   editBtn.innerHTML = 'Save Changes';
@@ -165,13 +167,13 @@ if (!token) {
   }
 
   function tableMyReimbursements(){
+    document.getElementById("newButton").innerHTML="";
     let authId = empId;
     let data = getReimbursementsByAuthorId(authId);
-    populateData(data);
-    console.log("my reimbursements on table");
   }
 
   function tableMyResolvedReimbursements(){
+    document.getElementById("newButton").innerHTML="";
     let authId = empId;
     let status = "resolved";
     getMyReimbursementsByStatus(authId,status);
@@ -179,6 +181,7 @@ if (!token) {
   }
 
   function tableMyPendingReimbursements(){
+    document.getElementById("newButton").innerHTML="";
     let status = "pending";
     let authId = empId;
     getMyReimbursementsByStatus(authId,status);
@@ -194,33 +197,29 @@ if (!token) {
     }
   }
 
-  function getMyReimbursementsByStatus(authId, status) {
-    let data = getReimbursementsByAuthorId(authId);
+  async function getMyReimbursementsByStatus(authId, status) {
     let reimbs = [];
-    if(data != null){
-      for (const reimb in data) {
-        console.log(reimb);
-        if(status == "pending" && reimb[reimbStatusId] == 1){
-          reimb[reimbSubmitted] = new Date(reimb[reimbSubmitted])
+    authorId = empId;
+    let userInput = "?reimbAuthId=" + authorId;
+    let response = await fetch(`${reimbUrl}${userInput}`);
+    if(response.status >= 200 && response.status < 300){
+      let data = await response.json();
+      if(data != null){
+        for (const reimb of data) {
+          reimb.reimbSubmitted = new Date(reimb.reimbSubmitted)
           .toLocaleDateString();
-          if(reimb[resolved] != null){
-            reimb[reimbResolved] = new Date(reimb[reimbSubmitted])
+          if(reimb.reimbResolved != null){
+            reimb.reimbResolved = new Date(reimb.reimbResolved)
             .toLocaleDateString();
           }
-          reimbs.push(reimb);
-        }else if(status == "resolved" && reimb[reimbStatusId] != 1){
-          reimb[reimbSubmitted] = new Date(reimb[reimbSubmitted])
-          .toLocaleDateString();
-          if(reimb[resolved] != null){
-            reimb[reimbResolved] = new Date(reimb[reimbSubmitted])
-            .toLocaleDateString();
+          if(status == "pending" && reimb.reimbStatusId == 1){
+            reimbs.push(reimb);
+          }else if(status == "resolved" && reimb.reimbStatusId != 1){
+            reimbs.push(reimb);
           }
-          reimbs.push(reimb);
         }
-        
+        populateData(reimbs);
       }
-      console.log(reimbs);
-      populateData(data);
     }
   }
 
@@ -230,19 +229,20 @@ if (!token) {
     let userInput = "?reimbAuthId=" + authorId;
     let response = await fetch(`${reimbUrl}${userInput}`);
     if(response.status >= 200 && response.status < 300){
-        let data = await response.json();
-        if(data != null){
+      let data = await response.json();
+      if(data != null){
         for (const reimb of data) {
-            reimb.reimbSubmitted = new Date(reimb.reimbSubmitted)
+          reimb.reimbSubmitted = new Date(reimb.reimbSubmitted)
+          .toLocaleDateString();
+          if(reimb.reimbResolved != null){
+            reimb.reimbResolved = new Date(reimb.reimbResolved)
             .toLocaleDateString();
-            if(reimb.reimbResolved != null){
-              reimb.reimbResolved = new Date(reimb.reimbResolved)
-              .toLocaleDateString();
-            }
-            reimbs.push(reimb);
-        return reimbs;
+          }
+          reimbs.push(reimb);
+          populateData(reimbs);
+        }
+      }
     }
-  }
     
   async function getAllReimbursements() {
     let reimbs = [];
@@ -264,116 +264,6 @@ if (!token) {
     }
   }
 
-  
-  // async function getMyPendingReimbursements(authId) {
-  //   return getReimbursementByStatus("under review");
-  // }
-
-  // async function getMyResolvedReimbursements(authId){
-  //   authId = empId;
-  //   let resolved = [];
-  //   let myReimbs = getMyReimbursements(authId);
-  //   for (const reimb of myReimbs) {
-  //     if(reimb != null && reimb.reimbStatusId != 1){
-  //         reimb.reimbSubmitted = new Date(reimb.reimbSubmitted)
-  //         .toLocaleDateString();
-  //         reimb.reimbResolved = new Date(reimb.reimbSubmitted)
-  //         .toLocaleDateString();
-  //         resolved.push(reimb);
-  //     }
-  //   }
-  //   return resolved;
-  // }
-  // async function getReimbursementByStatus(status) {
-  //   let reimbs = [];
-  //   let userInput = "?status=" + status;
-  //   let response = await fetch(`${reimbUrl}${userInput}`);
-  //   if(response.status >= 200 && response.status < 300){
-  //     let data = await response.json();
-  //     if(data != null){
-  //       for (const reimb of data) {
-  //         reimb.reimbSubmitted = new Date(reimb.reimbSubmitted)
-  //         .toLocaleDateString();
-  //         if(reimb.resolved != null){
-  //           reimb.reimbResolved = new Date(reimb.reimbSubmitted)
-  //           .toLocaleDateString();
-  //         }
-  //         reimbs.push(reimb);
-  //       }
-  //       return reimbs;
-  //     }
-  //   }
-  // }
-
-
-
-
-
-
-
-  // async function getMyReimbursements() {
-  //   let myReimbs = []
-  //   let response = await fetch(reimbUrl);
-  //   if(response.status >= 200 && response.status < 300){
-  //       let data = await response.json();
-  //       for (const reimb of data) {
-  //         if(reimb.reimbAuthor == empId){
-  //           reimb.reimbSubmitted = new Date(reimb.reimbSubmitted)
-  //           .toLocaleDateString();
-  //           reimb.reimbResolved = new Date(reimb.reimbSubmitted)
-  //           .toLocaleDateString();
-  //           myReimbs.push(reimb);
-  //         }
-  //       }
-  //       populateData(myReimbs);
-  //   }
-  // }
-
-
-
-  // async function getPendingReimbursements() {
-  //   let pending = [];
-  //   let response = await fetch(reimbUrl);
-  //   if(response.status >= 200 && response.status < 300){
-  //     let data = await response.json();
-  //     for (const reimb of data) {
-  //       if((reimb != null && reimb.reimbStatusId == 1) 
-  //         && reimb.reimbAuthor == empId){
-  //         reimb.reimbSubmitted = new Date(reimb.reimbSubmitted)
-  //         .toLocaleDateString();
-  //         pending.push(reimb);
-          
-  //       }
-  //     }
-  //     populateData(pending);
-  //   }
-    
-    
-  // }
-
-  // async function getResolvedReimbursements() {
-  //   let resolved = [];
-  //   let response = await fetch(reimbUrl);
-  //   if(response.status >= 200 && response.status < 300){
-  //       let data = await response.json();
-  //       for (const reimb of data) {
-  //         if(reimb != null && (reimb.reimbAuthor == empId) 
-  //           && reimb.reimbStatusId != 1){
-  //             reimb.reimbSubmitted = new Date(reimb.reimbSubmitted)
-  //             .toLocaleDateString();
-  //             reimb.reimbResolved = new Date(reimb.reimbSubmitted)
-  //             .toLocaleDateString();
-  //             resolved.push(reimb);
-            
-  //         }
-  //       }
-  //       console.log(data);
-  //       populateData(resolved);
-  //   }
-  // }
-
-
-  
         // let nRows = document.getElementById("updatable").rows.length;
         // let str = "";
         // for(let i=1; i<nRows; i++){
@@ -387,61 +277,6 @@ if (!token) {
     }
     
   
-    
-    // function populateDataEditable(response){
-
-    //     function generateTableHead2(table, data) {
-    //         let thead = table.createTHead();
-    //         let row = thead.insertRow();
-    //         for (let key of data) {
-    //           let th = document.createElement("th");
-    //           if(Object.keys(col_map).includes(key)){
-    //             let text = document.createTextNode(col_map[key]);
-    //             th.appendChild(text);
-    //             row.appendChild(th);
-    //           }         
-    //         }
-    //       }
-          
-    //       function generateTable2(table, data) {
-    //           let uneditable = ['ersUserId', 'urerRoleId'];
-    //         for (let element of data) {
-    //           let row = table.insertRow(); 
-    //           for (key in element) {
-    //             let cell = row.insertCell();
-    //             cell.setAttribute("contenteditable", "true");
-    //             let text = document.createTextNode(element.key);
-    //             cell.appendChild(text);
-    //           }
-    //         }
-    //       }
-    //       editBtn = document.createElement("button");
-    //       editBtn.setAttribute("class","btn btn-outline-primary");
-    //       editBtn.setAttribute("id", "editBtn");
-    //       editBtn.innerHTML = 'Save Changes';
-    //     //   editBtn.setAttribute("type","button");
-    //       let table = document.querySelector("table");
-    //       table.innerHTML = "";
-    //       table.setAttribute("class", "table table-hover")
-    //       table.setAttribute("id", "updater")
-
-    //       if(!Array.isArray(response)){
-    //         let listResponse = [];
-    //         listResponse.push(response);
-    //         let data1 = Object.keys(listResponse[0]);
-    //         generateTableHead2(table, data1);
-    //         generateTable2(table, listResponse);
-    //         }else{
-    //             let data = Object.keys(response[0]);
-    //             generateTableHead2(table, data);
-    //             generateTable2(table, response);
-    //         }
-
-    //     //   let data = Object.keys(response[0]);
-    //     //   generateTableHead(table, data);
-    //     //   generateTable(table, response)
-
-
     //       editBtn.addEventListener('click', function(e) {
     //           editBtn.innerHTML = 'Save Changes';
     //         // Save the data in sessionStorage
@@ -452,4 +287,3 @@ if (!token) {
 
     
     }
-}
