@@ -37,7 +37,7 @@ public class ErsController {
 		}
 	}
 	
-	public static void getReimbursementClaimById(Context ctx) throws IOException {
+	public static void getReimbursementByClaimId(Context ctx) throws IOException {
 		int intId = Integer.parseInt(ctx.pathParam("reimbId"));
 		ErsReimbursement reimbClaim = ers.getReimbById(intId);
 		if (reimbClaim != null) {
@@ -61,9 +61,7 @@ public class ErsController {
 	}
 	
 	public static void updateReimbursementClaim(Context ctx) throws IOException {
-
 		boolean newClaim = ers.updateReimbursement(ctx.bodyAsClass(ErsReimbursement.class)); 
-
 		if (newClaim == false) {
 			ctx.status(HttpCode.BAD_REQUEST);
 		} else {

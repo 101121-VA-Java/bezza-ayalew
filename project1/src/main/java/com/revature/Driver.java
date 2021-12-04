@@ -31,13 +31,13 @@ public class Driver {
      	app.routes(() -> {
             path("reimbursements", () -> {
             	get(ErsController::getReimbursements);
-            	put(ErsController::updateReimbursementClaim);
             	post(ErsController::registerReimbursementClaim);
             	path("reimbAuthId", () -> {
             		get(ErsController::getReimbursements);
             		});
 	        	path("{reimbId}", () -> {
-	        		get(ErsController::getReimbursementClaimById);
+	        		get(ErsController::getReimbursementByClaimId);
+	        		put(ErsController::updateReimbursementClaim);
 	        		});
             	});
 

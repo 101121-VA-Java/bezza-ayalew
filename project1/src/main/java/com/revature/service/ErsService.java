@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import com.revature.dao.DaoFactory;
 import com.revature.dao.ErsReimbursementDao;
+import com.revature.dao.ErsReimbursementPostgres;
 import com.revature.model.ErsReimbursement;
 
 public class ErsService {
 
+	ErsReimbursementPostgres erp = new ErsReimbursementPostgres();
 	private ErsReimbursementDao erd;
 
 	public ErsService() {
@@ -91,35 +93,16 @@ public class ErsService {
 	 * @throws IOException
 	 */
 	public boolean updateReimbursement(ErsReimbursement reimb) throws IOException {
-		System.out.println(reimb);
 		ErsReimbursement reimbToUpdate = erd.getErsReimbursementById(reimb.getReimbId());
-
-		if (reimbToUpdate.getReimbAmount() != reimb.getReimbAmount()) {
+		System.out.println("This is :"+reimbToUpdate);
+			reimbToUpdate.setReimbId(reimb.getReimbId());
+			reimbToUpdate.setReimbAuthor(reimb.getReimbAuthor());
 			reimbToUpdate.setReimbAmount(reimb.getReimbAmount());
-		}
-
-		if (!reimbToUpdate.getReimbDescription().equals(reimb.getReimbDescription())) {
-			reimbToUpdate.setReimbDescription(reimb.getReimbDescription());
-		}
-
-		if (!reimbToUpdate.getReimbReceipt().equals(reimb.getReimbReceipt())) {
-			reimbToUpdate.setReimbReceipt(reimb.getReimbReceipt());
-		}
-
-		if (reimbToUpdate.getReimbResolver() != reimb.getReimbResolver()) {
-			reimbToUpdate.setReimbResolver(reimb.getReimbResolver());
-		}
-
-		if (reimbToUpdate.getReimbStatusId() != reimb.getReimbStatusId()) {
+			reimbToUpdate.setReimbAmount(reimb.getReimbAmount());
+			reimbToUpdate.setReimbResolved(reimb.getReimbResolved());
 			reimbToUpdate.setReimbStatusId(reimb.getReimbStatusId());
-		}
-
-		
-		if (reimbToUpdate.getReimbTypeId() != reimb.getReimbTypeId()) {
 			reimbToUpdate.setReimbTypeId(reimb.getReimbTypeId());
-		}
-
-
-		return erd.updateErsReimbursement(reimbToUpdate);
+			
+			return erp.updateErsReimbursement(reimbToUpdate);
 	}
 }

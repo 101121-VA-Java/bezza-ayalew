@@ -56,15 +56,15 @@ public class ErsReimbursementPostgres implements ErsReimbursementDao {
 			
 			if(rs.next()) {
 				reimb = new ErsReimbursement(rs.getInt("reimb_id"),
-						rs.getDouble("reimb_amount"),
-						rs.getTimestamp("reimb_submitted"),
-						rs.getTimestamp("reimb_resolved"),
-						rs.getString("reimb_description"),
-						rs.getString("reimb_receipt"),
-						rs.getInt("reimb_author"),
-						rs.getInt("reimb_resolver"),
-						rs.getInt("reimb_status_id"),
-						rs.getInt("reimb_type_id"));
+											rs.getDouble("reimb_amount"),
+											rs.getTimestamp("reimb_submitted"),
+											rs.getTimestamp("reimb_resolved"),
+											rs.getString("reimb_description"),
+											rs.getString("reimb_receipt"),
+											rs.getInt("reimb_author"),
+											rs.getInt("reimb_resolver"),
+											rs.getInt("reimb_status_id"),
+											rs.getInt("reimb_type_id"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -178,33 +178,28 @@ public class ErsReimbursementPostgres implements ErsReimbursementDao {
 	@Override
 	public boolean updateErsReimbursement(ErsReimbursement er) throws IOException {
 		String sql = "update ers.ers_reimbursement set reimb_amount = ?, "
-				+ "reimb_resolved = ?, reimb_description = ?, reimb_receipt = ?, "
-				+ "reimb_resolver = ?, reimb_status_id = ? where reimb_id = ?;";
+				+ "reimb_resolved = ?, reimb_receipt = ?, reimb_resolver = ?, "
+				+ "reimb_status_id = ?, reimb_type_id = ? where reimb_id = ?;";
 
-		int rowsChanged = -1;
+		boolean result = false;
 
 		try (Connection con = ConnectionUtil.getConnectionFromFile()){
 			PreparedStatement ps = con.prepareStatement(sql);
 
 			ps.setDouble(1, er.getReimbAmount());
 			ps.setTimestamp(2, er.getReimbResolved());
-			ps.setString(3, er.getReimbDescription());
-			ps.setString(4, er.getReimbReceipt());
-			ps.setInt(5, er.getReimbResolver());
-			ps.setInt(6, er.getReimbStatusId());
+			ps.setString(3, er.getReimbReceipt());
+			ps.setInt(4, er.getReimbResolver());
+			ps.setInt(5, er.getReimbStatusId());
+			ps.setInt(6, er.getReimbTypeId());
 			ps.setInt(7, er.getReimbId());
 
-			rowsChanged = ps.executeUpdate();
+			if(ps.executeUpdate()>0) result = true;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		if (rowsChanged > 0) {
-			return true;
-		}
-		
-		return false;
+		return result;
 	}
 
 }

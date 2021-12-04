@@ -48,17 +48,33 @@ if (!token) {
 
   async function commitUpdates(){
     let data = collectUpdates();
-    let response = await fetch(`${empUrl}/${empId}`, {
-        method:'PUT',
-        headers:{
-          "Authorization":token
-        },
-        body: JSON.stringify(data)
-      });
-    if(response.status == 200){
-      window.location.reload();
-      } else {
-        document.getElementById('error-div').innerHTML='Unable to submit reimbursement.'
+      if(Object.keys(data).length == 5){
+      let response = await fetch(`${empUrl}/${empId}`, {
+          method:'PUT',
+          headers:{
+            "Authorization":token
+          },
+          body: JSON.stringify(data)
+        });
+      if(response.status == 200){
+        window.location.reload();
+        } else {
+          document.getElementById('error-div').innerHTML='Unable to submit reimbursement.'
+        }
+      }else{
+        let userInput = "?reimbAuthId=" + empId;
+        let response = await fetch(`${reimbUrl}${userInput}`, {
+          method:'POST',
+          headers:{
+            "Authorization":token
+          },
+          body: JSON.stringify(data)
+        });
+      if(response.status == 200){
+        window.location.reload();
+        } else {
+          document.getElementById('error-div').innerHTML='Unable to submit reimbursement.'
+      }
     }
   }
 
@@ -72,7 +88,15 @@ if (!token) {
       sessionStorage.setItem("update", str);
     }
     let savedUpdate = sessionStorage.getItem("update");
-    let th = ["ersUsername", "ersPassword", "userFirstName", "userLastName", "userEmail"];
+    let usersTh = ["ersUsername", "ersPassword", "userFirstName", "userLastName", "userEmail"];
+    let reimbTh = ["reimbAmount","reimbSubmitted","reimbResolved","reimbDescription",
+    "reimbReceipt","reimbAuthor","reimbResolver","reimbStatusId","reimbTypeId"];
+    let th = [];
+    if(savedUpdate.slice(0,-1).split(":").length > 5){
+      th = reimbTh;
+    }else{
+      th = usersTh;
+    }
     let tr = savedUpdate.slice(0,-1).split(":");
     let result =  tr.reduce(function(result, field, index) {
         result[th[index]] = field;
@@ -99,7 +123,7 @@ if (!token) {
   }
 
   function populateData(response) {
-    document.getElementById("newButton").innerHTML="";
+    // document.getElementById("newButton").innerHTML="";
     function generateTableHead(table, data) {
         let thead = table.createTHead();
         let row = thead.insertRow();
@@ -141,39 +165,57 @@ if (!token) {
       }
   }
 
+  function convertDate(miliseconds){
+    let oldFormat = new Date(miliseconds).toLocaleDateString();
+    let dateList = oldFormat.split('/');
+    let month = dateList[0];
+    let day = dateList[1];
+    let year = dateList[2];
+    let newFormat = year+"-";
+    if(month.length<2){
+      newFormat=newFormat+"0"+month+"-";
+    }else{
+      newFormat=newFormat+month+"-";
+    }
+    if(day.length<2){
+      newFormat=newFormat+"0"+day;
+    }else{
+      newFormat=newFormat+day;
+    }
+    return newFormat;
+  }
+
   function fileReimbursement(){
     let newReimbursement = {
       reimbAmount:0,
-      reimbSubmitted: + new Date(),
+      reimbSubmitted:convertDate(+ new Date()),
       reimbResolved:null,
       reimbDescription:null,
       reimbReceipt: null,
       reimbAuthor:empId,
       reimbResolver:null,
-      reimbStatusId:0,
+      reimbStatusId:1,
       reimbTypeId:0
   };
   populateData(newReimbursement);
-  let buttonLocation = document.getElementById("newButton");
-  buttonLocation.innerHTML="";
-  editBtn = buttonLocation.createElement("button")
-  // editBtn = document.createElement;
+  editBtn = document.createElement("button");
   editBtn.setAttribute("class","btn btn-outline-primary");
   editBtn.setAttribute("id", "editBtn");
   editBtn.innerHTML = 'Save Changes';
   document.body.appendChild(editBtn);
+  console.log("button created");
   document.getElementById('editBtn')
   .addEventListener("click", commitUpdates);
   }
 
   function tableMyReimbursements(){
-    document.getElementById("newButton").innerHTML="";
+    // document.getElementById("newButton").innerHTML="";
     let authId = empId;
     let data = getReimbursementsByAuthorId(authId);
   }
 
   function tableMyResolvedReimbursements(){
-    document.getElementById("newButton").innerHTML="";
+    // document.getElementById("newButton").innerHTML="";
     let authId = empId;
     let status = "resolved";
     getMyReimbursementsByStatus(authId,status);
@@ -181,7 +223,7 @@ if (!token) {
   }
 
   function tableMyPendingReimbursements(){
-    document.getElementById("newButton").innerHTML="";
+    // document.getElementById("newButton").innerHTML="";
     let status = "pending";
     let authId = empId;
     getMyReimbursementsByStatus(authId,status);

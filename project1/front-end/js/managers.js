@@ -54,7 +54,7 @@ if (!token) {
 
     async function commitUpdates(){
       let data = collectUpdates();
-      let reimbId = document.getElementById('reimbursementAuthorId').value;
+      let reimbId = document.getElementById('reimbursementToReview').value;
       let response = await fetch(`${reimbUrl}/${reimbId}`, {
           method:'PUT',
           headers:{
@@ -62,10 +62,13 @@ if (!token) {
           },
           body: JSON.stringify(data)
         });
+        document.getElementById('error-div').innerHTML= "Update was successful!";
       if(response.status == 200){
+        
         window.location.reload();
+        
         } else {
-          document.getElementById('error-div').innerHTML='Unable to submit reimbursement.'
+          
       }
     }
 
@@ -79,7 +82,7 @@ if (!token) {
         sessionStorage.setItem("update", str);
       }
       let savedUpdate = sessionStorage.getItem("update");
-      let th = ["reimbAmount","reimbResolved","reimbDescription","reimbReceipt","reimbResolver","reimbStatusId"]    
+      let th = ["reimbId","reimbAmount","reimbResolved","reimbReceipt","reimbResolver","reimbStatusId","reimbTypeId"]    
       let tr = savedUpdate.slice(0,-1).split(":");
       let result =  tr.reduce(function(result, field, index) {
           result[th[index]] = field;
@@ -91,14 +94,16 @@ if (!token) {
     async function setReimbursementForUpdate() {
       let reimbId = document.getElementById('reimbursementToReview').value;
       let response = await fetch(`${reimbUrl}/${reimbId}`); 
-      console.log("Fine");
       if(response.status >= 200 && response.status < 300){
        
           data = await response.json();
-          delete data.reimbId;
+          // delete data.reimbId;
           delete data.reimbSubmitted;
           delete data.reimbDescription;
           delete data.reimbAuthor;
+          if(data.reimbResolved != null){
+            data.reimbResolved= convertDate(data.reimbResolved);
+          }
           populateData(data);
           editBtn = document.createElement("button");
           editBtn.setAttribute("class","btn btn-outline-primary");
@@ -258,14 +263,34 @@ if (!token) {
       }
     }
 
-    async function reviewReimbursement(){
-      let reimbId = document.getElementById("reimbursementToReview").value;
-      console.log(reimbId);
-      let response = await fetch(`${reimbUrl}/${reimbId}`);
-      if(response.status >= 200 && response.status < 300){
-        let data = await response.json();
-      
-        populateData(data);
+    function convertDate(miliseconds){
+      let oldFormat = new Date(miliseconds).toLocaleDateString();
+      let dateList = oldFormat.split('/');
+      let month = dateList[0];
+      let day = dateList[1];
+      let year = dateList[2];
+      let newFormat = year+"-";
+      if(month.length<2){
+        newFormat=newFormat+"0"+month+"-";
+      }else{
+        newFormat=newFormat+month+"-";
+      }
+      if(day.length<2){
+        newFormat=newFormat+"0"+day;
+      }else{
+        newFormat=newFormat+day;
+      }
+      return newFormat;
     }
-  }
+
+  //   async function reviewReimbursement(){
+  //     let reimbId = document.getElementById("reimbursementToReview").value;
+  //     console.log(reimbId);
+  //     let response = await fetch(`${reimbUrl}/${reimbId}`);
+  //     if(response.status >= 200 && response.status < 300){
+  //       let data = await response.json();
+      
+  //       populateData(data);
+  //   }
+  // }
 }
