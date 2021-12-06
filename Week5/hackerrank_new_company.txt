@@ -1,0 +1,22 @@
+SELECT Distinct company.company_code, company.founder, count(employee.lead_managers_code), count(employee.senior_manager_code), count(employee.manager_code), 
+	count(employee.employee_code) 
+FROM employee
+Join company
+ON employee.company_code == employee.company_code
+
+
+
+company_code, 
+founder name, 
+total number of lead managers, 
+total number of senior managers, 
+total number of managers, 
+total number of employees. 
+Order by company_code.ascending 
+
+Select Distinct company.company_code, company.founder, count(Distinct employee.lead_manager_code),  count(Distinct employee.senior_manager_code),count(Distinct employee.manager_code), count(Distinct employee.employee_code) 
+FROM company
+INNER JOIN employee
+ON company.company_code = employee.company_code
+GROUP BY company_code, founder
+ORDER BY company_code ASC;

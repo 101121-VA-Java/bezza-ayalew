@@ -1,0 +1,501 @@
+Monday Plan
+	- QC Survey
+	- 10:10am - 11:30am
+		- RevPro quiz 
+	- 11:30am - 1pm  
+		- Lecture + Setup
+			- Node.js & npm
+	- afternoon
+		- stand-up
+		- mock interview(Hibernate/Javalin/Rest)
+			- push to common repository
+		- Hackerrank as group
+			- https://www.hackerrank.com/1011javakevinweek8
+		- set up Angular
+			- node, npm, angular/cli	
+				- https://angular.io/guide/setup-local
+	- Groups
+		- Sam, Kendrick, Jason, Tricia
+		- Patience, Albert, David, Hannah
+		- Jeremy, Gerardo, Bezza, Peter
+		- Alex, Brayden, Dean, Davey
+
+Installation
+	- scoop
+		- scoop install nodejs
+			- includes npm
+	- website
+		- https://nodejs.org/en/download/
+
+Node.js
+	- open-source, cross-platform JavaScript runtime environment
+		- execute JS code outside of the browser
+	- Allows to use JS for every tier of a webapplication
+		- ie: JS backend
+
+
+Node Package Manager (npm)
+	- included with the installation of node.js
+	- One of the world's largest software registry
+		- free to use
+	- 3 main components
+		- website: discover packages, navigate...
+		- CLI tool: npm command in terminal
+		- registry: database of JS software available for download
+	- npm init
+		- initializes a new JS project
+			- generates the package.json file
+				- like the pom.xml
+					- allows us to list our dependencies used
+					- allows us to add any information about our project
+	- node_modules
+		- folder that contains all of the dependencies required for an npm project
+			- [BN] the folder won't be show-up until the first such package is installed with npm.
+			- after cloning/pulling an npm project, run npm install to download the required dependencies
+		- good practice is to add the node_modules foler to a .gitignore
+			- otherwise all of the dependencies are also pushed to GitHub
+		- managed by npm
+			- add dependency using npm install
+			- remove dependency using npm uninstall
+	- package-lock.json
+		- specifies the exact version of the dependencies and required subdependencies so that the project is 100% reproducible
+
+
+TypeScript
+	- made by Microsoft
+		- https://www.typescriptlang.org/docs/handbook/2/basic-types.html
+	- Superset of JS
+		- all JavaScript is valid TypeScript
+			- anything you can do in JS, can be done in TS
+	- features
+		- static typing
+		- compile/transpile time check
+		- interfaces
+		- access modifiers
+		...
+	- more OOP JS
+	- Cannot be ran in a browser
+		- has to be transpiled into JS
+	- installing TS
+		- npm -g install typescript
+			- (-g) flag indicates a global installation rather than project specific
+	- tsc
+		- command that can be used to transpile .ts files to .js files
+		- by default it uses a JS version < ES5
+			- use --target flag to specify a js version
+			- tsc --target es6 [script].ts
+	- types
+		- all of JS types
+		- TS specific
+			- any
+			- void
+			- never
+			- enums
+			- tuple
+	- access mods
+		- public by default
+		- private
+		- protected
+	- non-access mods
+		- readonly
+	- interfaces
+		- we're going to use those for type checking
+
+Tuesday
+Angular
+	- front-end framework
+	- used to make dynamic, single page applications
+		- SPA - Single Page Application
+			- design pattern
+			- load all of the static resources at once
+				- instead of reloading the webpage with another html view
+					- inject/remove views and functionality on A webpage rather than requesting a whole new one
+						- components
+							- basic building blocks of Angular
+		- DI - Dependency Injection 
+			- design pattern
+			- relying on a framework to provide instances of dependencies rather than creating them ourselves
+				- in this case, dependencies refer to objects that our code needs to run properly
+			- Abstract away implementation details
+	- Angular.js vs Angular
+		- Angular.js
+			- first iteration of Angular
+			- using js
+		- Angular
+			- any version after Angular.js
+			- using ts
+	- Powerful CLI (command line interface)
+		- ng new [app-name]
+		- ng serve
+			- "serves" our project locally on port 4200 by default
+			- --open flag (to open the browser automatically)
+		- ng test
+			- runs protractor and jasmine tests (spec.ts)
+		- ng build
+			- builds/package the application as an artifact to be deployed
+			- Webpack
+				- resource bundler which prepares the application during development/builds
+					- bundle refers to a file that incorporates files that belong together
+						- served to the client in one singular file request
+		- ng generate [component | service | module | pipe | ... ] [name]
+			- ng g [ c | s | ...] [name]
+
+	- Project set up
+		- angular.json
+			- angular application settings
+		- tsconfig.json
+			- typescript setting (ie: transpiling target)
+	- Decorators
+		- "fancy functions" that provide metadata as parameters
+		- Types
+			- class, method, property, parameter...
+		- In Angular, each of the main "elements" has their own decorator
+			- @Component
+			- @NgModule
+			- @Injectable for services
+			- @Pipe
+	- Components
+		- Building block of Angular, used to design the webpage
+			- a webpage is built by combining components together
+		- when generated, a component is made up of 4 files
+			- html - view
+			- css - styling
+			- ts - functionality
+			- spec.ts - testing
+		- @Component decorator
+			- selector
+				- how to reference the component elsewhere
+			- template
+				- html "template"
+			- style
+				- styling for that component
+	- Modules
+		- groups of related components
+		- at least one module
+			- by default AppModule, which is the root module
+				- convention, can be renamed if desired
+		- @NgModule
+			- decorator for modules
+				- defines 4 properties
+					- declarations - to declare components associated with the module
+					- imports - to import additional modules
+					- providers - define services associates with the module
+					- bootstrap - define the root component for the module
+	- Routing 
+		- allows us to swap components dynamically based on the url-path
+		- routing module
+			- contains predefined routes
+				- maps component to url paths
+		- define paths to navigate to using routerLink attribute
+			- ie: routerLink = ''
+			- IMPORTANT:
+				- do not use href attribute, or it will reload the page.
+		- <router-outlet></router-outlet>
+			- where the component is going to be injected
+
+Wednesday
+installing bootstrap on Angular
+	- npm install bootstrap
+	- add the path to the dependency ("node_modules/bootstrap/dist/css/bootstrap.min.css") in styles in the angular.json
+
+Databinding
+	- way to communicate between the HTML/DOM and the application state (typescript)
+		- way to keep the view up to date based on the state of the application
+	One-way databinding
+		- String interpolation
+			- display data to the view
+			- from ts file -> html document
+			- someVar: string = 'Kevin' in the component's ts file
+			- {{someVar}} in the html document to display the value of the variable
+		- EventBinding
+			- assign functionality to an event
+			- from html document -> ts file
+			- doSomething() {...} in the ts file
+			- <someTag (event)='doSomething()'> </...>
+		- Attribute/Property Binding
+			- assigning a value to an attribute/property of an html element
+			- from ts file -> html document
+	Two-way databinding
+		- both ways from html document <-> ts file
+		- import FormModule
+		- someVar:string = 'Kevin'; in ts file
+		- <input [(ngModel)]='someVar' /> in html document
+
+Directives
+	- classes that add behaviors to elements in Angular application
+		- angular has certain built-in directives to be leveraged
+	- Component
+		- html tag that refers to a component
+		- <app-someComponent></app-someComponent>
+	- Structural
+		- directives used to interact with the DOM
+			- create elements, display elements...
+		- *ngIf, *ngFor...
+	- Attribute
+		- directives used to change the looks/behaviors of DOM elements/ components
+			- can generate custom directives
+				- @Directive decorator
+		- ngStyle, ngClass, ngModel
+		
+Pipes
+	- used to transform/display data in the view
+		- don't actually change the data itself, only the way it's displayed
+		- ie: uppercase/lowercase
+			- date formatting
+			- currency
+	- used in conjunction with String Interpolation {{value | pipeName}}
+	- custom pipes
+		- ng g pipe pipename
+			- @Pipe decorator which has the name of the pipe
+			- implement transform()
+				- specifies the pipe behavior
+			
+Services
+	- Angular Entities used to reuse code/logic that could be reusable
+		- ie: making an API call (HTTP request)
+	- services are injected into other classes (components, services...)
+		- via the constructor
+			constructor(private cal: CalculatorService) { }
+		- services are injected using Dependency Injection
+			- different types of injectors are available
+				- root: service is a singleton/ one per application
+				- module: service is reused within a module
+				- component: 1 service per component
+	- @Injectable decorator
+		@Injectable({
+  			providedIn: '[type-of-injector]'
+		})
+
+Thursday
+Pokehome Component
+	- used to retrieve pokemon information from pokeapi using user input (capture pokemon id)
+		- https://pokeapi.co/api/v2/pokemon/
+		- HTTP request
+			- Http Method/Verb
+				- GET
+			- Url
+				- https://pokeapi.co/api/v2/pokemon/{pokemon-id}
+			- Body
+				- no body required
+			- headers
+				- no headers required
+		- Need to parse that information
+			- we're going to retrieve JSON
+			- need to map to a usable TS object
+				- id
+				- name
+				- sprites[]
+		- Pass the pokemon data to the Pokemon component
+			- We could have everything on the same component
+				- but for demo's sake we're passing data between components
+		
+Pokemon Component
+	- Display pokemon information:
+		- id, name, sprites
+	- Databinding/ Directives to display data
+
+Models
+	- classes/interfaces for data/object to be received
+		- for this example we'll be using an interface since we don't need to intstantiate any pokemons
+	- not required, but they make working with JSON data easier
+
+Making HTTP calls in Angular
+	- import HttpClientModule in the app.module
+		- gives access to HttpClient
+	- HttpClient allows us to make HttpRequests
+	- returns an Observable
+		- stream of data returned from an async http call
+		- follow a publisher/subscriber model/design pattern
+			- any entity that is subscrived to the the observable can retrieve the information
+			- lazy, which means that the http call is only made when the observable is subscribed
+	- .pipe - allows us to return an Observable
+	- .map - allows us to "map" a JSON object to an interface (Pokemon)
+	- https://angular.io/guide/http
+
+@Input/@Output
+	- decorator in order to pass information between a parent and a child components
+	- EventEmitter in order to emit custom asynchronously between our components
+	- https://angular.io/guide/inputs-outputs
+
+Friday
+Exercise due Monday 2pm:
+	- Angular tour of heroes:
+		- https://angular.io/tutorial
+		- push to GitHub Repo  
+Checkout APIs to get inspiration for p2
+	- https://github.com/public-apis/public-apis
+QC Monday 2pm
+	- Angular
+	- SDLC
+
+1o1s Monday Morning
+	- Quiz
+
+SDLC
+	- Software Development Life Cycle
+	- Process of planning, creating, testing and displaying an information system
+	- General steps/ phases:
+		- Requirement phase
+			- evaluate the current system and identify deficiencies
+			- meetings with client/ share holders... eliciting requirements
+				- done by Business Analysts(BAs)
+		- Analysis phase
+			- Requirements are going be to defined
+				- particular defiencies in the system and a proposal is made
+				- Senior Dev/Architect and BAs
+		- Design phase
+			- Proposed system is designed and product features are planned out
+			- no coding
+		- Development phase
+			- Software is actually built
+			- code is written
+		- Testing phase
+			- Software is tested to ensure desired functionality
+			- testing team
+		- Deployment/maintenance phase(s)
+			- product is delivered to the customer
+			- maintenance is kept up
+
+Waterfall model
+	- traditional model, linear/sequential cycle
+	- each phase must be completed before the next phase begins/ no overlapping of the phases
+		- inflexible, aka, no going back up
+	- Advantages
+		- well fleshed out requirements/documented
+		- well defined timeline, stable product definition
+		- most successful with small scale projects
+	- Disadvantages
+		- Cannot accomodate well for stakeholder feedback
+			- inflexible
+		- no coding until way later in the lifecycle
+		- poor model for long-ongoing project
+
+Agile
+	- Approach to SDLC based on iterative and incremental development with a focus on customer satisfaction and rapid delivery of software product
+		- breaking down the product into small incremental builds, provided in iterations, each iteration involving cross functional teams working simultaneously
+	- a philosophy/mindset
+		- https://agilemanifesto.org/
+		- Individuals and interactions over processes and tools
+		- Working software over comprehensive documentation
+		- Customer collaboration over contract negotiation
+		- Responding to change over following a plan
+
+Terminology
+	- User story
+		- individual feature/requirement for a project
+	- Epic
+		- group of related user stories that make up a big feature
+	- Story point
+		- level of difficulty assigned to a user story
+			- can be based on perceived time to be spent on it
+	- Sprint
+		- specified timeline for an iteration (2 weeks to a month)
+
+Scrum
+	- Agile framework/ implementation of Agile
+	- Artifacts(documents)
+		- Product Backlog
+			- List of everything that is known to be needed in the product/ list of requirements /features
+			- Managed by the product owner
+		- Sprint Backlog
+			- Set of product backlog items selected for a sprint
+	- Scrum team
+		- usually 5-9 members
+		- Product Owner
+			- responsible for the product resulting from the dev team
+			- resonsible for managing the product backlog
+		- Development Team
+			- devs/QA 
+		- Scrum master
+			- Facilitator to the scrum dev team
+			- clarifies questions, organize activities...
+	- Ceremonies (meetings) 
+		- https://www.myagilepartner.com/blog/wp-content/uploads/2018/10/sprint-scrum-1-e1538431497335.jpg
+		- Sprint Planning
+			- meeting to plan the work to done during a sprint
+			- collaboration of the whole Scrum team
+				- assign features/ story pointing(assign story points to user stories)
+			- ~ 2 hours per week of the sprint
+		- Daily Scrum(Daily standups) 
+			- Daily meeting for the dev team
+			- to check on the progress
+				- what did you do yesterday?
+				- what did you do today?
+					- includes struggles
+				- Any blockers?
+					- blocker: not being able to do work due to someone else's
+			- ~15 minutes
+		- Sprint Review
+			- Demo of the product resulting from the sprint, "working software"
+			- Scrum team and stake holders collaborate on inspecting what was done and update the product backlog as required
+				- maybe rework a feature
+		- Sprint Retrospective
+			- Scrum team reviews how the sprint went, and create a plan for improvement for the next sprint
+	- Burndown chart
+		- graph displaying the progress over the course of a sprint
+		- Story point remaining vs time
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,130 @@
+Full Stack architecture:
+	- refers to an architecture to design a web application
+		- client/server
+			- client: who/what is making the request
+			- server: who/what is handling the request and returning a response
+		- front end
+		- back end
+		- database
+		- Communication between the different components
+
+Java
+	- Java is a mature language
+		- lot of documentation 
+		- supported/ backed by Oracle
+	- Highlevel programming language
+	- OOP language
+		- also supports other programming paradigms (ie: functional)
+	- Compiled language
+		- provides compile time error checking
+	- Strictly typed language
+		- variable needs to declared with a type
+	- WORA/ Platform independence
+		- via the JVM
+	- Multithreaded language
+	- Automatic memory management
+		- Garbage collector
+
+JDK/JRE/JVM
+	- Java Development Kit
+		- Contains the JVM and the JRE
+		- Contains the compiler (javac) and other tools for development
+		- Provide an environment to develop and execute a Java program
+	- Java Runtime Environment
+		- Includes core libraries of Java
+		- Includes the JVM
+		- ALL THAT'S NEEDED TO RUN an application
+	- Java Virtual Machine
+		- takes the compiled code and executes it starting from the main method
+	- Compilation process in Java
+		- Highlevel Java code (.java) => Compilation Step (javac) => Bytecode (intermediary language) (.class) 
+		- then interpreted by the JVM
+
+Datatypes
+	- primitive
+		- boolean
+			- true/false: size is jvm dependent
+		- character
+			- 'A': 2bytes
+		- Whole numbers
+			- byte: 1byte
+			- short: 2bytes
+			- int: 4bytes // default
+			- long: 8 bytes
+		- Floating points, accomodate for decimals
+			- float: 4 bytes
+			- double: 8 bytes // default
+	- reference
+
+	- Strings
+		- objects
+		- Arrays of characters
+
+Control flow statements
+	- controls the flow of execution of an application
+	- if/else if/else
+		- determine whether a block of code executes based on a condition
+	- for 
+		- best used when number of iteration is known
+		- for( initialization; termination condition; increment){
+			statements to be ran
+		}		
+	- while
+		- best used when the number of iteration is unknown
+		- while(condition){
+			statements to be ran while the condition remains true
+		}
+	- do while
+		- while loop that executes at least once regardless of the condition
+	- switch
+		 - switch(expression to be evaluated){
+			case 1: 
+				[statements];
+				break;
+			case 2:
+				[statements];
+				break;
+			default:
+				[statements];
+				break;
+		}
+Truth tables
+	- && => and
+	- || => or
+	- True && True => T
+	- T && F => F
+	- F && F => F
+
+	- T || T => T
+	- T || F => T
+	- F || F => F
+= vs ==
+	- =: assigns a value to a variable
+	- ==: compares the value of primitive datatypes
+
+Methods
+	- blocks of reusable logic that can take in arguments and can have a return type
+		- int... any datatypes
+		- void: no return types
+
+Create a Calculator class
+	- add
+		public int add(int a, int b)
+	- subtract
+		public int subtract(int a, int b)
+	- multiply
+		public double multiply(double a, double b)
+	- remainder
+		public int remainder(int a, int b)
+	- weekday
+		public String weekday(String weekday)
+			- return a different string based on the weekday passed in, if it's not a week day return a default message
+
+1. countdown: make sure that argument is positive,
+	then count down from that number to 0. if
+	argument is not positive, it should print
+	"input must be positive or 0."
+	public void countdown(int startValue) { }
+
+2. greeting: takes in a name, should print a greeting
+	using the name.

@@ -1,4 +1,5 @@
 let token = sessionStorage.getItem("token");
+
 function login(){
     document.getElementById("error-div").innerHTML = "";
 

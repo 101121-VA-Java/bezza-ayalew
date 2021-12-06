@@ -1,0 +1,356 @@
+
+Tuesday
+
+POJO/ Java Beans
+	- POJO: Plain Old Java Object
+		- Any java object, not bound to any specific restriction
+		- used to define an entity
+	- Java Beans
+		- Special type of POJOs
+			- All java beans are POJOs but not POJOs are Java beans
+		- should implement the Serializable interface
+			- marker interface that provides information to the compiler that a class can be serialized
+				- serialization: process of converting an object into a stream of byte to store that object(file, db)...
+		- no-args constructor defined
+		- all fields to be encapsulated
+			- private
+			- setters/getters
+		- override Object class methods
+			- toString()
+			- hashcode()
+			- equals()
+
+CRUD operations
+	- Create | Read | Update | Delete
+	- POST | GET | PUT | DELETE
+
+
+Javalin
+	- lightweight framework for Java (and Kotlin) to handle HTTP requests and response
+	- runs on an embedded webserver(Jetty)
+		- Jetty: an open source web server and servlet container which allows a servlet application to run 
+	- Built on top of Servlets
+	- Set up
+		- dependencies
+			- Javalin
+			- slf4j
+			- (Object mapper, optional)
+		- main method
+		- Javalin app = Javalin.create()
+			      = Javalin.create( config -> {})
+		- app.start(portNum)
+			- by default 8080
+		- HTTP handlers
+			- a functional interface that takes in a Context Object as a parameter, 
+			  used to specify a behavior to handle a request at a particular endpoint
+				- Context object is an abstraction of HttpServletRequest and HttpServletResponse
+					- used to retrieve information from the request
+						- url
+						- headers
+						- body
+					- used to add information to the response
+						- headers
+						- body
+						- status code
+				- https://javalin.io/documentation#context
+			- app.get("path/endpoint", Executable<Handler>)
+			- app.get("path/endpoint", lambda)
+			- app.get("path/endpoint", (ctx) -> { // handle request})
+			- app.post("path/endpoint"...)
+
+			.../employees 
+				- Get
+					- retrieve all employees
+				- Post
+					- add a new employee
+					- include employee information in the request body
+
+JSON
+	- JavaScript Object notation
+		- JavaScript Like
+		- string format used to represent objects to be exchanged over the web
+			- syntax: {"key1":"value1", "key2":"value2"}
+				- {} represent an object
+				- key represent a field
+				- value represent the field's value
+
+JSON Marshalling/Object mapping
+	- Converting Java Objects to JSON
+		- mapping for data exchange
+	- Jackson-databind
+		- provides us with an object mapper to convert Java to JSON and vice versa
+		- Jackson integrates very well with javalin
+	
+
+Wednesday
+
+Handler groups
+	- Grouping HTTP handlers/setting up path to handle different resources (ie: Pokemons)
+		- app.routes()
+			- can then set up paths (nested paths as well) for the different resources
+				- path("resourceName", () -> {
+						get(//Handling behavior);
+						post(...);
+						path("...")...
+					});
+	- handler methods in Controllers should take Context object as param to interact the Http request and response
+
+URL - Uniform Resource Locator
+	- Location for where a resource (on a server) is located
+	- URL => protocol + domain name (host + port) + URI + parameters
+ 
+	
+	- URL: https://www.google.com/search?q=java+documentation&rlz=1C1GCEU_enUS924US924&oq=java+documen&aqs=chrome.0.0i433i512j69i57j0i512l5j69i60.4432j0j7&sourceid=chrome&ie=UTF-8
+	
+	- protocol - https://
+	- domain name - www.google.com
+	- URI - search
+		- Uniform Resource Identifier
+			- specifically determines a resource/service requested
+	- parameters (query params)
+		- ?param1=value1&param2=value2...
+		- q=java+documentation
+		- &rlz=1C1GCEU_enUS924US924
+		- &oq=java+documen
+		- &aqs=chrome.0.0i433i512j69i57j0i512l5j69i60.4432j0j7
+		- &sourceid=chrome
+		- &ie=UTF-8
+
+Path param
+	- parameter embedded in the url
+		- resources/{path-param}/{something}
+		- employees/{id}/reimbursements?param1=value1
+	
+
+
+base-app-endpoints
+
+- /employees
+	GET - return all employees
+	POST - create a new employee
+	 - /employees?manager-id=[value]
+		GET - return all employees with a specific manager (based on id)
+	 - /employees?username=[value]
+		GET - return all employees with a specific username (in this case, just one)
+	
+- /employees/{id}
+	GET - returning employee with id specified
+	PUT - update employee with that id
+			- FTAL(for this application's logic): this is just for basic information
+				- username, password, name
+		
+- /employees/{id}/admin
+	PUT - update employee with that id
+			- FTAL(for this application's logic): this is just for admin information
+				- Role, manager
+				- needs to have a role of Admin to use this endpoint
+
+- /auth
+	POST - login 
+		- send username/password
+		- retrieve Authorization Header if login was successful
+
+For ERS, endpoint/HTTP verb to create reimbursement?
+	- /reimbursements - POST
+		- JSON representation of reimbursement
+			- field with employee-id
+	- /createANewreimbursementforthisid/{id}
+		- if this was the endpoint, not very intuitive
+
+Authentication
+	- user being who they say they are
+		- ie: login in
+
+Authorization
+	- user has the permission to do something/use some functionality
+
+Query params:
+	- localhost:8080/employees?username=kev&password=kevpass
+		- bad for sensitive information as it's displayed in the url
+
+x-www-form-urlencoded params
+	- localhost:8080/employees
+		- params are hidden in the body of the request
+		- better practice with sensitive information
+
+Friday
+
+ORM
+	- Object-Relational mapping
+		- converting between incompatible types of objects (Java) and database tables
+
+JPA
+	- Java Persitence API
+		- interfaces meant for the mapping/managing of relational data with Java Objects
+		- "concept" rather than an actual tool
+			- describes which objects should be persisted and how
+			- tools like Hibernate IMPLEMENT JPA
+				- JPA != Hibernate
+
+Hibernate
+	- ORM framework for Java
+		- leverage annotations or xml files to sync java objects with a database
+	- Benefits
+		- Abstraction of JDBC
+			- uses JDBC under the hood
+			- abstracts away SQL queries
+				- abstracts sql dialects(ie: PostgreSQL, OracleSQL, MySQL...)
+					- can reuse the same methods for different dialects
+			- reduces boiler plate code 
+		- Caching
+			- can store query information in the server if reused
+				- can reduce the number of calls to the database
+		- leverages HQL
+			- Hibernate Query Language
+				- dialect specific to hibernate
+			- if desired, native SQL can still be used (bad practice)
+
+Class/Interfaces in Hibernate:
+
+	- Configuration (C)
+		- allowing to define information regarding your connection to your database/hibernate configuration to configure a session factory
+
+		- hibernate.cfg.xml
+			- config file for hibernate
+				- root tag: hibernate-configuration
+			- session factory tag
+				- provide configuration for session factory
+					- db info:
+						- username/password
+						- dialect - PostgreSQL
+						- url
+						- dialect...
+					- hbm2ddl.auto
+						- CREATE
+							- drop all existing tables and objects with names provided in your application and recreate the schema
+						- UPDATE
+							- doesn't drop anything, but adds to the schema if needed
+						- VALIDATE
+							- makes sure that the schema is expected as defined in your application
+						- NONE
+							- hibernate doesn't do ddl
+						- etc... 
+		- Object mapping in Hibernate (xml or annotation based)
+			- xml
+				- create a file: EntityName.hbm.xml
+					<hibernate-mapping>
+						<class name="com.revature.models.ClassName" table="entities">
+							<id name="entityId" column="entity_id"><generator class="increment"/></id>
+							<property name="entityProperty" column="entity_property"></property>
+						</class>
+					</hibernate-mapping>	
+				- in hibernate.cfg.xml
+					- <mapping resource="EntityName.hbm.xml"></mapping>
+			- annotation
+				- <mapping class="com.revature.models.ClassName"></mapping>	
+				- in the class, use JPA imported annotations to map a class
+					- @Entity: must go at the top of the class to be mapped to a table
+					- @Table: allows us to name a table to a different name than the class if desired
+						- @Table(name="entities")		
+	- SessionFactory (I)
+		- Heavy resource
+		- Singleton in charge of creating session object using a factory design pattern
+	- Session (I)
+		- represents database connection
+	- Transaction (I)
+		- manages ACID compliant transactions
+		- retrieved from Session object
+			- .beginTransaction()
+				- commit();
+				- rollback();
+	- Query (I)
+		- used to write more complex CRUD operations using HQL
+	- Criteria(I)
+		- used to programmatically write complicated SELECT statements
+
+Lazy loading vs Eager fetching
+	- when fetched eagerly, the entire object is retrieved as soon as the "parent" object is retrieved
+		- ie: if a reimbursement is retrieved, the Employee associated with that reimbursement is also loaded into our application
+	- when fetched lazily, a proxy is retrieved until that object is used in the session
+		- ie: if a reimbursement is retrieved, the employee associated with that reimbursement is loaded as a proxy until used explicitely in the session
+			- proxy: a dummy object/empty object aside from its unique identifier	
+
+DAO/CRUD methods (These are common interview questions, for more info checkout the documentation)
+	- .get() vs .load()
+		- used to retrieve records from the database
+		- get:
+			- eager fetching
+			- return null when getting an id not in the db
+		- load
+			- lazily fetches an object
+			- throw an exception if it doesn't exist in the database
+	- .update() vs merge()
+		- update:
+			- void return
+			- if trying to update an object with no id in db, throws an exception
+			- if a persistent object in the same session has the same id, throws an exception
+		- merge:
+			- returns the merged object
+			- if a persistent object in the same session has the same id, merges with the persistent object
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

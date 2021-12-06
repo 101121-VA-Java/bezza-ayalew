@@ -118,3 +118,5 @@ outstanding-questions.txt
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,java,maven
 *.properties
+/outstanding-questions.txt.txt
+/npm-practice

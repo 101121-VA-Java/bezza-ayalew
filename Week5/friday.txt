@@ -1,0 +1,178 @@
+DOM
+	- Document Object Model
+		- tree like representation of an HTML page using JS objects
+			- each node of the tree represents a nested HTML element
+	- Can traverse/navigate/retrieve elements from the DOM using js methods
+		- document.getElementById
+		- document.getElementsByClassName
+		- document.getElementsByTagName
+		- // can retrieve siblings, childs....
+	- Can programmatically manipulate these elements using their properties
+		- attributes
+		- setAttributes
+		- innerHTML
+	- Can also create and append elements from JS
+		- createElement("div") - creates an HTML element
+		- appendElement("") - attach that element to the appropriate location in the DOM 
+
+Template literal
+	- declared between backticks: `` 
+	- preservers new line
+	- easier than concatenation
+		- using concatenation: 'some string' + somevalue + '.'
+		- using template literal: `some string ${somevalue}.`
+			- to inject a value ${varName}
+
+Event listeners
+	- listeners that wait for certain events to happen to execute some functionality
+		- onclick
+		- onmousehover
+		- onkeydown
+		- ...
+	- 1st step, retrieve element
+	- assigning functionality
+		- element.onclick = callback
+		- element.addEventListener(event, callbackFunction, boolean)
+
+Event propagation
+	- how event listeners handle events for elements that have a parent/children with event listeners as well
+	- 2 types
+		- bubbling: default behavior - event bubbles up from the innermost child to the outermost parent
+		- capturing: event starts from the outermost parent and moves down to the innermost child element
+	- to specify behavior:
+		- element.addEventListener(event, callbackFunction, boolean)
+			- where boolean => true -> capturing
+			- where boolean => false (or no argument) -> bubbling
+	- to stop even propagation
+		- event.stopProgation();
+
+HTTP
+	- HyperText Transfer Protocol
+		- transfer protocol to exchange information over the web
+	- Consists of requests and responses exchanged between a client and a server
+	- information can be sent in many forms, plaintext, HTML, 
+	- JSON (JavaScript Object Notation)
+		- standard format for data transfer
+		- allows information exchange between different applications(ie: different languages, frameworks...)
+		
+	- HTTP request
+		- HTTP version: 1/1.1
+		- Verb
+			- HTTP methods: describes the operation requested by the HTTP request
+			- 4 main ones
+				- GET - retrieval operation (like select)
+				- POST	- create operation (like insert)
+				- PUT - update operation
+				- DELETE - delete operation
+		- URL
+			- where the request is sent to/ resource location
+		- Header
+			- metadata about the request
+		- Body
+			- can be empty
+			- can be used to include information
+				- ie: information about a user to be created...
+	- HTTP response
+		- HTTP version
+		- Header
+		- Body
+			- can be empty
+			- can be used to return the information requested
+		- Status code
+			- information about the status of the request (100 - 500s)
+				- 100 level: informational
+				- 200 level: success
+				- 300 level: redirect
+				- 400 level: client error
+				- 500 level: server error
+
+AJAX
+	- Asynchronous JS And XML
+	- library that allows us to send HTTP requests and receive HTTP responses
+		- allows for partial page reload
+			- making async calls, code is still running while we wait for the HTTP response
+	- 4 main Steps
+		- create XMLHttpRequest object
+		- setting a callback function to the ready state change of that object
+		- parameterize / open the request object (set request information)
+		- send the request
+	- 5 ready states
+		- 0: unsent - xhr object has beent created
+		- 1: opened - .open() has been called
+		- 2: headers received -- request has been sent, response headers have been received
+		- 3: loading - body of the response is loading
+		- 4: done - full response has been received and is ready for manipulation
+	- onreadystate change callback function
+		- checks that the ready state is 4 to make sure the the response was fully received
+		- checks that the status code is 200 for success
+		- define handling behavior for the response
+
+Fetch API
+	- an API in JS that allows us to send HTTP requests and receive HTTP responses
+		- introduced in ES6
+	- fetch(URL) - get
+	- fetch(URL, {method: 'POST', body: JSON.stringify(JSObject)});
+	- Can be used alongside async and await
+		- introduced in ES7
+		- async
+			- used to specify a function that returns a promise or is making an asynchronous call
+		- await
+			- used in an async function to make an asynchronous call
+
+S3 (AWS)
+	- Simple Storage Service
+		- Highly scalable
+		- Highly durable and available
+	- can programmatically access an s3 using the Amazon SDK
+	- can host static webpages on S3
+		- https://docs.aws.amazon.com/AmazonS3/latest/userguide/HostingWebsiteOnS3Setup.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

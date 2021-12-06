@@ -1,7 +1,6 @@
 if (!token) {
   window.location.href = "../pages/login.html";
 }else{
-  
   let col_map = {
       reimbId:"REIMB ID",
       reimbAmount:"REIMB AMOUNT",
@@ -112,6 +111,7 @@ if (!token) {
         delete data.ersUserId;
         delete data.userRoleId;
         populateData(data);
+        if(!document.getElementById("editBtn"))
         editBtn = document.createElement("button");
         editBtn.setAttribute("class","btn btn-outline-primary");
         editBtn.setAttribute("id", "editBtn");
@@ -198,6 +198,7 @@ if (!token) {
       reimbTypeId:0
   };
   populateData(newReimbursement);
+  if(!document.getElementById("editBtn"))
   editBtn = document.createElement("button");
   editBtn.setAttribute("class","btn btn-outline-primary");
   editBtn.setAttribute("id", "editBtn");
