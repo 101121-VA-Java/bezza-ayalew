@@ -18,9 +18,9 @@ export class EmployeeService {
     .pipe<Employee[]>(map((data: any) => data));
   }
 
-  getUserById(id: number): Observable<Employee[]>{
+  getUserById(id: number): any{
     return this.http.get(`${this.serviceUrl}/${id}`)
-    .pipe<Employee[]>(map((data: any) => data)); 
+    .pipe(map((data: any) => data)); 
     // {
     //   this.currentUser = JSON.stringify(data.body);
     // }));

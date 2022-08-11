@@ -24,7 +24,6 @@ export class EmployeeComponent implements OnInit {
 
   id: any = localStorage.getItem('token')?.split(':')[0];
   reimbursementData: any;
-  employeeProfile: any;
   resolvedReimbursementData: Reimbursement[] = [];
   pendingReimbursementData: Reimbursement[] = [];
   reimbursementForm: Reimbursement[] = [];
@@ -40,18 +39,14 @@ export class EmployeeComponent implements OnInit {
   ngOnInit(){
   }
 
-  getProfile(): any{
-    this.es.getUserById(this.id).subscribe((res: any) =>
-      this.employeeProfile =  res);
-      console.log(this.employeeProfile);
-    return this.employeeProfile;
+  getProfile(){
+    this.es.getUserById(this.id).subscribe((res: any) => {
+      this.profileDataSource.data.push(res)});
   }
   
   viewProfile(){
     this.view = true;
     this.edit = false;
-    
-    this.profileDataSource.data = this.employeeProfile;
     this.displayedColumns = EmployeeColumns.map((col) => col.key);
     this.columnsSchema = EmployeeColumns;
     
@@ -60,7 +55,6 @@ export class EmployeeComponent implements OnInit {
   updateProfile(){
     this.edit = true;
     this.view = false;
-    this.profileDataSource.data = this.employeeProfile;
     this.displayedColumns = EmployeeColumns.map((col) => col.key);
     this.columnsSchema = EmployeeColumns;
   }
@@ -75,12 +69,10 @@ export class EmployeeComponent implements OnInit {
 
   
 
-  getReimbursementData(): any {
+  getReimbursementData() {
     this.ds.getReimbursementByAuthorId(this.id)
-    .subscribe((res: any) => 
-    this.reimbursementData = res);
-    console.log(this.reimbursementData);
-    for(const reimb of this.reimbursementData){
+    .subscribe((res: any) => {
+    for(const reimb of res){
       if(reimb.reimbStatus > 1)
       {
         this.resolvedReimbursementData.push(reimb);
@@ -88,7 +80,7 @@ export class EmployeeComponent implements OnInit {
         this.pendingReimbursementData.push(reimb);
       }
     }
-    return this.reimbursementData;
+  this.reimbursementData = res});
   }
 
   inputHandler(e: any, id: number, key: string) {
@@ -109,7 +101,7 @@ export class EmployeeComponent implements OnInit {
     this.viewAllReimbs = true;
     this.viewPendingReimbs = false;
     this.viewResolvedReimbs = false;
-    this.reimbDataSource.data = this.getReimbursementData();
+    this.reimbDataSource.data = this.reimbursementData;
     this.displayedColumns = ReimbColumns.map((col) => col.key);
     this.columnsSchema = ReimbColumns;
 
@@ -119,7 +111,7 @@ export class EmployeeComponent implements OnInit {
     this.viewAllReimbs = false;
     this.viewPendingReimbs = true;
     this.viewResolvedReimbs = false;
-    this.reimbDataSource.data = this.getReimbursementData();
+    this.reimbDataSource.data = this.pendingReimbursementData;
     this.reimbDataSource.data = this.pendingReimbursementData;
     this.displayedColumns = ReimbColumns.map((col) => col.key);
     this.columnsSchema = ReimbColumns;
