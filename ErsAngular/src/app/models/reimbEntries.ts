@@ -23,6 +23,11 @@ export interface ReimbEntries {
     label: ''
   },
   {
+    key: 'reimbId',
+    type: 'number',
+    label: 'Claim Id'
+  },
+  {
     key: 'reimbAmount',
     type: 'number',
     label: 'Amount'
@@ -38,11 +43,6 @@ export interface ReimbEntries {
     label: 'Receipt'
   },
   {
-    key: 'reimbResolved',
-    type: 'date',
-    label: 'Date Resolved'
-  },
-  {
     key: 'reimbSubmitted',
     type: 'date',
     label: 'Date Submitted'
@@ -50,7 +50,7 @@ export interface ReimbEntries {
   {
     key: 'reimbAuthor',
     type: 'number',
-    label: 'Resolver'
+    label: 'Employee Id'
   },
   {
     key: 'reimbStatus',
