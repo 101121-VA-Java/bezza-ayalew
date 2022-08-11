@@ -131,6 +131,7 @@ export class EmployeeComponent implements OnInit {
   fileNewReimbursement(){
     this.fileReimbursement = true;
     const newReimb: ReimbEntries = {
+      isSelected: false,
       reimbId: 0,
       reimbAmount: 0,
       reimbDescription: '',
@@ -142,7 +143,7 @@ export class EmployeeComponent implements OnInit {
       reimbStatus: 1,
       reimbType: 0,
       isEdit: true,
-      isSelected: false
+      
     }
     this.reimbDataSource.data = [newReimb];
     this.displayedColumns = ReimbColumns.map((col) => col.key);
