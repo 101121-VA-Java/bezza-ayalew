@@ -3,7 +3,6 @@ package com.revature.service;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import com.revature.dao.DaoFactory;
 import com.revature.dao.ErsUsersDao;
 import com.revature.model.ErsUsers;
@@ -118,3 +117,4 @@ public class ErsUsersService {
 		
 	}
 }
+

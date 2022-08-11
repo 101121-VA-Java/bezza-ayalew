@@ -57,8 +57,7 @@ if (!token) {
         });
       if(response.status == 200){
         window.location.reload();
-        } else {
-          document.getElementById('error-div').innerHTML='Unable to submit reimbursement.'
+        document.getElementById('error-div').innerHTML='Successfully submit reimbursement.'
         }
       }else{
         let userInput = "?reimbAuthId=" + empId;
@@ -70,9 +69,8 @@ if (!token) {
           body: JSON.stringify(data)
         });
       if(response.status == 200){
+        document.getElementById('error-div').innerHTML='Successfully submit reimbursement.'
         window.location.reload();
-        } else {
-          document.getElementById('error-div').innerHTML='Unable to submit reimbursement.'
       }
     }
   }
@@ -220,7 +218,6 @@ if (!token) {
     let authId = empId;
     let status = "resolved";
     getMyReimbursementsByStatus(authId,status);
-    console.log("my resolved reimbursements on table");
   }
 
   function tableMyPendingReimbursements(){
@@ -228,7 +225,6 @@ if (!token) {
     let status = "pending";
     let authId = empId;
     getMyReimbursementsByStatus(authId,status);
-    console.log("my pending reimbursements on table");
   }
 
   async function getMyAccount() {

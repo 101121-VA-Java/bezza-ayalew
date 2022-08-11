@@ -11,6 +11,7 @@ import java.util.List;
 
 import com.revature.model.ErsReimbursement;
 import com.revature.util.ConnectionUtil;
+import com.revature.util.LogUtil;
 
 public class ErsReimbursementPostgres implements ErsReimbursementDao {
 
@@ -37,6 +38,7 @@ public class ErsReimbursementPostgres implements ErsReimbursementDao {
 				reimbs.add(reimb);
 			}
 		} catch (SQLException e) {
+			LogUtil.whatHappend("Exception in ErsReimbursementDao");
 			e.printStackTrace();
 		} 
 		return reimbs;
@@ -67,9 +69,9 @@ public class ErsReimbursementPostgres implements ErsReimbursementDao {
 											rs.getInt("reimb_type_id"));
 			}
 		} catch (SQLException e) {
+			LogUtil.whatHappend("Exception in ErsReimbursementDao");
 			e.printStackTrace();
 		} 
-		System.out.println("in dao" + reimb);
 		return reimb;
 	}
 
@@ -102,6 +104,7 @@ public class ErsReimbursementPostgres implements ErsReimbursementDao {
 				reimbs.add(reimb);
 			}
 		} catch (SQLException e) {
+			LogUtil.whatHappend("Exception in ErsReimbursementDao");
 			e.printStackTrace();
 		} 
 		return reimbs;
@@ -136,6 +139,7 @@ public class ErsReimbursementPostgres implements ErsReimbursementDao {
 				reimbs.add(reimb);
 			}
 		} catch (SQLException e) {
+			LogUtil.whatHappend("Exception in ErsReimbursementDao");
 			e.printStackTrace();
 		} 
 		return reimbs;
@@ -169,6 +173,7 @@ public class ErsReimbursementPostgres implements ErsReimbursementDao {
 				newReimb.setReimbId(rs.getInt("reimb_id"));
 			}
 		} catch (SQLException e) {
+			LogUtil.whatHappend("Exception in ErsReimbursementDao");
 			e.printStackTrace();
 		}
 		
@@ -197,6 +202,7 @@ public class ErsReimbursementPostgres implements ErsReimbursementDao {
 			if(ps.executeUpdate()>0) result = true;
 
 		} catch (SQLException e) {
+			LogUtil.whatHappend("Exception in ErsReimbursementDao");
 			e.printStackTrace();
 		}
 		return result;

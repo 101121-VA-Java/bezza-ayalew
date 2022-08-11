@@ -60,6 +60,7 @@ public class ErsUsersPostgres implements ErsUsersDao{
 									rs.getInt("user_role_id"));
 			}
 		} catch (SQLException e) {
+			
 			e.printStackTrace();
 		} 
 		return ersUser;

@@ -5,7 +5,9 @@ public class DaoFactory {
 	private static DaoFactory df;
 	private ErsUsersDao eud;
 	private ErsReimbursementDao erd;
-
+// a factory class was supposed to implement an interface with method signatures,
+// which it overrides to generate class objects that fulfill the promise of the interface.
+// by utilizing the overridden methods. But this one is 
 	// private constructor to restrict instantiation of DaoFactory class
 	private DaoFactory() {
 	}

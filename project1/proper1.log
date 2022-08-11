@@ -1,7 +1,0 @@
-2021-11-20 08:57:14.113 [main] TRACE  - This is a trace!
-2021-11-20 08:57:14.114 [main] DEBUG  - This is a debug!
-2021-11-20 08:57:14.114 [main] INFO   - This is an info!
-2021-11-20 08:57:14.114 [main] WARN   - This is a warning!
-2021-11-20 08:57:14.114 [main] ERROR  - This is an error!
-2021-11-20 08:57:14.115 [main] FATAL  - This is fatal!
-2021-11-20 08:57:14.115 [main] ERROR  - Exception was thrown and handled: My Exception is being thrown here

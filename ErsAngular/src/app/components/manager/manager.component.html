@@ -1,0 +1,42 @@
+<app-nav></app-nav>
+<figure class="text-center">
+  <h1 class="display-6">Managers' Page</h1>
+  <!-- <hr style="width:100%", size="3", color=black> -->
+</figure>
+<div class="text-center">
+    <div class="btn-group text-center gap-xxl-5" role="group" aria-label="Basic example">
+      <div class="dropdown pull-left">
+          <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+              View Employees
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <button type="button" (click)="getAllEmployees()" class="dropdown-item" id="viewAllEmployees">All</button>
+              <input class="form-control" (keyup)="onEmpId($event)" type="text" placeholder="By Id">
+          </ul>
+      </div>
+      <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+              View Reimbursements
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <select class="form-select form-select-md mb-3" [(ngModel)]="selectedStatus" (change)="getReimbsByStatus(selectedStatus)">
+                <option value="" selected disabled>By Status</option>
+                <option *ngFor="let status of statusDescription" [value] = status.name>
+                  {{status.name | titlecase}}
+                </option>
+              </select>
+              <li><hr class="dropdown-divider"></li>
+              <input class="form-control" (keyup)="onReimbAuthId($event)" type="text" placeholder="By Author Id">
+          </div>
+      </div>
+      <div class="dropdown pull-left">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+            Review Reimbursements
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <input class="form-control" (keyUp)="onReimbId($event)" type="text" placeholder="Reimbursement Id">
+        </ul>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,206 @@
+<app-nav></app-nav>
+<figure class="text-center">
+    <h1 class="display-6">Employees' Page</h1>
+    <!-- <hr style="width:100%", size="3", color=black> -->
+</figure>
+
+<div class="text-center">
+    <div class="btn-group text-center gap-xxl-5" role="group" aria-label="Basic example">
+        <a class="btn btn-secondary dropdown-toggle" (click) = getProfile() role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Employee Account
+        </a>
+          <!-- <button type="button"  class="btn btn-secondary dropdown-toggle" (click) = getProfile() role="button" data-bs-toggle="dropdown">
+              Employee Account
+          </button> -->
+          <div class="dropdown-menu">
+            <button (click) = "viewProfile()" type="button" class="dropdown-item" >View</button>
+            <button (click) = "updateProfile()" type="button" class="dropdown-item" >Update</button>
+          </div>
+
+      <div class="dropdown pull-right">
+          <a class="btn btn-secondary dropdown-toggle" (click) = getReimbursementData() role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Reimbursements
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <button (click) = viewAllReimbursements() type="button" class="dropdown-item" >View All</button>
+            <button (click) = viewPendingReimbursements() type="button" class="dropdown-item" >View Pending</button>
+            <button (click) = viewResolvedReimbursements() type="button" class="dropdown-item" >View Resolved</button>
+            <li><hr class="dropdown-divider"></li>
+            <button (click) = fileNewReimbursement() type="button" class="dropdown-item" >File New</button>
+          </ul>
+      </div>
+</div>
+</div>
+
+<!-- View profile -->
+<table mat-table [dataSource]="profileDataSource" *ngIf = "view" class="mat-elevation-z8 demo-table">
+  <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
+    <th mat-header-cell *matHeaderCellDef>
+      {{ col.label }}
+    </th>
+    <td mat-cell *matCellDef="let element">
+      {{element[col.key]}}
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<!-- Edit profile -->
+<table mat-table [dataSource]="profileDataSource" *ngIf = "edit" class="mat-elevation-z8 demo-table">
+  <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
+    <th mat-header-cell *matHeaderCellDef>
+      {{ col.label }}
+    </th>
+    <td mat-cell *matCellDef="let element">
+      <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
+        <ng-container *ngSwitchCase="'isSelected'">
+          <mat-checkbox
+            (change)="element.isSelected = $event.checked">
+          </mat-checkbox>
+        </ng-container>
+        <div class="btn-edit" *ngSwitchCase="'isEdit'">
+          <button mat-button (click)="element.isEdit = !element.isEdit">
+            Edit
+          </button>
+        </div>
+      </div>
+      <div [ngSwitch]="col.type" *ngIf="element.isEdit">
+        <div *ngSwitchCase="'isSelected'"></div>
+        <div class="btn-edit" *ngSwitchCase="'isEdit'">
+          <button
+            mat-button
+            (click)="editRow(element)"
+            >
+            Done
+          </button>
+        </div>
+        
+        <mat-form-field class="form-input" *ngSwitchDefault>
+          <input
+            matInput
+            [required]="col.required"
+            [pattern]="col.pattern"
+            [type]="col.type"
+            [(ngModel)]="element[col.key]"
+            (change)="inputHandler($event, element.id, col.key)"
+          />
+        </mat-form-field>
+      </div>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table> 
+
+<!-- View all reimbursements -->
+<table mat-table [dataSource]="reimbDataSource" *ngIf = "viewAllReimbs" class="mat-elevation-z8 demo-table">
+  <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
+    <th mat-header-cell *matHeaderCellDef>
+      {{ col.label }}
+    </th>
+    <td mat-cell *matCellDef="let element">
+      {{element[col.key]}}
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<!-- View pending reimbursements -->
+<table mat-table [dataSource]="reimbDataSource" *ngIf = "viewPendingReimbs" class="mat-elevation-z8 demo-table">
+  <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
+    <th mat-header-cell *matHeaderCellDef>
+      {{ col.label }}
+    </th>
+    <td mat-cell *matCellDef="let element">
+      {{element[col.key]}}
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<!-- View resolved reimbursements -->
+<table mat-table [dataSource]="reimbDataSource" *ngIf = "viewResolvedReimbs" class="mat-elevation-z8 demo-table">
+  <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
+    <th mat-header-cell *matHeaderCellDef>
+      {{ col.label }}
+    </th>
+    <td mat-cell *matCellDef="let element">
+      {{element[col.key]}}
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<!-- File new reimbursement -->
+<table mat-table [dataSource]="reimbDataSource" *ngIf = "fileReimbursement" class="mat-elevation-z8 demo-table">
+  <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
+    <th mat-header-cell *matHeaderCellDef>
+      {{ col.label }}
+    </th>
+    <td mat-cell *matCellDef="let element">
+      <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
+        <ng-container *ngSwitchCase="'isSelected'">
+          <mat-checkbox
+            (change)="element.isSelected = $event.checked">
+          </mat-checkbox>
+        </ng-container>
+        <div class="btn-edit" *ngSwitchCase="'isEdit'">
+          <button mat-button (click)="element.isEdit = !element.isEdit">
+            Edit
+          </button>
+        </div>
+        <span *ngSwitchCase="'date'">
+          {{ element[col.key] | date: 'mediumDate' }}
+        </span>
+        <span *ngSwitchDefault>
+          {{ element[col.key] }}
+        </span>
+      </div>
+      <div [ngSwitch]="col.type" *ngIf="element.isEdit">
+        <div *ngSwitchCase="'isSelected'"></div>
+        <div class="btn-edit" *ngSwitchCase="'isEdit'">
+          <button
+            mat-button
+            (click)="editReimbRow(element)"  
+          >
+            Done
+          </button>
+        </div>
+        <mat-form-field
+          class="form-input"
+          *ngSwitchCase="'date'"
+          appearance="fill"
+        >
+          <input
+            matInput
+            [matDatepicker]="picker"
+            [(ngModel)]="element[col.key]"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="form-input" *ngSwitchDefault>
+          <input
+            matInput
+            [required]="col.required"
+            [pattern]="col.pattern"
+            [type]="col.type"
+            [(ngModel)]="element[col.key]"
+            (change)="inputHandler($event, element.id, col.key)"
+          />
+        </mat-form-field>
+      </div>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table> 
+
+

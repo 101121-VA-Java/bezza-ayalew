@@ -1,0 +1,22 @@
+<app-nav></app-nav>
+<figure class="text-center">
+    <h1 class="display-2">Login</h1>
+    <!-- <hr style="width:100%", size="3", color=black> -->
+</figure>
+<div class="container-sm" style="width:30%">
+    <form>
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input [(ngModel)]="userLogin.ersUsername" type="text" name="username" class="form-control" >
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input [(ngModel)]="userLogin.ersPassword" type="password" name="password" class="form-control" >
+        </div>
+        <button (click)="login()" type="submit" class="btn btn-primary">Login</button>
+    </form>
+</div>
+	<div id="error-div">
+	</div>
+
+

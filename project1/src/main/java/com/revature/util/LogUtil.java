@@ -4,10 +4,8 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
 public class LogUtil {
-//	private static final Logger logger = LogManager.getLogger(LogUtil.class);
 	private static Logger log = LogManager.getRootLogger();
-	public static void whatHappended(String note){
+	public static void whatHappend(String note){
         log.error(note);
     }
-	
 }

@@ -1,0 +1,35 @@
+2021-11-20 08:57:14.113 [main] TRACE  - This is a trace!
+2021-11-20 08:57:14.114 [main] DEBUG  - This is a debug!
+2021-11-20 08:57:14.114 [main] INFO   - This is an info!
+2021-11-20 08:57:14.114 [main] WARN   - This is a warning!
+2021-11-20 08:57:14.114 [main] ERROR  - This is an error!
+2021-11-20 08:57:14.115 [main] FATAL  - This is fatal!
+2021-11-20 08:57:14.115 [main] ERROR  - Exception was thrown and handled: My Exception is being thrown here
+2021-12-18 13:35:08.258 [main] TRACE  - This is a trace!
+2021-12-18 13:35:08.259 [main] DEBUG  - This is a debug!
+2021-12-18 13:35:08.259 [main] INFO   - This is an info!
+2021-12-18 13:35:08.259 [main] WARN   - This is a warning!
+2021-12-18 13:35:08.259 [main] ERROR  - This is an error!
+2021-12-18 13:35:08.259 [main] FATAL  - This is fatal!
+2021-12-18 13:35:08.259 [main] ERROR  - Exception was thrown and handled: My Exception is being thrown here
+2021-12-18 14:28:20.111 [main] TRACE  - This is a trace!
+2021-12-18 14:28:20.111 [main] DEBUG  - This is a debug!
+2021-12-18 14:28:20.111 [main] INFO   - This is an info!
+2021-12-18 14:28:20.112 [main] WARN   - This is a warning!
+2021-12-18 14:28:20.112 [main] ERROR  - This is an error!
+2021-12-18 14:28:20.112 [main] FATAL  - This is fatal!
+2021-12-18 14:28:20.112 [main] ERROR  - Exception was thrown and handled: My Exception is being thrown here
+2021-12-19 17:49:00.433 [main] TRACE  - This is a trace!
+2021-12-19 17:49:00.435 [main] DEBUG  - This is a debug!
+2021-12-19 17:49:00.435 [main] INFO   - This is an info!
+2021-12-19 17:49:00.435 [main] WARN   - This is a warning!
+2021-12-19 17:49:00.435 [main] ERROR  - This is an error!
+2021-12-19 17:49:00.435 [main] FATAL  - This is fatal!
+2021-12-19 17:49:00.435 [main] ERROR  - Exception was thrown and handled: My Exception is being thrown here
+2021-12-19 17:49:13.323 [main] TRACE  - This is a trace!
+2021-12-19 17:49:13.324 [main] DEBUG  - This is a debug!
+2021-12-19 17:49:13.324 [main] INFO   - This is an info!
+2021-12-19 17:49:13.324 [main] WARN   - This is a warning!
+2021-12-19 17:49:13.324 [main] ERROR  - This is an error!
+2021-12-19 17:49:13.324 [main] FATAL  - This is fatal!
+2021-12-19 17:49:13.324 [main] ERROR  - Exception was thrown and handled: My Exception is being thrown here
