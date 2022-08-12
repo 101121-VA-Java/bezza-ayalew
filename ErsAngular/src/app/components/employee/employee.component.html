@@ -175,7 +175,7 @@
             (click)="editReimbRow(element)"
             [disabled]="disableSubmit(element.id)"  
           >
-            Done
+            Submit
           </button>
         </div>
         <mat-form-field
@@ -200,6 +200,7 @@
             [required]="col.required"
             [pattern]="col.pattern"
             [type]="col.type"
+            [step] = "col.step"
             [(ngModel)]="element[col.key]"
             (change)="inputHandler($event, element.id, col.key)"
           />

@@ -18,7 +18,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class EmployeeComponent implements OnInit {
   displayedColumns: string[] = [];
   columnsSchema: any = [];
-  profileData: Employee[] = [];
+
   profileDataSource = new MatTableDataSource<Employee>();
   reimbDataSource = new MatTableDataSource<ReimbEntries>();
   valid: any = {};
@@ -63,9 +63,7 @@ export class EmployeeComponent implements OnInit {
     }
   }
   editReimbRow(row: ReimbEntries){
-    if(row.reimbId !=0){
       this.ds.updateReimbursement(row).subscribe(() => (row.isEdit = false));
-    }
   }
 
   getReimbursementData() {
@@ -129,7 +127,6 @@ export class EmployeeComponent implements OnInit {
   }
 
   fileNewReimbursement(){
-    this.fileReimbursement = true;
     const newReimb: ReimbEntries = {
       isSelected: false,
       reimbId: 0,
@@ -142,10 +139,10 @@ export class EmployeeComponent implements OnInit {
       reimbResolver: 0,
       reimbStatus: 1,
       reimbType: 0,
-      isEdit: true,
-      
+      isEdit: true
     }
     this.reimbDataSource.data = [newReimb];
+    this.fileReimbursement = true;
     this.displayedColumns = ReimbColumns.map((col) => col.key);
     this.columnsSchema = ReimbColumns;
   }

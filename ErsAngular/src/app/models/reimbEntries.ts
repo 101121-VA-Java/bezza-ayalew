@@ -30,6 +30,7 @@ export interface ReimbEntries {
   {
     key: 'reimbAmount',
     type: 'number',
+    step: 'any',
     label: 'Amount'
   },
   {
