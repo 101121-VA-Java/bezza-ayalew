@@ -26,8 +26,8 @@ export class DataService {
   getReimbursementById(id: number): any{
     return this.http.get(`${this.reimbUrl}/id`).pipe(map((res: any) => res));
   }
-  addReimbursement(reimb: Reimbursement): Observable<ReimbEntries> {
-      return this.http.put<ReimbEntries>(`${this.reimbUrl}`, reimb
+  addReimbursement(reimb: ReimbEntries): Observable<ReimbEntries> {
+      return this.http.post<ReimbEntries>(`${this.reimbUrl}`, reimb
       );
   }
   updateReimbursement(reimb: ReimbEntries): Observable<ReimbEntries> {

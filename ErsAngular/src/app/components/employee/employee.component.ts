@@ -28,8 +28,8 @@ export class EmployeeComponent implements OnInit {
   resolvedReimbursementData: Reimbursement[] = [];
   pendingReimbursementData: Reimbursement[] = [];
   reimbursementForm: Reimbursement[] = [];
-  view: boolean = false;
-  edit: boolean = false; 
+  view = false;
+  edit = false; 
   viewAllReimbs = false;
   viewPendingReimbs = false;
   viewResolvedReimbs = false;
@@ -43,16 +43,24 @@ export class EmployeeComponent implements OnInit {
   }
   
   viewProfile(){
-    this.view = true;
+    this.fileReimbursement = false;
+    this.viewAllReimbs = false;
+    this.viewPendingReimbs = false;
+    this.viewResolvedReimbs = false;
     this.edit = false;
+    this.view = true;
     this.displayedColumns = EmployeeColumns.map((col) => col.key);
     this.columnsSchema = EmployeeColumns;
     
   }
 
   updateProfile(){
-    this.edit = true;
+    this.fileReimbursement = false;
+    this.viewAllReimbs = false;
+    this.viewPendingReimbs = false;
+    this.viewResolvedReimbs = false;
     this.view = false;
+    this.edit = true;
     this.displayedColumns = EmployeeColumns.map((col) => col.key);
     this.columnsSchema = EmployeeColumns;
   }
@@ -64,6 +72,10 @@ export class EmployeeComponent implements OnInit {
   }
   editReimbRow(row: ReimbEntries){
       this.ds.updateReimbursement(row).subscribe(() => (row.isEdit = false));
+  }
+
+  submitReimbRow(row: ReimbEntries){
+      this.ds.addReimbursement(row).subscribe(() => (row.isEdit = false));
   }
 
   getReimbursementData() {
@@ -95,6 +107,9 @@ export class EmployeeComponent implements OnInit {
   }
 
   viewAllReimbursements(){
+    this.view = false;
+    this.edit = false;
+    this.fileReimbursement = false;
     this.viewAllReimbs = true;
     this.viewPendingReimbs = false;
     this.viewResolvedReimbs = false;
@@ -105,6 +120,9 @@ export class EmployeeComponent implements OnInit {
   }
 
   viewPendingReimbursements(){
+    this.view = false;
+    this.edit = false;
+    this.fileReimbursement = false;
     this.viewAllReimbs = false;
     this.viewPendingReimbs = true;
     this.viewResolvedReimbs = false;
@@ -116,6 +134,9 @@ export class EmployeeComponent implements OnInit {
   }
 
   viewResolvedReimbursements(){
+    this.view = false;
+    this.edit = false;
+    this.fileReimbursement = false;
     this.viewAllReimbs = false;
     this.viewPendingReimbs = false;
     this.viewResolvedReimbs = true;
@@ -143,6 +164,11 @@ export class EmployeeComponent implements OnInit {
     }
     this.reimbDataSource.data = [newReimb];
     this.fileReimbursement = true;
+    this.view = false;
+    this.edit = false; 
+    this.viewAllReimbs = false;
+    this.viewPendingReimbs = false;
+    this.viewResolvedReimbs = false;
     this.displayedColumns = ReimbColumns.map((col) => col.key);
     this.columnsSchema = ReimbColumns;
   }

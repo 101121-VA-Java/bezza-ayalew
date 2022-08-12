@@ -145,10 +145,10 @@
 <!-- File new reimbursement -->
 <table mat-table [dataSource]="reimbDataSource" *ngIf = "fileReimbursement" class="mat-elevation-z8 demo-table">
   <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
-    <th mat-header-cell *matHeaderCellDef>
+    <mat-header-cell *matHeaderCellDef>
       {{ col.label }}
-    </th>
-    <td mat-cell *matCellDef="let element">
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
       <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
         <ng-container *ngSwitchCase="'isSelected'">
           <mat-checkbox
@@ -172,9 +172,9 @@
         <div class="btn-edit" *ngSwitchCase="'isEdit'">
           <button
             mat-button
-            (click)="editReimbRow(element)"
-            [disabled]="disableSubmit(element.id)"  
-          >
+            (click)="submitReimbRow(element)"
+            [disabled]="disableSubmit(element.id)"
+            >
             Submit
           </button>
         </div>
@@ -206,10 +206,10 @@
           />
         </mat-form-field>
       </div>
-    </td>
+    </mat-cell>
   </ng-container>
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 </table> 
 
 
