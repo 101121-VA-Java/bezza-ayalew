@@ -7,7 +7,7 @@ import com.revature.exceptions.LoginException;
 
 public class FrontController {
 	
-	private static Scanner sc = new Scanner(System.in);
+//	private static Scanner sc = new Scanner(System.in);
 	public static void welcome(Scanner sc) throws IOException, LoginException {
 		boolean run = true;
 		while(run) {

@@ -6,17 +6,18 @@
 <div class="text-center">
     <div class="btn-group text-center gap-xxl-5" role="group" aria-label="Basic example">
       <div class="dropdown pull-left">
-          <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="btn btn-secondary dropdown-toggle"  data-bs-toggle="dropdown" aria-expanded="false">
               View Employees
           </a>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <button type="button" (click)="getAllEmployees()" class="dropdown-item" id="viewAllEmployees">All</button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <button type="button" (click)="getAllEmployees()" class="dropdown-item" >All</button>
+              <li><hr class="dropdown-divider"></li>
               <input class="form-control" (keyup)="onEmpId($event)" type="text" placeholder="By Id">
-          </ul>
+          </div>
       </div>
       <div class="dropdown">
           <button class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-              View Reimbursements
+              Reiew Reimbursements
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <select class="form-select form-select-md mb-3" [(ngModel)]="selectedStatus" (change)="getReimbsByStatus(selectedStatus)">
@@ -26,17 +27,160 @@
                 </option>
               </select>
               <li><hr class="dropdown-divider"></li>
-              <input class="form-control" (keyup)="onReimbAuthId($event)" type="text" placeholder="By Author Id">
+              <input class="form-control" (keyup)="onReimbByAuthId($event)" type="text" placeholder="By Author Id">
           </div>
       </div>
-      <div class="dropdown pull-left">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+      <!-- <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
             Review Reimbursements
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <input class="form-control" (keyUp)="onReimbId($event)" type="text" placeholder="Reimbursement Id">
-        </ul>
-    </div>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <input class="form-control" (keyup)="onReimbId($event)" type="text" placeholder="Reimbursement Id">
+        </div>
+    </div> -->
   </div>
 </div>
+
+<!-- View all employees -->
+<table mat-table class="mat-elevation-z8 demo-table" [dataSource]="employeeDataSource" *ngIf = "allEmployees">
+  <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
+    <th mat-header-cell *matHeaderCellDef>
+      {{ col.label }}
+    </th>
+    <td mat-cell *matCellDef="let element">
+      {{element[col.key]}}
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<!-- View employee by Id -->
+
+<table mat-table class="mat-elevation-z8 demo-table" [dataSource]="employeeDataSource" *ngIf = "employeeById">
+  <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
+    <th mat-header-cell *matHeaderCellDef>
+      {{ col.label }}
+    </th>
+    <td mat-cell *matCellDef="let element">
+      {{element[col.key]}}
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<!-- Reimbursement by status-->
+
+<table mat-table class="mat-elevation-z8 demo-table" [dataSource]="reimbDataSource" *ngIf = "selectedReimbs">
+  <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
+    <mat-header-cell *matHeaderCellDef>
+      {{ col.label }}
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
+        <ng-container *ngSwitchCase="'isSelected'">
+          <mat-checkbox
+            (change)="element.isSelected = $event.checked">
+          </mat-checkbox>
+        </ng-container>
+        <div class="btn-edit" *ngSwitchCase="'isEdit'">
+          <button mat-button (click)="element.isEdit = !element.isEdit">
+            Edit
+          </button>
+        </div>
+        <span *ngSwitchCase="'date'">
+          {{ element[col.key] | date: 'mediumDate' }}
+        </span>
+        <span *ngSwitchDefault>
+          {{ element[col.key] }}
+        </span>
+      </div>
+      <div [ngSwitch]="col.type" *ngIf="element.isEdit">
+        <div *ngSwitchCase="'isSelected'"></div>
+        <div class="btn-edit" *ngSwitchCase="'isEdit'">
+          <button
+            mat-button
+            (click)="editReimbRow(element)"
+            [disabled]="disableSubmit(element.id)"
+            >
+            Done
+          </button>
+        </div>
+        
+        <mat-form-field class="form-input" *ngSwitchDefault>
+          <input
+            matInput
+            [required]="col.required"
+            [pattern]="col.pattern"
+            [type]="col.type"
+            [disabled]="col.disabled"
+            [(ngModel)]="element[col.key]"
+            (change)="inputHandler($event, element.id, col.key)"
+          />
+        </mat-form-field>
+      </div>
+    </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</table>
+
+<!-- Reimbursement by author Id-->
+
+<table mat-table class="mat-elevation-z8 demo-table" [dataSource]="reimbDataSource" *ngIf = "reimbByAuthor">
+  <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
+    <mat-header-cell *matHeaderCellDef>
+      {{ col.label }}
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
+        <ng-container *ngSwitchCase="'isSelected'">
+          <mat-checkbox
+            (change)="element.isSelected = $event.checked">
+          </mat-checkbox>
+        </ng-container>
+        <div class="btn-edit" *ngSwitchCase="'isEdit'">
+          <button mat-button (click)="element.isEdit = !element.isEdit">
+            Edit
+          </button>
+        </div>
+        <span *ngSwitchCase="'date'">
+          {{ element[col.key] | date: 'mediumDate' }}
+        </span>
+        <span *ngSwitchDefault>
+          {{ element[col.key] }}
+        </span>
+      </div>
+      <div [ngSwitch]="col.type" *ngIf="element.isEdit">
+        <div *ngSwitchCase="'isSelected'"></div>
+        <div class="btn-edit" *ngSwitchCase="'isEdit'">
+          <button
+            mat-button
+            (click)="editReimbRow(element)"
+            [disabled]="disableSubmit(element.id)"
+            >
+            Done
+          </button>
+        </div>
+        
+        <mat-form-field class="form-input" *ngSwitchDefault>
+          <input
+            matInput
+            [required]="col.required"
+            [pattern]="col.pattern"
+            [type]="col.type"
+            [disabled]="col.disabled"
+            [(ngModel)]="element[col.key]"
+            (change)="inputHandler($event, element.id, col.key)"
+          />
+        </mat-form-field>
+      </div>
+    </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</table>
+
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 

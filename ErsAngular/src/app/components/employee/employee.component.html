@@ -141,6 +141,7 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 
 <!-- File new reimbursement -->
 <table mat-table [dataSource]="reimbDataSource" *ngIf = "fileReimbursement" class="mat-elevation-z8 demo-table">
@@ -150,11 +151,6 @@
     </mat-header-cell>
     <mat-cell *matCellDef="let element">
       <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
-        <ng-container *ngSwitchCase="'isSelected'">
-          <mat-checkbox
-            (change)="element.isSelected = $event.checked">
-          </mat-checkbox>
-        </ng-container>
         <div class="btn-edit" *ngSwitchCase="'isEdit'">
           <button mat-button (click)="element.isEdit = !element.isEdit">
             Edit
@@ -210,6 +206,7 @@
   </ng-container>
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-</table> 
+</table>
+ 
 
 

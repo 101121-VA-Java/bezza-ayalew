@@ -1,0 +1,44 @@
+1. insert navbar
+2. insert a block and center its content
+3. insert heading "Employee's Page" text with (phont-size of heading1 and style as "display-6" class)
+4. 
+5.
+6.
+7. insert a block with centered content
+8. insert a block with specified attributes
+9. insert an anchor "Employee Account" with specified attributes
+
+15. insert a block styled as "dropdown-menu" class
+16. insert a button with text "View" styled as "dropdown-item" class which triggers the "viewProfiele()" function when clicked
+17. insert a button with text "Update" styled as "dropdown-item" class which triggers the "updateProfiele()" function when clicked
+
+
+20. insert a block styled as "dropdown pull-right" class
+21. insert anchor text "Reimbursement" styled
+
+50. If the variable "edit" is true, then insert a mat-table table styled as "mat-elevation-z8 demo-table" 
+	class and bind the "dataSource" attribute to the value of "profileDatasurce"
+51. Insert a block in which the elements of "columnSchema" will be iterated over as "col" and "col.key" 
+	will be bound to the "matColumnDef" attribute
+52. Insert a header row in which the cells are defined by "matHeaderCellDef" directive as the value of "col.label"
+
+55. Insert the table body cells the values of which is defined by "matCellDef" in the variable "element"
+56. Insert a switch block in which if the value of "element.isEdit" is false "col.type" cases will be evaluated
+57. Insert a block where a checkbox would appear in case "col.type" equals "isSelected"
+58. "element.isSelected" gets the value of "$event.checked" depending on the state of the checkbox 
+
+62. Insert a block where an edit-button would appear in case "col.type" equals "isEdit"
+63. The value of "element.isEdit" is switched by the button click
+
+67. Insert a block where a date in a callendar item would appear in case "col.type" equals "date"
+
+70. Insert a block where the value of "element[col.key]" would appear as a default case
+
+74. Insert a switch block in which if the value of "element.isEdit" is ture "col.type" cases will be evaluated
+75. Insert a block where edit-button would appear in case "col.type" equals "isSelected"
+
+76. Insert a block where a submit-button with text value "Done" would appear in case "col.type" equals "isEdit"
+77. The "editRow(element)" and "disableSubmit(element.id) functions would be triggered by the button click and 
+	the button would be "disabled" depending on the value of the latter function. 
+	
+ 

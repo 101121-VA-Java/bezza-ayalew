@@ -12,10 +12,10 @@ export class EmployeeService {
   token: string = "";
   constructor(private http: HttpClient) { }
 
-  getUsers(): Observable<Employee[]>{
+  getUsers(): any{
     return this.http
     .get(this.serviceUrl)
-    .pipe<Employee[]>(map((data: any) => data));
+    .pipe(map((data: any) => data));
   }
 
   getUserById(id: number): any{

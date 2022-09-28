@@ -14,6 +14,7 @@ userLogin = {
   ersUsername:'',
   ersPassword:''
 };
+loginError = '';
 
   constructor(private us: EmployeeService, private router: Router) { }
 
@@ -41,6 +42,7 @@ userLogin = {
         };
       } else{
         console.log("cannot login");
+        this.loginError = "Incorrect username and/or password!"
       }
     })
   }

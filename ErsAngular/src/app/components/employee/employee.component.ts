@@ -1,13 +1,11 @@
-import { map } from 'rxjs';
 import { ReimbEntries, ReimbColumns } from './../../models/reimbEntries';
 import { Reimbursement } from 'src/app/models/reimbursement';
 import { Employee, EmployeeColumns } from 'src/app/models/employee';
 import { EmployeeService } from './../../services/employee.service';
 import { DataService } from './../../services/data.service';
-import { Component, Input, OnInit } from '@angular/core';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatDialog } from '@angular/material/dialog';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-employee',
@@ -15,7 +13,7 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./employee.component.css']
 })
 
-export class EmployeeComponent implements OnInit {
+export class EmployeeComponent implements AfterViewInit, OnInit {
   displayedColumns: string[] = [];
   columnsSchema: any = [];
 
@@ -34,8 +32,16 @@ export class EmployeeComponent implements OnInit {
   viewPendingReimbs = false;
   viewResolvedReimbs = false;
   fileReimbursement = false;
+  isSubmitted = false;
+  
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
   
   constructor(private ds: DataService, private es: EmployeeService) { }
+  
+  ngAfterViewInit(): void {
+    this.reimbDataSource.paginator = this.paginator;
+  }
 
   ngOnInit(){
     this.es.getUserById(this.id).subscribe((res: any) => {
@@ -78,20 +84,6 @@ export class EmployeeComponent implements OnInit {
       this.ds.addReimbursement(row).subscribe(() => (row.isEdit = false));
   }
 
-  getReimbursementData() {
-    this.ds.getReimbursementByAuthorId(this.id)
-    .subscribe((res: any) => {
-    for(const reimb of res){
-      if(reimb.reimbStatus > 1)
-      {
-        this.resolvedReimbursementData.push(reimb);
-      }else{
-        this.pendingReimbursementData.push(reimb);
-      }
-    }
-  this.reimbursementData = res});
-  }
-
   inputHandler(e: any, id: number, key: string) {
     if (!this.valid[id]) {
       this.valid[id] = {};
@@ -104,6 +96,20 @@ export class EmployeeComponent implements OnInit {
       return Object.values(this.valid[id]).some((item) => item === false);
     }
     return false;
+  }
+
+  getReimbursementData() {
+    this.ds.getReimbursementByAuthorId(this.id)
+    .subscribe((res: any) => {
+    for(const reimb of res){
+      if(reimb.reimbStatus > 1)
+      {
+        this.resolvedReimbursementData.push(reimb);
+      }else{
+        this.pendingReimbursementData.push(reimb);
+      }
+    }
+  this.reimbursementData = res});
   }
 
   viewAllReimbursements(){
@@ -154,8 +160,8 @@ export class EmployeeComponent implements OnInit {
       reimbAmount: 0,
       reimbDescription: '',
       reimbReceipt: '',
-      reimbResolved: new Date(),  //should be null by default
-      reimbSubmitted: new Date(),
+      reimbResolved: new Date().toISOString().substring(0,10),  //should be null by default
+      reimbSubmitted: new Date().toISOString().substring(0,10),
       reimbAuthor: this.id,
       reimbResolver: 0,
       reimbStatus: 1,

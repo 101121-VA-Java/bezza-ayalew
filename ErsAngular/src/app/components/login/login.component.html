@@ -16,7 +16,7 @@
         <button (click)="login()" type="submit" class="btn btn-primary">Login</button>
     </form>
 </div>
-	<div id="error-div">
-	</div>
+	<span [ngModel] = "loginError" *ngIf = "loginError"></span>
+	
 
 
