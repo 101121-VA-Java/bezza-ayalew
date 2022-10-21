@@ -1,7 +1,13 @@
 {
   "dependencies": {
-    "bootstrap": "^5.2.0",
+    "@angular/elements": "^14.2.4",
+    "@formio/angular": "^5.3.0",
+    "bootstrap": "^5.2.2",
+    "bootswatch": "^5.2.1",
+    "font-awesome": "^4.7.0",
+    "formiojs": "^4.14.8",
     "jquery": "^3.6.0",
+    "ngx-bootstrap": "^9.0.0",
     "save": "^2.5.0"
   }
 }
